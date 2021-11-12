@@ -53,7 +53,7 @@ def getReserveInUsdc(w3, tlp):
             usdcReserveInWNearUsdcPair = reservesWnearUsdc[0]
         return reserveInWnear*usdcReserveInWNearUsdcPair/wnearReserveInWNearUsdcPair
 
-def getTotalStakedInUSD(totalStaked, totalAvailable, reserveInUSDC):
+def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     if totalAvailable == 0:
         return 0
     else:
@@ -72,4 +72,4 @@ def getAPR(w3, totalRewardRate, totalStakedInUSDC):
         else:
             triUSDCRatio = reserves[0]/reserves[1]
         totalYearlyRewards = totalRewardRate * 3600 * 24 * 365
-        return triUSDCRatio*totalYearlyRewards*100/totalStakedInUSDC
+        return triUSDCRatio*totalYearlyRewards*100/(totalStakedInUSDC * 10**6)

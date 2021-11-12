@@ -10,7 +10,7 @@ from utils import (
     USDC_ADDRESS,
     FACTORY_ADDRESS,
     getReserveInUsdc,
-    getTotalStakedInUSD,
+    getTotalStakedInUSDC,
     getAPR,
 )
 
@@ -35,7 +35,7 @@ for id, address in lpAddresses.items():
     reserveInUSDC = getReserveInUsdc(w3, tlp)
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(chef.address).call()
-    totalStakedInUSDC = getTotalStakedInUSD(totalStaked, totalSupply, reserveInUSDC)
+    totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
     totalRewardRate = triPerBlock * poolInfo[1] / totalAllocPoint # TODO: update to return base 10 values
 
     # USDC wNEAR
@@ -44,7 +44,7 @@ for id, address in lpAddresses.items():
         "lpAddress": address,
         "totalSupply": totalSupply,
         "totalStaked": totalStaked,
-        "totalStakedInUSDC": totalStakedInUSDC,
+        "totalStakedInUSD": totalStakedInUSDC/10**6,
         "totalRewardRate": totalRewardRate,
         "apr": getAPR(w3, totalRewardRate, totalStakedInUSDC)
     }) 
