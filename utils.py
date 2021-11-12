@@ -26,9 +26,10 @@ def init_tlp(w3, lpAddress):
             abi=json.load(json_file)
         )
 
+"""
 def reserveInUsdc(tlp):
     t0 = tlp.functions.token0().call()
     t1 = tlp.functions.token1().call()
     reserves = tlp.functions.getReserves().call()
     if (t0 == USDC_ADDRESS | t1 == USDC_ADDRESS):
-        
+"""
