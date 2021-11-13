@@ -32,11 +32,12 @@ triPerBlock = chef.functions.triPerBlock().call()
 for id, address in lpAddresses.items():
     tlp = init_tlp(w3, address)
     poolInfo = chef.functions.poolInfo(id).call()
+    allocPoint = poolInfo[1]
     reserveInUSDC = getReserveInUsdc(w3, tlp)
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(chef.address).call()
     totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
-    totalRewardRate = triPerBlock * poolInfo[1] / totalAllocPoint # TODO: update to return base 10 values
+    totalRewardRate = triPerBlock * allocPoint / totalAllocPoint # TODO: update to return base 10 values
 
     # USDC wNEAR
     data.append({
@@ -46,6 +47,7 @@ for id, address in lpAddresses.items():
         "totalStaked": totalStaked,
         "totalStakedInUSD": totalStakedInUSDC/10**6,
         "totalRewardRate": totalRewardRate,
+        "allocPoint": allocPoint,
         "apr": getAPR(w3, totalRewardRate, totalStakedInUSDC)
     }) 
 
