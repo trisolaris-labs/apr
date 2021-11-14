@@ -1,14 +1,8 @@
 import json
 from web3 import Web3
 from utils import (
-    TRI_ADDRESS,
     init_chef, 
     init_tlp,
-    WETH_ADDRESS,
-    WNEAR_ADDRESS,
-    DAI_ADDRESS,
-    USDC_ADDRESS,
-    FACTORY_ADDRESS,
     getReserveInUsdc,
     getTotalStakedInUSDC,
     getAPR,
