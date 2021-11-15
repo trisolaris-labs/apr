@@ -24,8 +24,8 @@ decimals = 18
 chef = init_chef(w3)
 totalAllocPoint = chef.functions.totalAllocPoint().call()
 triPerBlock = chef.functions.triPerBlock().call()
-triUsdcRatio = getTriUsdcRatio(w3)
-print(triUsdcRatio)
+triUsdRatio = getTriUsdcRatio(w3)/10**12
+print(triUsdRatio)
     
 
 for id, address in lpAddresses.items():
@@ -51,7 +51,7 @@ for id, address in lpAddresses.items():
         "totalRewardRate": totalRewardRate,
         # "totalWeeklyRewardRate": totalWeeklyRewardRate,
         "allocPoint": allocPoint,
-        "apr": getAPR(triUsdcRatio, totalRewardRate, totalStakedInUSDC)
+        "apr": getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC)
     }) 
 
 with open('data.json', 'w', encoding='utf-8') as f:

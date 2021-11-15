@@ -74,9 +74,9 @@ def getTriUsdcRatio(w3):
         wnearUsdcRatio = reserves[1]/reserves[0]
     return triWnearRatio * wnearUsdcRatio
 
-def getAPR(triUsdcRatio, totalRewardRate, totalStakedInUSDC):
+def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
     if totalStakedInUSDC == 0:
         return 0
     else:
         totalYearlyRewards = totalRewardRate * 3600 * 24 * 365
-        return triUsdcRatio*totalYearlyRewards*100/(totalStakedInUSDC * 10**12)
+        return triUsdRatio*totalYearlyRewards*100*10**6/(totalStakedInUSDC)
