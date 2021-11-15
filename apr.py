@@ -49,7 +49,7 @@ for id, address in lpAddresses.items():
         "totalStaked": totalStaked,
         "totalStakedInUSD": totalStakedInUSDC/10**6,
         "totalRewardRate": totalRewardRate,
-        "totalWeeklyRewardRate": totalWeeklyRewardRate,
+        # "totalWeeklyRewardRate": totalWeeklyRewardRate,
         "allocPoint": allocPoint,
         "apr": getAPR(triUsdcRatio, totalRewardRate, totalStakedInUSDC)
     }) 
