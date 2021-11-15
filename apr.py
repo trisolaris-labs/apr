@@ -6,6 +6,7 @@ from utils import (
     getReserveInUsdc,
     getTotalStakedInUSDC,
     getAPR,
+    getTriUsdcRatio,
 )
 
 lpAddresses = {
@@ -19,9 +20,13 @@ data = []
 w3 = Web3(Web3.HTTPProvider("https://mainnet.aurora.dev/"))
 
 ## chef calls
+decimals = 18
 chef = init_chef(w3)
 totalAllocPoint = chef.functions.totalAllocPoint().call()
 triPerBlock = chef.functions.triPerBlock().call()
+triUsdcRatio = getTriUsdcRatio(w3)
+print(triUsdcRatio)
+    
 
 for id, address in lpAddresses.items():
     print("Reached here", address)
@@ -33,7 +38,8 @@ for id, address in lpAddresses.items():
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(chef.address).call()
     totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
-    totalRewardRate = triPerBlock * allocPoint / totalAllocPoint # TODO: update to return base 10 values
+    totalRewardRate = triPerBlock * allocPoint / (totalAllocPoint * 10**decimals) # TODO: update to return base 10 values
+    totalWeeklyRewardRate = 3600*24*7*totalRewardRate # TODO: update to return base 10 values
 
     # USDC wNEAR
     data.append({
@@ -43,8 +49,9 @@ for id, address in lpAddresses.items():
         "totalStaked": totalStaked,
         "totalStakedInUSD": totalStakedInUSDC/10**6,
         "totalRewardRate": totalRewardRate,
+        "totalWeeklyRewardRate": totalWeeklyRewardRate,
         "allocPoint": allocPoint,
-        "apr": getAPR(w3, totalRewardRate, totalStakedInUSDC)
+        "apr": getAPR(triUsdcRatio, totalRewardRate, totalStakedInUSDC)
     }) 
 
 with open('data.json', 'w', encoding='utf-8') as f:
