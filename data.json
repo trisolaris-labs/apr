@@ -2,32 +2,32 @@
     {
         "id": 0,
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
-        "totalSupply": 3234575964098013000346590,
-        "totalStaked": 1873209244965813909163685,
-        "totalStakedInUSD": 924312.0296590979,
+        "totalSupply": 3235319776936914856501916,
+        "totalStaked": 1873387133297879767709919,
+        "totalStakedInUSD": 923044.1609595988,
         "totalRewardRate": 1.0,
         "allocPoint": 14,
-        "apr": 89474.96541763883
+        "apr": 89703.75560176247
     },
     {
         "id": 1,
         "lpAddress": "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0",
         "totalSupply": 96345327527890786716,
-        "totalStaked": 62523766506057168981,
-        "totalStakedInUSD": 442038.56106186804,
+        "totalStaked": 62532249063693465430,
+        "totalStakedInUSD": 441837.91188692336,
         "totalRewardRate": 1.0,
         "allocPoint": 14,
-        "apr": 187094.05507561637
+        "apr": 187400.2334266516
     },
     {
         "id": 2,
         "lpAddress": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
         "totalSupply": 61588265471438046333,
         "totalStaked": 55331056909110118208,
-        "totalStakedInUSD": 412143.04885278834,
+        "totalStakedInUSD": 411656.53930734814,
         "totalRewardRate": 1.0,
         "allocPoint": 14,
-        "apr": 200665.24746458992
+        "apr": 201139.8336187581
     },
     {
         "id": 3,
@@ -37,16 +37,16 @@
         "totalStakedInUSD": 716116.604017462,
         "totalRewardRate": 1.0,
         "allocPoint": 14,
-        "apr": 115487.87784682994
+        "apr": 115624.36530564612
     },
     {
         "id": 4,
         "lpAddress": "0xbc8A244e8fb683ec1Fd6f88F3cc6E565082174Eb",
         "totalSupply": 4502577642043465861,
         "totalStaked": 943999090817294846,
-        "totalStakedInUSD": 164877.40424135726,
+        "totalStakedInUSD": 164682.7765963828,
         "totalRewardRate": 1.0,
         "allocPoint": 14,
-        "apr": 501601.703819828
+        "apr": 502788.0239552169
     }
 ]
