@@ -1,16 +1,13 @@
 import json
 
 FACTORY_ADDRESS = "0xc66F594268041dB60507F00703b152492fb176E7"
-CHEF_ADDRESS = "0x474b825a605c45836Ac50398473059D4c4c6d3Db"
-WETH_ADDRESS = "0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB"
+CHEF_ADDRESS = "0x1f1Ed214bef5E83D8f5d0eB5D7011EB965D0D79B"
 WNEAR_ADDRESS = "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d"
 USDC_ADDRESS = "0xB12BFcA5A55806AaF64E99521918A4bf0fC40802"
-TRI_ADDRESS = "0x0029050f71704940D77Cfe71D0F1FB868DeeFa03"
-DAI_ADDRESS = "0xe3520349f477a5f6eb06107066048508498a291b"
 
-DAI_USDC = "0xbb310Ef4Fac855f2F49D8Fb35A2DA8f639B3464E"
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
-TRI_USDC = "0x56ff686187cffbB09E545655F88CCaB690D77cE2"
+# TODO: change this address
+WNEAR_TRI = "0xD4B28eA361DF98568FF65dD3e60407c3fBC014A7"
 
 
 def init_chef(w3):
@@ -59,17 +56,27 @@ def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     else:
         return totalStaked*reserveInUSDC/totalAvailable
 
-def getAPR(w3, totalRewardRate, totalStakedInUSDC):
+def getTriUsdcRatio(w3):
+    triWnearPair = init_tlp(w3, WNEAR_TRI)
+    t0 = triWnearPair.functions.token0().call()
+    reserves = triWnearPair.functions.getReserves().call()
+    if t0 == WNEAR_ADDRESS:
+        triWnearRatio = reserves[1]/reserves[0]
+    else:
+        triWnearRatio = reserves[0]/reserves[1]
+        
+    usdcWnearPair = init_tlp(w3, WNEAR_USDC)
+    t0 = usdcWnearPair.functions.token0().call()
+    reserves = usdcWnearPair.functions.getReserves().call()
+    if t0 == WNEAR_ADDRESS:
+        wnearUsdcRatio = reserves[0]/reserves[1]
+    else:
+        wnearUsdcRatio = reserves[1]/reserves[0]
+    return triWnearRatio * wnearUsdcRatio
+
+def getAPR(triUsdcRatio, totalRewardRate, totalStakedInUSDC):
     if totalStakedInUSDC == 0:
         return 0
     else:
-        triUsdcPair = init_tlp(w3, TRI_USDC)
-        t0 = triUsdcPair.functions.token0().call()
-        t1 = triUsdcPair.functions.token1().call()
-        reserves = triUsdcPair.functions.getReserves().call()
-        if t0 == USDC_ADDRESS:
-            triUSDCRatio = reserves[1]/reserves[0]
-        else:
-            triUSDCRatio = reserves[0]/reserves[1]
         totalYearlyRewards = totalRewardRate * 3600 * 24 * 365
-        return triUSDCRatio*totalYearlyRewards*100/(totalStakedInUSDC * 10**6)
+        return triUsdcRatio*totalYearlyRewards*100/(totalStakedInUSDC * 10**12)
