@@ -38,8 +38,8 @@ for id, address in lpAddresses.items():
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(chef.address).call()
     totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
-    totalRewardRate = triPerBlock * allocPoint / (totalAllocPoint * 10**decimals) # TODO: update to return base 10 values
-    totalWeeklyRewardRate = 3600*24*7*totalRewardRate # TODO: update to return base 10 values
+    totalSecondRewardRate = triPerBlock * allocPoint / (totalAllocPoint * 10**decimals) # TODO: update to return base 10 values
+    totalWeeklyRewardRate = 3600*24*7*totalSecondRewardRate # TODO: update to return base 10 values
 
     # USDC wNEAR
     data.append({
@@ -48,10 +48,10 @@ for id, address in lpAddresses.items():
         "totalSupply": totalSupply,
         "totalStaked": totalStaked,
         "totalStakedInUSD": totalStakedInUSDC/10**6,
-        "totalRewardRate": totalRewardRate,
+        "totalRewardRate": totalWeeklyRewardRate,
         # "totalWeeklyRewardRate": totalWeeklyRewardRate,
         "allocPoint": allocPoint,
-        "apr": getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC)
+        "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSDC)
     }) 
 
 with open('data.json', 'w', encoding='utf-8') as f:
