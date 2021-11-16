@@ -6,8 +6,7 @@ WNEAR_ADDRESS = "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d"
 USDC_ADDRESS = "0xB12BFcA5A55806AaF64E99521918A4bf0fC40802"
 
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
-# TODO: change this address
-WNEAR_TRI = "0xD4B28eA361DF98568FF65dD3e60407c3fBC014A7"
+WNEAR_TRI = "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD"
 
 
 def init_chef(w3):
@@ -58,20 +57,24 @@ def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
 
 def getTriUsdcRatio(w3):
     triWnearPair = init_tlp(w3, WNEAR_TRI)
+    t1 = triWnearPair.functions.token1().call()
     t0 = triWnearPair.functions.token0().call()
     reserves = triWnearPair.functions.getReserves().call()
     if t0 == WNEAR_ADDRESS:
         triWnearRatio = reserves[1]/reserves[0]
     else:
         triWnearRatio = reserves[0]/reserves[1]
-        
+    
     usdcWnearPair = init_tlp(w3, WNEAR_USDC)
+    t1 = usdcWnearPair.functions.token1().call()
     t0 = usdcWnearPair.functions.token0().call()
     reserves = usdcWnearPair.functions.getReserves().call()
+
     if t0 == WNEAR_ADDRESS:
         wnearUsdcRatio = reserves[0]/reserves[1]
     else:
         wnearUsdcRatio = reserves[1]/reserves[0]
+    print(triWnearRatio, wnearUsdcRatio)
     return triWnearRatio * wnearUsdcRatio
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
@@ -79,4 +82,4 @@ def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
         return 0
     else:
         totalYearlyRewards = totalRewardRate * 3600 * 24 * 365
-        return triUsdRatio*totalYearlyRewards*100*10**6/(totalStakedInUSDC)
+        return totalYearlyRewards*100*10**6/(totalStakedInUSDC*triUsdRatio)
