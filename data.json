@@ -2,12 +2,12 @@
     {
         "id": 0,
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
-        "totalSupply": 16413582616326767370514386,
-        "totalStaked": 15186708917483552899595318,
-        "totalStakedInUSD": 6660904.424247666,
+        "totalSupply": 16385785539998592547277096,
+        "totalStaked": 15177428053965596130480218,
+        "totalStakedInUSD": 6678065.2100914875,
         "totalRewardRate": 604800.0,
         "allocPoint": 14,
-        "apr": 584.0386394683599
+        "apr": 582.537821237162
     },
     {
         "id": 1,
@@ -22,31 +22,31 @@
     {
         "id": 2,
         "lpAddress": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
-        "totalSupply": 789647659600350250462,
-        "totalStaked": 754247718799278623261,
-        "totalStakedInUSD": 5281810.891505272,
+        "totalSupply": 789658271591422514337,
+        "totalStaked": 753313957968329470142,
+        "totalStakedInUSD": 5279144.457024438,
         "totalRewardRate": 604800.0,
         "allocPoint": 14,
-        "apr": 736.5325335337221
+        "apr": 736.9045475522165
     },
     {
         "id": 3,
         "lpAddress": "0x2fe064B6c7D274082aa5d2624709bC9AE7D16C77",
-        "totalSupply": 4846973051419,
-        "totalStaked": 4570917138715,
-        "totalStakedInUSD": 9556111.537644146,
+        "totalSupply": 4847120929739,
+        "totalStaked": 4566536031393,
+        "totalStakedInUSD": 9543185.006392892,
         "totalRewardRate": 604800.0,
         "allocPoint": 14,
-        "apr": 407.0929417516444
+        "apr": 407.644361390915
     },
     {
         "id": 4,
         "lpAddress": "0xbc8A244e8fb683ec1Fd6f88F3cc6E565082174Eb",
-        "totalSupply": 27484745552881861042,
-        "totalStaked": 27407036282698308660,
-        "totalStakedInUSD": 4378431.467224793,
+        "totalSupply": 27534256890460508649,
+        "totalStaked": 27417101918656373106,
+        "totalStakedInUSD": 4387910.941028538,
         "totalRewardRate": 604800.0,
         "allocPoint": 14,
-        "apr": 888.4975331204968
+        "apr": 886.5780572689805
     }
 ]
