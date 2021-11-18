@@ -4,8 +4,10 @@ FACTORY_ADDRESS = "0xc66F594268041dB60507F00703b152492fb176E7"
 CHEF_ADDRESS = "0x1f1Ed214bef5E83D8f5d0eB5D7011EB965D0D79B"
 WNEAR_ADDRESS = "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d"
 USDC_ADDRESS = "0xB12BFcA5A55806AaF64E99521918A4bf0fC40802"
+WETH_ADDRESS = "0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB"
 
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
+WETH_USDC = "0x2F41AF687164062f118297cA10751F4b55478ae1"
 WNEAR_TRI = "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD"
 
 
@@ -48,6 +50,21 @@ def getReserveInUsdc(w3, tlp):
             wnearReserveInWNearUsdcPair = reservesWnearUsdc[1]
             usdcReserveInWNearUsdcPair = reservesWnearUsdc[0]
         return reserveInWnear*usdcReserveInWNearUsdcPair/wnearReserveInWNearUsdcPair
+    elif (t0 == WETH_ADDRESS or t1 == WETH_ADDRESS):
+        wethUsdcPair = init_tlp(w3, WETH_USDC)
+        reservesWethUsdc = wethUsdcPair.functions.getReserves().call()
+        t0WethUsdc = wethUsdcPair.functions.token0().call()
+        if t0 == WETH_ADDRESS:
+            reserveInWeth = reserves[0]*2
+        else:
+            reserveInWeth = reserves[1]*2
+        if t0WethUsdc == WETH_ADDRESS:
+            wethReserveInWethUsdcPair = reservesWethUsdc[0]
+            usdcReserveInWethUsdcPair = reservesWethUsdc[1]
+        else:
+            wethReserveInWethUsdcPair = reservesWethUsdc[1]
+            usdcReserveInWethUsdcPair = reservesWethUsdc[0]
+        return reserveInWeth*usdcReserveInWethUsdcPair/wethReserveInWethUsdcPair
 
 def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     if totalAvailable == 0:
