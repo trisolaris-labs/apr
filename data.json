@@ -4,10 +4,10 @@
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
         "totalSupply": 59163589883093862701756633,
         "totalStaked": 58893561325346627924260677,
-        "totalStakedInUSD": 25888703.911546227,
+        "totalStakedInUSD": 25888763.808796585,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 58.28145637103657
+        "apr": 58.27299137537672
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@
         "totalStakedInUSD": 13001330.53925326,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 116.05207351417171
+        "apr": 116.03548618307927
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "totalStakedInUSD": 12040463.992890054,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 125.31339061471688
+        "apr": 125.29547956291488
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@
         "totalStakedInUSD": 56635950.814681046,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 26.640876436603396
+        "apr": 26.637068654246168
     },
     {
         "id": 4,
@@ -47,17 +47,17 @@
         "totalStakedInUSD": 22999561.79361446,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 65.60261369598673
+        "apr": 65.59323710976166
     },
     {
         "id": 5,
         "lpAddress": "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-        "totalSupply": 186312288915304566612578030,
-        "totalStaked": 181836679127496443047819193,
-        "totalStakedInUSD": 3564153.255665651,
+        "totalSupply": 186314999326869758604930065,
+        "totalStaked": 181874456790925002124794744,
+        "totalStakedInUSD": 3564639.338289518,
         "totalRewardRate": 665280.0,
         "allocPoint": 22,
-        "apr": 665.2409563547792
+        "apr": 665.0551725583472
     },
     {
         "id": 6,
@@ -67,6 +67,6 @@
         "totalStakedInUSD": 4361009.706416042,
         "totalRewardRate": 241920.0,
         "allocPoint": 8,
-        "apr": 197.7040664693027
+        "apr": 197.6758086130702
     }
 ]
