@@ -2,12 +2,12 @@
     {
         "id": 0,
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
-        "totalSupply": 59163589883093862701756633,
-        "totalStaked": 58893561325346627924260677,
-        "totalStakedInUSD": 25888763.808796585,
+        "totalSupply": 59163594747694434635123153,
+        "totalStaked": 58893566189947199857627197,
+        "totalStakedInUSD": 25888766.348422296,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 58.27299137537672
+        "apr": 58.27197520841548
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@
         "totalStakedInUSD": 13001330.53925326,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 116.03548618307927
+        "apr": 116.0334741338229
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "totalStakedInUSD": 12040463.992890054,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 125.29547956291488
+        "apr": 125.29330694585803
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@
         "totalStakedInUSD": 56635950.814681046,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 26.637068654246168
+        "apr": 26.63660676887006
     },
     {
         "id": 4,
@@ -47,17 +47,17 @@
         "totalStakedInUSD": 22999561.79361446,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 65.59323710976166
+        "apr": 65.59209972646374
     },
     {
         "id": 5,
         "lpAddress": "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-        "totalSupply": 186314999326869758604930065,
+        "totalSupply": 186315759267098553041545789,
         "totalStaked": 181874456790925002124794744,
-        "totalStakedInUSD": 3564639.338289518,
+        "totalStakedInUSD": 3564608.479253282,
         "totalRewardRate": 665280.0,
         "allocPoint": 22,
-        "apr": 665.0551725583472
+        "apr": 665.0493978604273
     },
     {
         "id": 6,
@@ -67,6 +67,6 @@
         "totalStakedInUSD": 4361009.706416042,
         "totalRewardRate": 241920.0,
         "allocPoint": 8,
-        "apr": 197.6758086130702
+        "apr": 197.6723809248965
     }
 ]
