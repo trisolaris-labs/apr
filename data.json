@@ -4,10 +4,10 @@
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
         "totalSupply": 52328713878467508125411672,
         "totalStaked": 52049956991723420741854806,
-        "totalStakedInUSD": 21162385.678383164,
+        "totalStakedInUSD": 21162407.76969596,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 42.588801613858664
+        "apr": 42.58772828270175
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@
         "totalStakedInUSD": 10115470.58728699,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 89.09923048615687
+        "apr": 89.09707799815462
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "totalStakedInUSD": 8975180.697844913,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 100.41922003297786
+        "apr": 100.41679407301011
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@
         "totalStakedInUSD": 35590330.312507875,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 25.323750508038355
+        "apr": 25.323138728690285
     },
     {
         "id": 4,
@@ -47,17 +47,17 @@
         "totalStakedInUSD": 18749250.34205399,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 48.07022301638799
+        "apr": 48.0690617204066
     },
     {
         "id": 5,
         "lpAddress": "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-        "totalSupply": 195952925571995910014624120,
-        "totalStaked": 191120566567351930594609593,
-        "totalStakedInUSD": 2738583.6736927424,
+        "totalSupply": 195956387127807648134139435,
+        "totalStaked": 191185650409449710882936133,
+        "totalStakedInUSD": 2739483.2243324975,
         "totalRewardRate": 665280.0,
         "allocPoint": 22,
-        "apr": 517.1644637176677
+        "apr": 516.9821552412701
     },
     {
         "id": 6,
@@ -67,6 +67,6 @@
         "totalStakedInUSD": 2288924.7641982664,
         "totalRewardRate": 241920.0,
         "allocPoint": 8,
-        "apr": 225.0041240647924
+        "apr": 224.99868834245376
     }
 ]
