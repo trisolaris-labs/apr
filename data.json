@@ -4,10 +4,10 @@
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
         "totalSupply": 52324999246011169343158959,
         "totalStaked": 52052597431729588448170968,
-        "totalStakedInUSD": 19999876.35127503,
+        "totalStakedInUSD": 19998774.30352017,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 43.610854309534226
+        "apr": 43.60061931823056
     },
     {
         "id": 1,
@@ -17,17 +17,17 @@
         "totalStakedInUSD": 9843398.48179541,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 88.60879658354187
+        "apr": 88.58311962597205
     },
     {
         "id": 2,
         "lpAddress": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
-        "totalSupply": 1420690976482867701134,
+        "totalSupply": 1420707105617029983916,
         "totalStaked": 1418906136490757329643,
-        "totalStakedInUSD": 8822917.584566735,
+        "totalStakedInUSD": 8821957.387124434,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 98.85751344768863
+        "apr": 98.83962333706242
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@
         "totalStakedInUSD": 35653090.45811778,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 24.463845421444027
+        "apr": 24.456756315789725
     },
     {
         "id": 4,
@@ -47,26 +47,26 @@
         "totalStakedInUSD": 17613273.692854386,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 49.520135153410244
+        "apr": 49.50578526425463
     },
     {
         "id": 5,
         "lpAddress": "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-        "totalSupply": 195155103861435326861017482,
-        "totalStaked": 190340241338987856279981364,
-        "totalStakedInUSD": 2610669.3740646183,
+        "totalSupply": 195205846110244173657896986,
+        "totalStaked": 190390983587796703076860868,
+        "totalStakedInUSD": 2610988.9533769577,
         "totalRewardRate": 665280.0,
         "allocPoint": 22,
-        "apr": 525.0064943233884
+        "apr": 524.7901175104871
     },
     {
         "id": 6,
         "lpAddress": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
         "totalSupply": 8855907164212498594042,
         "totalStaked": 5629804567293093063158,
-        "totalStakedInUSD": 2194855.2478584126,
+        "totalStakedInUSD": 2194906.713865119,
         "totalRewardRate": 241920.0,
         "allocPoint": 8,
-        "apr": 227.07952273265224
+        "apr": 227.00839688301286
     }
 ]
