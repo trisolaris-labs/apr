@@ -4,10 +4,10 @@
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
         "totalSupply": 52324975673147111170672065,
         "totalStaked": 52052573858865530275684074,
-        "totalStakedInUSD": 19999800.60103753,
+        "totalStakedInUSD": 19999800.819778487,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 43.57863570621621
+        "apr": 43.61373850140033
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@
         "totalStakedInUSD": 9843398.48179541,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 88.54299927016744
+        "apr": 88.61432204000461
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "totalStakedInUSD": 8822917.584566735,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 98.7841058511234
+        "apr": 98.86367799237979
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@
         "totalStakedInUSD": 35653090.45811778,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 24.44567955794513
+        "apr": 24.46537093491446
     },
     {
         "id": 4,
@@ -47,17 +47,17 @@
         "totalStakedInUSD": 17613273.692854386,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 49.48336350119668
+        "apr": 49.52322312392073
     },
     {
         "id": 5,
         "lpAddress": "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-        "totalSupply": 195079145584820035169552812,
-        "totalStaked": 190251621840184747792004223,
-        "totalStakedInUSD": 2608472.615691931,
+        "totalSupply": 195162282448237304179792638,
+        "totalStaked": 190338949353850824900459344,
+        "totalStakedInUSD": 2610731.789467804,
         "totalRewardRate": 665280.0,
         "allocPoint": 22,
-        "apr": 525.0584582832715
+        "apr": 525.026680372629
     },
     {
         "id": 6,
@@ -67,6 +67,6 @@
         "totalStakedInUSD": 2194806.6369325467,
         "totalRewardRate": 241920.0,
         "allocPoint": 8,
-        "apr": 226.91592830966331
+        "apr": 227.0987126366075
     }
 ]
