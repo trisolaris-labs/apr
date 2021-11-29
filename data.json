@@ -4,10 +4,10 @@
         "lpAddress": "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
         "totalSupply": 54608190773371451280952788,
         "totalStaked": 54330655109882193150002562,
-        "totalStakedInUSD": 22498582.919724405,
+        "totalStakedInUSD": 22498583.736044396,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 36.91767130960021
+        "apr": 36.91191510880041
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@
         "totalStakedInUSD": 10061641.258693628,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 82.55067615777953
+        "apr": 82.53780785670081
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "totalStakedInUSD": 9236675.152212324,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 89.92362245880551
+        "apr": 89.90960483591316
     },
     {
         "id": 3,
@@ -37,7 +37,7 @@
         "totalStakedInUSD": 35581331.975392416,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 23.3435693114749
+        "apr": 23.33993043058218
     },
     {
         "id": 4,
@@ -47,17 +47,17 @@
         "totalStakedInUSD": 18548466.305994764,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 44.77972870963067
+        "apr": 44.77274828187309
     },
     {
         "id": 5,
         "lpAddress": "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-        "totalSupply": 201296838985189012157206859,
-        "totalStaked": 197151768500882893972054275,
-        "totalStakedInUSD": 2720108.162752214,
+        "totalSupply": 201324099472134779631540770,
+        "totalStaked": 197165203246740498671153627,
+        "totalStakedInUSD": 2720081.8078959156,
         "totalRewardRate": 665280.0,
         "allocPoint": 22,
-        "apr": 479.84164253335615
+        "apr": 479.7714915226103
     },
     {
         "id": 6,
@@ -67,6 +67,6 @@
         "totalStakedInUSD": 2262949.842103917,
         "totalRewardRate": 241920.0,
         "allocPoint": 8,
-        "apr": 209.73769311650756
+        "apr": 209.70499843842376
     }
 ]
