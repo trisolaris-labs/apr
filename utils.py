@@ -6,7 +6,9 @@ TRIBAR_ADDRESS = "0x802119e4e253D5C19aA06A5d567C5a41596D6803"
 CHEF_ADDRESS = "0x1f1Ed214bef5E83D8f5d0eB5D7011EB965D0D79B"
 TRI_ADDRESS = "0xFa94348467f64D5A457F75F8bc40495D33c65aBB"
 WNEAR_ADDRESS = "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d"
+AURORA_ADDRESS = "0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79"
 USDC_ADDRESS = "0xB12BFcA5A55806AaF64E99521918A4bf0fC40802"
+USDT_ADDRESS = "0x4988a896b1227218e4A686fdE5EabdcAbd91571f"
 WETH_ADDRESS = "0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB"
 
 ### TLP addresses
@@ -119,5 +121,13 @@ def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
         totalYearlyRewards = totalRewardRate * 3600 * 24 * 365
         return totalYearlyRewards*100*10**6/(totalStakedInUSDC*triUsdRatio)
 
-def convertFees(triMaker):
-    triMaker.functions.convert(TRI_ADDRESS, WNEAR_ADDRESS)
+def convertFeesForPair(tri_maker, pair, w3, acct):
+    transaction = {
+    'gasPrice': w3.eth.gas_price,
+    'nonce': w3.eth.getTransactionCount(acct.address)
+    }
+    convert_tranasction = tri_maker.functions.convert(pair[0], pair[1]).buildTransaction(transaction)
+    signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
+    signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
+    txn_hash = signed_txn.hex()
+    return w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
