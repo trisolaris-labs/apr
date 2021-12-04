@@ -27,10 +27,6 @@ tri = init_erc20(w3, TRI_ADDRESS)
 
 pairs = [
     (USDC_ADDRESS, WNEAR_ADDRESS),
-    ]
-
-
-"""
     (USDT_ADDRESS, WNEAR_ADDRESS),
     (WBTC_ADDRESS, WNEAR_ADDRESS),
     (TRI_ADDRESS, WNEAR_ADDRESS),
@@ -42,7 +38,8 @@ pairs = [
     (WETH_ADDRESS, USDC_ADDRESS),
     (WETH_ADDRESS, USDT_ADDRESS),
     (AURORA_ADDRESS, WETH_ADDRESS),
-"""
+    ]
+
 
 tri_amount = 0
 initial_triBar_balance = tri.functions.balanceOf(TRIBAR_ADDRESS).call()
