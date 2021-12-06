@@ -92,7 +92,8 @@
         "totalStakedInUSD": 20157616.419747714,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 43.516287700599015,
+        "apr":  40,
+        "apr":10,
         "chefVersion": "v2"
     },
     {
@@ -104,7 +105,8 @@
         "totalStakedInUSD": 9875590.94037632,
         "totalRewardRate": 423360.0,
         "allocPoint": 14,
-        "apr": 88.82350846405492,
+        "apr": 50,
+        "apr2": 11,
         "chefVersion": "v2"
     }
 ]
