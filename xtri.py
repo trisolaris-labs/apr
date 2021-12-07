@@ -49,7 +49,7 @@ with open('xtri.json') as json_file:
     xtri_data = json.load(json_file)
 
 for pair in pairs:
-    sleep(1)
+    sleep(2)
     receipt = convertFeesForPair(tri_maker, pair, w3, acct)
     for l in receipt['logs']:
         if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000802119e4e253d5c19aa06a5d567c5a41596d6803"):
