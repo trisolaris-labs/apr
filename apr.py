@@ -1,7 +1,7 @@
 import json
 from web3 import Web3
 from utils import (
-    init_chef, 
+    init_chef,
     init_tlp,
     getReserveInUsdc,
     getTotalStakedInUSDC,
@@ -16,8 +16,8 @@ lpAddresses = {
     3: "0x2fe064B6c7D274082aa5d2624709bC9AE7D16C77",
     4: "0xbc8A244e8fb683ec1Fd6f88F3cc6E565082174Eb",
     5: "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD",
-    6: "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e"
-    }
+    6: "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
+}
 data = []
 w3 = Web3(Web3.HTTPProvider("https://mainnet.aurora.dev/"))
 
@@ -26,9 +26,9 @@ decimals = 18
 chef = init_chef(w3)
 totalAllocPoint = chef.functions.totalAllocPoint().call()
 triPerBlock = chef.functions.triPerBlock().call()
-triUsdRatio = getTriUsdcRatio(w3)/10**12
+triUsdRatio = getTriUsdcRatio(w3) / 10 ** 12
 print(triUsdRatio)
-    
+
 
 for id, address in lpAddresses.items():
     print("Reached here", address)
@@ -40,21 +40,64 @@ for id, address in lpAddresses.items():
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(chef.address).call()
     totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
-    totalSecondRewardRate = triPerBlock * allocPoint / (totalAllocPoint * 10**decimals) # TODO: update to return base 10 values
-    totalWeeklyRewardRate = 3600*24*7*totalSecondRewardRate # TODO: update to return base 10 values
+    totalSecondRewardRate = (
+        triPerBlock * allocPoint / (totalAllocPoint * 10 ** decimals)
+    )  # TODO: update to return base 10 values
+    totalWeeklyRewardRate = (
+        3600 * 24 * 7 * totalSecondRewardRate
+    )  # TODO: update to return base 10 values
 
-    # USDC wNEAR
-    data.append({
-        "id": id,
-        "lpAddress": address,
-        "totalSupply": totalSupply,
-        "totalStaked": totalStaked,
-        "totalStakedInUSD": totalStakedInUSDC/10**6,
-        "totalRewardRate": totalWeeklyRewardRate,
-        # "totalWeeklyRewardRate": totalWeeklyRewardRate,
-        "allocPoint": allocPoint,
-        "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSDC)
-    }) 
+    # Chef V1
+    data.append(
+        {
+            "id": id,
+            "poolId": id,
+            "lpAddress": address,
+            "totalSupply": totalSupply,
+            "totalStaked": totalStaked,
+            "totalStakedInUSD": totalStakedInUSDC / 10 ** 6,
+            "totalRewardRate": totalWeeklyRewardRate,
+            # "totalWeeklyRewardRate": totalWeeklyRewardRate,
+            "allocPoint": allocPoint,
+            "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSDC),
+            "apr2": 0,
+            "chefVersion": "v1",
+        }
+    )
 
-with open('data.json', 'w', encoding='utf-8') as f:
+
+# Chef V2 (Temp)
+data.extend(
+    [
+        {
+            "id": 7,
+            "poolId": 0,
+            "lpAddress": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
+            "totalSupply": 0,
+            "totalStaked": 0,
+            "totalStakedInUSD": 0,
+            "totalRewardRate": 0,
+            "allocPoint": 0,
+            "apr": 0,
+            "apr2": 0,
+            "chefVersion": "v2",
+        },
+        {
+            "id": 8,
+            "poolId": 1,
+            "lpAddress": "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
+            "totalSupply": 0,
+            "totalStaked": 0,
+            "totalStakedInUSD": 0,
+            "totalRewardRate": 0,
+            "allocPoint": 0,
+            "apr": 0,
+            "apr2": 0,
+            "chefVersion": "v2",
+        },
+    ]
+)
+
+
+with open("datav2.json", "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
