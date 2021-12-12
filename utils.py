@@ -4,6 +4,7 @@ FACTORY_ADDRESS = "0xc66F594268041dB60507F00703b152492fb176E7"
 TRIMAKER_ADDRESS = "0xe793455c9728fc91A3E5a33FAfF9eB2F228aE151"
 TRIBAR_ADDRESS = "0x802119e4e253D5C19aA06A5d567C5a41596D6803"
 CHEF_ADDRESS = "0x1f1Ed214bef5E83D8f5d0eB5D7011EB965D0D79B"
+CHEFV2_ADDRESS = "0x3838956710bcc9D122Dd23863a0549ca8D5675D6"
 TRI_ADDRESS = "0xFa94348467f64D5A457F75F8bc40495D33c65aBB"
 WNEAR_ADDRESS = "0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d"
 AURORA_ADDRESS = "0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79"
@@ -48,7 +49,7 @@ def init_erc20(w3, erc20_address):
         )
 
 
-def getReserveInUsdc(w3, tlp):
+def getReserveInUsdc(w3, tlp, triUsdcRatio):
     t0 = tlp.functions.token0().call()
     t1 = tlp.functions.token1().call()
     reserves = tlp.functions.getReserves().call()
@@ -87,6 +88,15 @@ def getReserveInUsdc(w3, tlp):
             wethReserveInWethUsdcPair = reservesWethUsdc[1]
             usdcReserveInWethUsdcPair = reservesWethUsdc[0]
         return reserveInWeth*usdcReserveInWethUsdcPair/wethReserveInWethUsdcPair
+    elif (t0 == TRI_ADDRESS or t1 == TRI_ADDRESS):
+        print("reached here")
+        if t0 == TRI_ADDRESS:
+            reserveInTri = reserves[0]*2
+        else:
+            reserveInTri = reserves[1]*2
+        print(reserveInTri, triUsdcRatio)
+        return reserveInTri/triUsdcRatio
+
 
 def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     if totalAvailable == 0:
@@ -113,7 +123,6 @@ def getTriUsdcRatio(w3):
         wnearUsdcRatio = reserves[0]/reserves[1]
     else:
         wnearUsdcRatio = reserves[1]/reserves[0]
-    print(triWnearRatio, wnearUsdcRatio)
     return triWnearRatio * wnearUsdcRatio
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
