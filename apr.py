@@ -33,15 +33,8 @@ totalAllocPoint = chef.functions.totalAllocPoint().call()
 triPerBlock = chef.functions.triPerBlock().call()
 triUsdcRatio = getTriUsdcRatio(w3)
 auroraUsdcRatio = getAuroraUsdcRatio(w3)
-print(triUsdcRatio/10**12)
+print(f"Aurora USDC Ratio: {triUsdcRatio/10**12}")
 print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
-
-rewarderAddress = "0x94669d7a170bfe62FAc297061663e0B48C63B9B5"
-rewarder = init_rewarder(w3, rewarderAddress)
-rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
-print(f"Rewards per block: {rewardsPerBlock}")
-
-
 
 for id, address in v1_pools.items():
     print("V1 Reached here", address)
