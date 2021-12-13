@@ -26,6 +26,13 @@ def init_chef(w3):
             address=CHEF_ADDRESS,
             abi=json.load(json_file)
         )
+        
+def init_chefv2(w3):
+    with open('abi/chefv2.json') as json_file:
+        return w3.eth.contract(
+            address=CHEFV2_ADDRESS,
+            abi=json.load(json_file)
+        )
 
 def init_tlp(w3, lpAddress):
     with open('abi/tlp.json') as json_file:
