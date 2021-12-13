@@ -33,7 +33,7 @@ totalAllocPoint = chef.functions.totalAllocPoint().call()
 triPerBlock = chef.functions.triPerBlock().call()
 triUsdcRatio = getTriUsdcRatio(w3)
 auroraUsdcRatio = getAuroraUsdcRatio(w3)
-print(f"Aurora USDC Ratio: {triUsdcRatio/10**12}")
+print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
 print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
 
 for id, address in v1_pools.items():
@@ -106,6 +106,7 @@ for id, addresses in v2_pools.items():
     # Rewarder logic
     rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
     rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
+    print(f"Aurora rewards per block: {rewardsPerBlock}")
 
     #LP staked amts logic
     reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
@@ -129,7 +130,7 @@ for id, addresses in v2_pools.items():
                 "totalRewardRate": totalWeeklyRewardRate,
                 "allocPoint": allocPoint,
                 "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
-                "apr2": getAPR(triUsdcRatio/10**12, rewardsPerBlock, totalStakedInUSDC),
+                "apr2": getAPR(auroraUsdcRatio/10**12, rewardsPerBlock/(10**18), totalStakedInUSDC),
                 "chefVersion": "v2",
             }
     )
