@@ -4,11 +4,13 @@ from utils import (
     CHEFV2_ADDRESS,
     init_chef,
     init_chefv2,
+    init_rewarder,
     init_tlp,
     getReserveInUsdc,
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
+    getAuroraUsdcRatio
 )
 
 v1_pools = {
@@ -30,7 +32,15 @@ totalAllocPoint = chef.functions.totalAllocPoint().call()
 
 triPerBlock = chef.functions.triPerBlock().call()
 triUsdcRatio = getTriUsdcRatio(w3)
+auroraUsdcRatio = getAuroraUsdcRatio(w3)
 print(triUsdcRatio/10**12)
+print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
+
+rewarderAddress = "0x94669d7a170bfe62FAc297061663e0B48C63B9B5"
+rewarder = init_rewarder(w3, rewarderAddress)
+rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
+print(f"Rewards per block: {rewardsPerBlock}")
+
 
 
 for id, address in v1_pools.items():
@@ -84,15 +94,27 @@ chefv2 = init_chefv2(w3)
 totalAllocPointV2 = chefv2.functions.totalAllocPoint().call()
 
 v2_pools = {
-    0: "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
-    1: "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
+    0: {
+        "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e", 
+        "Aurora Rewarder": "0x94669d7a170bfe62FAc297061663e0B48C63B9B5"
+        },
+    1: {
+        "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194", 
+        "Aurora Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1"
+        }
 }
 
-for id, address in v2_pools.items():
-    print("V2 Reached here", address)
-    tlp = init_tlp(w3, address)
+for id, addresses in v2_pools.items():
+    print("V2 Reached here", addresses["LP"])
+    tlp = init_tlp(w3, addresses["LP"])
     poolInfo = chefv2.functions.poolInfo(id).call()
     allocPoint = poolInfo[2]
+
+    # Rewarder logic
+    rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
+    rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
+
+    #LP staked amts logic
     reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
@@ -107,14 +129,14 @@ for id, address in v2_pools.items():
             {
                 "id": len(v1_pools) + id,
                 "poolId": id,
-                "lpAddress": address,
+                "lpAddress": addresses["LP"],
                 "totalSupply": totalSupply,
                 "totalStaked": totalStaked,
                 "totalStakedInUSD": totalStakedInUSDC / 10 ** 6,
                 "totalRewardRate": totalWeeklyRewardRate,
                 "allocPoint": allocPoint,
                 "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
-                "apr2": 0,
+                "apr2": getAPR(triUsdcRatio/10**12, rewardsPerBlock, totalStakedInUSDC),
                 "chefVersion": "v2",
             }
     )
