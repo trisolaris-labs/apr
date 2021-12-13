@@ -3,11 +3,14 @@ from web3 import Web3
 from utils import (
     CHEFV2_ADDRESS,
     init_chef,
+    init_chefv2,
+    init_rewarder,
     init_tlp,
     getReserveInUsdc,
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
+    getAuroraUsdcRatio
 )
 
 v1_pools = {
@@ -26,10 +29,12 @@ w3 = Web3(Web3.HTTPProvider("https://mainnet.aurora.dev/"))
 decimals = 18
 chef = init_chef(w3)
 totalAllocPoint = chef.functions.totalAllocPoint().call()
+
 triPerBlock = chef.functions.triPerBlock().call()
 triUsdcRatio = getTriUsdcRatio(w3)
-print(triUsdcRatio/10**12)
-
+auroraUsdcRatio = getAuroraUsdcRatio(w3)
+print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
+print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
 
 for id, address in v1_pools.items():
     print("V1 Reached here", address)
@@ -66,31 +71,66 @@ for id, address in v1_pools.items():
         }
     )
 
+#Get alloc point of dummy LP pool in Chef V1
+dummyLPPoolId = 7
+dummyLPToken = "0x9990a658F71248cc507Ea62946f0EB7728491B70"
+dummyLpPoolInfo = chef.functions.poolInfo(dummyLPPoolId).call()
+assert dummyLpPoolInfo[0].lower() == dummyLPToken.lower()
+dummyLpAllocPoint = dummyLpPoolInfo[1]
+
+
+# get totalSecondRewardRate for dummy LP in Chef V1
+dummyLpTotalSecondRewardRate = (triPerBlock * dummyLpAllocPoint / (totalAllocPoint * 10 ** decimals))
+
+#Chef V2 calls
+chefv2 = init_chefv2(w3)
+totalAllocPointV2 = chefv2.functions.totalAllocPoint().call()
+
 v2_pools = {
-    0: "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
-    1: "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
+    0: {
+        "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e", 
+        "Aurora Rewarder": "0x94669d7a170bfe62FAc297061663e0B48C63B9B5"
+        },
+    1: {
+        "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194", 
+        "Aurora Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1"
+        }
 }
 
-for id, address in v2_pools.items():
-    print("V2 Reached here", address)
-    tlp = init_tlp(w3, address)
-    # TODO: implement alloc point logic
+for id, addresses in v2_pools.items():
+    print("V2 Reached here", addresses["LP"])
+    tlp = init_tlp(w3, addresses["LP"])
+    poolInfo = chefv2.functions.poolInfo(id).call()
+    allocPoint = poolInfo[2]
+
+    # Rewarder logic
+    rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
+    rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
+    print(f"Aurora rewards per block: {rewardsPerBlock}")
+
+    #LP staked amts logic
     reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
     totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+    totalSecondRewardRate = (
+        dummyLpTotalSecondRewardRate * allocPoint / (totalAllocPointV2)
+    )  # Taking TRI allocation to dummy LP in chef v1 as tri per block for chef V2
+    totalWeeklyRewardRate = (
+        3600 * 24 * 7 * totalSecondRewardRate
+    )  # TODO: update to return base 10 values
     data.append(
             {
                 "id": len(v1_pools) + id,
                 "poolId": id,
-                "lpAddress": address,
+                "lpAddress": addresses["LP"],
                 "totalSupply": totalSupply,
                 "totalStaked": totalStaked,
                 "totalStakedInUSD": totalStakedInUSDC / 10 ** 6,
-                "totalRewardRate": 0,
-                "allocPoint": 0,
-                "apr": 0,
-                "apr2": 0,
+                "totalRewardRate": totalWeeklyRewardRate,
+                "allocPoint": allocPoint,
+                "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
+                "apr2": getAPR(auroraUsdcRatio/10**12, rewardsPerBlock/(10**18), totalStakedInUSDC),
                 "chefVersion": "v2",
             }
     )

@@ -18,12 +18,27 @@ WBTC_ADDRESS = "0xF4eB217Ba2454613b15dBdea6e5f22276410e89e"
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
 WETH_USDC = "0x2F41AF687164062f118297cA10751F4b55478ae1"
 WNEAR_TRI = "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD"
+TRI_AURORA = "0xd1654a7713617d41A8C9530Fb9B948d00e162194"
 
 
 def init_chef(w3):
     with open('abi/chef.json') as json_file:
         return w3.eth.contract(
             address=CHEF_ADDRESS,
+            abi=json.load(json_file)
+        )
+
+def init_chefv2(w3):
+    with open('abi/chefv2.json') as json_file:
+        return w3.eth.contract(
+            address=CHEFV2_ADDRESS,
+            abi=json.load(json_file)
+        )
+
+def init_rewarder(w3, rewarderAddress):
+    with open('abi/complexrewarder.json') as json_file:
+        return w3.eth.contract(
+            address=rewarderAddress,
             abi=json.load(json_file)
         )
 
@@ -124,6 +139,19 @@ def getTriUsdcRatio(w3):
     else:
         wnearUsdcRatio = reserves[1]/reserves[0]
     return triWnearRatio * wnearUsdcRatio
+
+def getAuroraUsdcRatio(w3):
+    triAuroraPair = init_tlp(w3, TRI_AURORA)
+    t1 = triAuroraPair.functions.token1().call()
+    t0 = triAuroraPair.functions.token0().call()
+    reserves = triAuroraPair.functions.getReserves().call()
+    if t0 == TRI_ADDRESS:
+        triAuroraRatio = reserves[1]/reserves[0]
+    else:
+        triAuroraRatio = reserves[0]/reserves[1]
+    
+    triUsdcRatio = getTriUsdcRatio(w3)
+    return triAuroraRatio * triUsdcRatio
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
     if totalStakedInUSDC == 0:
