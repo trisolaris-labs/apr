@@ -24,6 +24,7 @@ v1_pools = {
 }
 data = []
 w3 = Web3(Web3.HTTPProvider("https://mainnet.aurora.dev/"))
+ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 ## chef calls
 decimals = 18
@@ -94,6 +95,14 @@ v2_pools = {
     1: {
         "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194", 
         "Aurora Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1"
+        },
+    2: {
+        "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914", 
+        "Aurora Rewarder": ZERO_ADDRESS
+        },
+    3: {
+        "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90", 
+        "Aurora Rewarder": ZERO_ADDRESS
         }
 }
 
@@ -104,9 +113,11 @@ for id, addresses in v2_pools.items():
     allocPoint = poolInfo[2]
 
     # Rewarder logic
-    rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
-    rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
-    print(f"Aurora rewards per block: {rewardsPerBlock}")
+    rewardsPerBlock = 0
+    if addresses["Aurora Rewarder"] != ZERO_ADDRESS:
+        rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
+        rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
+        print(f"Aurora rewards per block: {rewardsPerBlock}")
 
     #LP staked amts logic
     reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
