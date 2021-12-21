@@ -163,7 +163,7 @@ def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
 def convertFeesForPair(tri_maker, pair, w3, acct):
     transaction = {
     'gasPrice': w3.eth.gas_price,
-    'nonce': w3.eth.getTransactionCount(acct.address)
+    'nonce': w3.eth.getTransactionCount(acct.address),
     }
     convert_tranasction = tri_maker.functions.convert(pair[0], pair[1]).buildTransaction(transaction)
     signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
