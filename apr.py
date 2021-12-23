@@ -14,7 +14,6 @@ from utils import (
     getTriUsdcRatio,
     getAuroraUsdcRatio
 )
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 v1_pools = {
@@ -159,8 +158,5 @@ def apr():
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-# Create an instance of scheduler and add function.
-scheduler = BlockingScheduler()
-scheduler.add_job(apr, "interval", seconds=120)
-
-scheduler.start()
+if __name__ == "__main__":
+    apr()
