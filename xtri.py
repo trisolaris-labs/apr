@@ -18,7 +18,8 @@ from utils import (
 from time import time, sleep
 Account.enable_unaudited_hdwallet_features()
 
-w3 = Web3(Web3.HTTPProvider("https://mainnet.aurora.dev/"))
+web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
+w3 = Web3(Web3.HTTPProvider(web3_url))
 temp_mnemonic = "test test test test test test test test test test test junk"
 acct = Account.from_mnemonic(mnemonic=temp_mnemonic)
 
@@ -38,6 +39,7 @@ pairs = [
     (WETH_ADDRESS, USDC_ADDRESS),
     (WETH_ADDRESS, USDT_ADDRESS),
     (AURORA_ADDRESS, WETH_ADDRESS),
+    (USDC_ADDRESS, USDT_ADDRESS),
     ]
 
 
