@@ -3,6 +3,9 @@ import os
 from eth_account import Account
 from web3 import Web3
 from utils import (
+    ATLUNA_ADDRESS,
+    ATUST_ADDRESS,
+    ASHIBAM_ADDRESS,
     convertFeesForPair,
     init_tri_maker,
     init_erc20,
@@ -27,6 +30,8 @@ tri_maker = init_tri_maker(w3)
 tri = init_erc20(w3, TRI_ADDRESS)
 
 pairs = [
+    (ATLUNA_ADDRESS, WNEAR_ADDRESS),
+    (ATUST_ADDRESS, WNEAR_ADDRESS),
     (USDC_ADDRESS, WNEAR_ADDRESS),
     (USDT_ADDRESS, WNEAR_ADDRESS),
     (WBTC_ADDRESS, WNEAR_ADDRESS),
@@ -39,6 +44,7 @@ pairs = [
     (WETH_ADDRESS, USDC_ADDRESS),
     (WETH_ADDRESS, USDT_ADDRESS),
     (AURORA_ADDRESS, WETH_ADDRESS),
+    (ASHIBAM_ADDRESS, WETH_ADDRESS),
     (USDC_ADDRESS, USDT_ADDRESS),
     ]
 
