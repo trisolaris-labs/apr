@@ -42,6 +42,10 @@ v2_pools = {
         3: {
             "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90", 
             "Aurora Rewarder": ZERO_ADDRESS
+            },
+        4: {
+            "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c", 
+            "Aurora Rewarder": ZERO_ADDRESS
             }
     }
 
