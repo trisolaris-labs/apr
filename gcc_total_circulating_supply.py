@@ -6,7 +6,7 @@ import os
 
 from web3 import Web3
 from utils import (init_erc20, TRI_ADDRESS)
-from gcc_utils import (get_event_id, upload_object_as_text_to_gcc)
+from gcc_utils import (get_event_id, get_google_cloud_storage_blob)
 
 # Output file name
 FILE_NAME = "circulating_supply.txt"
@@ -30,24 +30,22 @@ def gcc_total_circulating_supply(data, context):
     event_id = get_event_id(context)
 
     print(TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id))
-    
-    current_total_supply = tri.functions.totalSupply().call()
-    decimals = tri.functions.decimals().call()
 
-    locked_tri = get_locked_tri()
+    circulating_supply = get_total_circulating_supply()
 
-    circulating_supply = current_total_supply - locked_tri
-
-    circulating_supply_formatted = str(circulating_supply / (10 ** decimals))
+    circulating_supply_formatted = str(circulating_supply)
 
     print(TAG + " TRI: {0}".format(circulating_supply_formatted))
 
-    upload_object_as_text_to_gcc(
-        circulating_supply_formatted,
-        gcc_bucket=TRISOLARIS_APR_BUCKET,
-        gcc_file_path=TRISOLARIS_APR_BUCKET_FILE_PATH,
-        make_public=True,
-    )
+    blob = get_google_cloud_storage_blob(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH)
+    
+    with blob.open("wt", chunk_size=256 * 1024) as writer:
+        writer.write(circulating_supply_formatted)
+    
+    # Allows file to be publicly accessible
+    blob.make_public()
+
+    print(TAG + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH))
 
 def get_locked_tri():
     transaction_receipt = w3.eth.get_transaction_receipt(LOCKED_TRI_TRANSACTION_HASH)
@@ -55,6 +53,16 @@ def get_locked_tri():
     locked_tri = int(data, 16)
 
     return locked_tri
+
+def get_total_circulating_supply():
+    current_total_supply = tri.functions.totalSupply().call()
+    decimals = tri.functions.decimals().call()
+
+    locked_tri = get_locked_tri()
+
+    circulating_supply = current_total_supply - locked_tri
+
+    return (circulating_supply / (10 ** decimals))
 
 
 if __name__ == "__main__":
