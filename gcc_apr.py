@@ -14,9 +14,6 @@ FILE_NAME = "datav2.json"
 TRISOLARIS_APR_BUCKET = "trisolaris_public"
 TRISOLARIS_APR_BUCKET_FILE_PATH = FILE_NAME
 
-# This directory is writable by cloud functions; consumes memory resources provisioned for function
-GOOGLE_CLOUD_STORAGE_TEMP_DIRECTORY = "/tmp/"
-
 TAG = "[GCC_APR]"
 
 # Gets apr data from `apr_base`
