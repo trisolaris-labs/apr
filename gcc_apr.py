@@ -30,9 +30,8 @@ def gcc_apr(data, context):
     blob = get_google_cloud_storage_blob(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH)
 
     json_data = json.dumps(result, ensure_ascii=False, indent=4)
-    
-    with blob.open("wt", chunk_size=256 * 1024) as writer:
-        writer.write(json_data)
+
+    blob.upload_from_string(json_data, "application/json")
     
     # Allows file to be publicly accessible
     blob.make_public()
