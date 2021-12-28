@@ -2,8 +2,10 @@
 This file is used for Google Cloud functions to serve apr calculations
 """
 
+import json
+
 from apr_base import apr_base
-from gcc_utils import (get_event_id, upload_object_as_json_to_gcc)
+from gcc_utils import (get_event_id, get_google_cloud_storage_blob)
 
 # Output file name
 FILE_NAME = "datav2.json"
@@ -11,9 +13,6 @@ FILE_NAME = "datav2.json"
 # Google Cloud Storage
 TRISOLARIS_APR_BUCKET = "trisolaris_public"
 TRISOLARIS_APR_BUCKET_FILE_PATH = FILE_NAME
-
-# This directory is writable by cloud functions; consumes memory resources provisioned for function
-GOOGLE_CLOUD_STORAGE_TEMP_DIRECTORY = "/tmp/"
 
 TAG = "[GCC_APR]"
 
@@ -28,14 +27,17 @@ def gcc_apr(data, context):
 
     print(TAG + "APR calculation completed")
 
-    upload_object_as_json_to_gcc(
-        result,
-        gcc_bucket=TRISOLARIS_APR_BUCKET,
-        gcc_file_path=TRISOLARIS_APR_BUCKET_FILE_PATH,
-        make_public=True,
-    )
+    blob = get_google_cloud_storage_blob(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH)
 
-    print(TAG + "Complete Google Cloud Fn processing of apr for event_id: {0}".format(event_id))
+    json_data = json.dumps(result, ensure_ascii=False, indent=4)
+    
+    with blob.open("wt", chunk_size=256 * 1024) as writer:
+        writer.write(json_data)
+    
+    # Allows file to be publicly accessible
+    blob.make_public()
+    
+    print(TAG + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH))
 
 if __name__ == "__main__":
     gcc_apr(None, None)
