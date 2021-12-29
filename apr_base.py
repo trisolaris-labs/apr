@@ -49,12 +49,12 @@ v2_pools = {
             }
     }
 
-data = []
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
 w3 = Web3(Web3.HTTPProvider(web3_url))
 
 def apr_base():
     print("Starting APR BASE")
+    data = []
     ## chef calls
     decimals = 18
     chef = init_chef(w3)
