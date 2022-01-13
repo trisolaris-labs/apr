@@ -1,4 +1,5 @@
 import json
+from retry import retry
 
 FACTORY_ADDRESS = "0xc66F594268041dB60507F00703b152492fb176E7"
 TRIMAKER_ADDRESS = "0xe793455c9728fc91A3E5a33FAfF9eB2F228aE151"
@@ -164,6 +165,7 @@ def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
         totalYearlyRewards = totalRewardRate * 3600 * 24 * 365
         return totalYearlyRewards*100*10**6/(totalStakedInUSDC*triUsdRatio)
 
+@retry((ValueError), delay=10, tries=5)
 def convertFeesForPair(tri_maker, pair, w3, acct):
     transaction = {
     'gasPrice': w3.eth.gas_price,
