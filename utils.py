@@ -1,5 +1,6 @@
 import json
 from retry import retry
+import requests
 
 FACTORY_ADDRESS = "0xc66F594268041dB60507F00703b152492fb176E7"
 TRIMAKER_ADDRESS = "0xe793455c9728fc91A3E5a33FAfF9eB2F228aE151"
@@ -157,6 +158,19 @@ def getAuroraUsdcRatio(w3):
     
     triUsdcRatio = getTriUsdcRatio(w3)
     return triAuroraRatio * triUsdcRatio
+
+
+def getCoingeckoPriceRatio(asset):
+    try:
+        response = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={asset}&vs_currencies=usd")
+        usd_price = (response.json()[asset]['usd'])
+        return 1/usd_price
+    except requests.exceptions.RequestException as e:
+        print(f"Coingecko API Call Error: {e}")
+        return 0
+
+    
+
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
     if totalStakedInUSDC == 0:
