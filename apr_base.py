@@ -12,8 +12,7 @@ from utils import (
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
-    getAuroraUsdcRatio,
-    getCoingeckoPriceRatio
+    getAuroraUsdcRatio
 )
 
 
@@ -38,11 +37,11 @@ v2_pools = {
             },
         2: {
             "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914", 
-            "Aurora Rewarder": "0x89F6628927fdFA2592E016Ba5B14389a4b08D681"
+            "Aurora Rewarder": ZERO_ADDRESS
             },
         3: {
             "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90", 
-            "Aurora Rewarder": "0x17d1597ec86fD6aecbfE0F32Ab2F2aD9c37E6750"
+            "Aurora Rewarder": ZERO_ADDRESS
             },
         4: {
             "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c", 
@@ -76,10 +75,8 @@ def apr_base():
     triPerBlock = chef.functions.triPerBlock().call()
     triUsdcRatio = getTriUsdcRatio(w3)
     auroraUsdcRatio = getAuroraUsdcRatio(w3)
-    lunaUsdcRatio = getCoingeckoPriceRatio("terra-luna")
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
-    print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
@@ -144,11 +141,7 @@ def apr_base():
         if addresses["Aurora Rewarder"] != ZERO_ADDRESS:
             rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
             rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
-            print(f"Double rewards per block: {rewardsPerBlock}")
-            if id == 0 or id == 1:
-                doubleRewardUsdcRatio = auroraUsdcRatio/10**12
-            elif id == 2 or id == 3:
-                doubleRewardUsdcRatio = lunaUsdcRatio
+            print(f"Aurora rewards per block: {rewardsPerBlock}")
 
         #LP staked amts logic
         reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
@@ -172,7 +165,7 @@ def apr_base():
                     "totalRewardRate": totalWeeklyRewardRate,
                     "allocPoint": allocPoint,
                     "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
-                    "apr2": getAPR(doubleRewardUsdcRatio, rewardsPerBlock/(10**18), totalStakedInUSDC),
+                    "apr2": getAPR(auroraUsdcRatio/10**12, rewardsPerBlock/(10**18), totalStakedInUSDC),
                     "chefVersion": "v2",
                 }
         )
