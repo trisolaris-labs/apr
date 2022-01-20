@@ -17,6 +17,11 @@ WBTC_ADDRESS = "0xF4eB217Ba2454613b15dBdea6e5f22276410e89e"
 ATLUNA_ADDRESS = "0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096"
 ATUST_ADDRESS = "0x5ce9F0B6AFb36135b5ddBF11705cEB65E634A9dC"
 ASHIBAM_ADDRESS = "0x48687fB162A735a3FedD47a98Fcbf58Be3ed4538"
+FLX_ADDRESS = "0xea62791aa682d455614eaA2A12Ba3d9A2fD197af"
+EMPYR_ADDRESS = "0xE9F226a228Eb58d408FdB94c3ED5A18AF6968fE1"
+AVAX_ADDRESS = "0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844"
+BNB_ADDRESS = "0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c"
+MATIC_ADDRESS = "0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
 ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 
@@ -181,12 +186,21 @@ def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
 
 @retry((ValueError), delay=10, tries=5)
 def convertFeesForPair(tri_maker, pair, w3, acct):
-    transaction = {
-    'gasPrice': w3.eth.gas_price,
-    'nonce': w3.eth.getTransactionCount(acct.address),
-    }
-    convert_tranasction = tri_maker.functions.convert(pair[0], pair[1]).buildTransaction(transaction)
-    signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
-    signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
-    txn_hash = signed_txn.hex()
-    return w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+    tri_amount = 0
+    try:
+        transaction = {
+        'gasPrice': w3.eth.gas_price,
+        'nonce': w3.eth.getTransactionCount(acct.address),
+        }
+        convert_tranasction = tri_maker.functions.convert(pair[0], pair[1]).buildTransaction(transaction)
+        signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
+        signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
+        txn_hash = signed_txn.hex()
+        receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+        for l in receipt['logs']:
+            if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000802119e4e253d5c19aa06a5d567c5a41596d6803"):
+                tri_amount += int(l['data'], 16)
+    except ValueError as e:
+        if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
+            raise e
+    return tri_amount

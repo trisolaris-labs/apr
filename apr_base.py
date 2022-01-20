@@ -59,6 +59,10 @@ v2_pools = {
         7: {
             "LP": "0x3dC236Ea01459F57EFc737A12BA3Bb5F3BFfD071", 
             "Aurora Rewarder": ZERO_ADDRESS
+            },
+        8: {
+            "LP": "0x48887cEEA1b8AD328d5254BeF774Be91B90FaA09", 
+            "Aurora Rewarder": "0x42b950FB4dd822ef04C4388450726EFbF1C3CF63"
             }
     }
 
@@ -77,9 +81,11 @@ def apr_base():
     triUsdcRatio = getTriUsdcRatio(w3)
     auroraUsdcRatio = getAuroraUsdcRatio(w3)
     lunaUsdcRatio = getCoingeckoPriceRatio("terra-luna")
+    flxUsdcRatio = getCoingeckoPriceRatio("flux-token")
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
+    print(f"FLX USDC Ratio: {flxUsdcRatio}")
 
 
     for id, address in v1_pools.items():
@@ -150,6 +156,8 @@ def apr_base():
                 doubleRewardUsdcRatio = auroraUsdcRatio/10**12
             elif id == 2 or id == 3:
                 doubleRewardUsdcRatio = lunaUsdcRatio
+            elif id == 8:
+                doubleRewardUsdcRatio = flxUsdcRatio
 
 
         #LP staked amts logic

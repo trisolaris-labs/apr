@@ -6,6 +6,11 @@ from utils import (
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
     ASHIBAM_ADDRESS,
+    AVAX_ADDRESS,
+    BNB_ADDRESS,
+    EMPYR_ADDRESS,
+    FLX_ADDRESS,
+    MATIC_ADDRESS,
     convertFeesForPair,
     init_tri_maker,
     init_erc20,
@@ -46,6 +51,11 @@ pairs = [
     (AURORA_ADDRESS, WETH_ADDRESS),
     (ASHIBAM_ADDRESS, WETH_ADDRESS),
     (USDC_ADDRESS, USDT_ADDRESS),
+    (FLX_ADDRESS, WNEAR_ADDRESS),
+    (AVAX_ADDRESS, WNEAR_ADDRESS),
+    (BNB_ADDRESS, WNEAR_ADDRESS),
+    (MATIC_ADDRESS, WNEAR_ADDRESS),
+    (EMPYR_ADDRESS, USDC_ADDRESS),
     ]
 
 
@@ -57,11 +67,7 @@ with open('xtri.json') as json_file:
     xtri_data = json.load(json_file)
 
 for pair in pairs:
-    sleep(1)
-    receipt = convertFeesForPair(tri_maker, pair, w3, acct)
-    for l in receipt['logs']:
-        if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000802119e4e253d5c19aa06a5d567c5a41596d6803"):
-            tri_amount += int(l['data'], 16)
+    tri_amount += convertFeesForPair(tri_maker, pair, w3, acct)
     print(tri_amount)
     
 print(current_time, initial_triBar_balance, tri_amount)
