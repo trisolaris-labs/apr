@@ -32,9 +32,15 @@ def gcc_apr(data, context):
     json_data = json.dumps(result, ensure_ascii=False, indent=4)
 
     blob.upload_from_string(json_data, "application/json")
+
+    # Don't serve stale data
+    blob.cache_control = 'no-cache'
     
     # Allows file to be publicly accessible
     blob.make_public()
+
+    # Save
+    blob.patch()
     
     print(TAG + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH))
 
