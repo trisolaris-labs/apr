@@ -13,7 +13,8 @@ from utils import (
     getAPR,
     getTriUsdcRatio,
     getAuroraUsdcRatio,
-    getCoingeckoPriceRatio
+    getCoingeckoPriceRatio,
+    getMechaUsdcRatio
 )
 
 
@@ -63,6 +64,10 @@ v2_pools = {
         8: {
             "LP": "0x48887cEEA1b8AD328d5254BeF774Be91B90FaA09", 
             "Aurora Rewarder": "0x42b950FB4dd822ef04C4388450726EFbF1C3CF63"
+            },
+        9: {
+            "LP": "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f", 
+            "Aurora Rewarder": "0x9847F7e33CCbC0542b05d15c5cf3aE2Ae092C057"
             }
     }
 
@@ -80,6 +85,7 @@ def apr_base():
     triPerBlock = chef.functions.triPerBlock().call()
     triUsdcRatio = getTriUsdcRatio(w3)
     auroraUsdcRatio = getAuroraUsdcRatio(w3)
+    mechaUsdcRatio = getMechaUsdcRatio(w3)
     lunaUsdcRatio = getCoingeckoPriceRatio("terra-luna")
     flxUsdcRatio = getCoingeckoPriceRatio("flux-token")
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
@@ -158,6 +164,8 @@ def apr_base():
                 doubleRewardUsdcRatio = lunaUsdcRatio
             elif id == 8:
                 doubleRewardUsdcRatio = flxUsdcRatio
+            elif id == 9:
+                doubleRewardUsdcRatio = mechaUsdcRatio/10**12
 
 
         #LP staked amts logic

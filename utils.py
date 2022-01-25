@@ -23,14 +23,14 @@ AVAX_ADDRESS = "0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844"
 BNB_ADDRESS = "0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c"
 MATIC_ADDRESS = "0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
 ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
-
+MECHA_ADDRESS = "0xa33C3B53694419824722C10D99ad7cB16Ea62754"
 
 ### TLP addresses
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
 WETH_USDC = "0x2F41AF687164062f118297cA10751F4b55478ae1"
 WNEAR_TRI = "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD"
 TRI_AURORA = "0xd1654a7713617d41A8C9530Fb9B948d00e162194"
-
+MECHA_WNEAR = "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f"
 
 def init_chef(w3):
     with open('abi/chef.json') as json_file:
@@ -163,6 +163,29 @@ def getAuroraUsdcRatio(w3):
     
     triUsdcRatio = getTriUsdcRatio(w3)
     return triAuroraRatio * triUsdcRatio
+
+def getMechaUsdcRatio(w3):
+    mechaWnearPair = init_tlp(w3, MECHA_WNEAR)
+    t1 = mechaWnearPair.functions.token1().call()
+    t0 = mechaWnearPair.functions.token0().call()
+    reserves = mechaWnearPair.functions.getReserves().call()
+
+    if t0 == MECHA_ADDRESS:
+        mechaWnearRatio = reserves[1]/reserves[0]
+    else:
+        mechaWnearRatio = reserves[0]/reserves[1]
+    
+    usdcWnearPair = init_tlp(w3, WNEAR_USDC)
+    t1 = usdcWnearPair.functions.token1().call()
+    t0 = usdcWnearPair.functions.token0().call()
+    reserves = usdcWnearPair.functions.getReserves().call()
+
+    if t0 == WNEAR_ADDRESS:
+        wnearUsdcRatio = reserves[0]/reserves[1]
+    else:
+        wnearUsdcRatio = reserves[1]/reserves[0]
+    
+    return mechaWnearRatio * wnearUsdcRatio
 
 
 def getCoingeckoPriceRatio(asset):
