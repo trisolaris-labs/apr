@@ -165,7 +165,7 @@ def apr_base():
             elif id == 8:
                 doubleRewardUsdcRatio = flxUsdcRatio
             elif id == 9:
-                doubleRewardUsdcRatio = mechaUsdcRatio
+                doubleRewardUsdcRatio = mechaUsdcRatio/10**12
 
 
         #LP staked amts logic

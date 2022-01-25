@@ -165,17 +165,27 @@ def getAuroraUsdcRatio(w3):
     return triAuroraRatio * triUsdcRatio
 
 def getMechaUsdcRatio(w3):
-    # mechaWnearPair = init_tlp(w3, MECHA_WNEAR)
-    # t1 = mechaWnearPair.functions.token1().call()
-    # t0 = mechaWnearPair.functions.token0().call()
-    # reserves = mechaWnearPair.functions.getReserves().call()
-    # if t0 == MECHA_ADDRESS:
-    #     mechaWnearRatio = reserves[1]/reserves[0]
-    # else:
-    #     mechaWnearRatio = reserves[0]/reserves[1]
+    mechaWnearPair = init_tlp(w3, MECHA_WNEAR)
+    t1 = mechaWnearPair.functions.token1().call()
+    t0 = mechaWnearPair.functions.token0().call()
+    reserves = mechaWnearPair.functions.getReserves().call()
+
+    if t0 == MECHA_ADDRESS:
+        mechaWnearRatio = reserves[1]/reserves[0]
+    else:
+        mechaWnearRatio = reserves[0]/reserves[1]
     
-    # mechaWnearRatio = getTriUsdcRatio(w3)
-    return 0
+    usdcWnearPair = init_tlp(w3, WNEAR_USDC)
+    t1 = usdcWnearPair.functions.token1().call()
+    t0 = usdcWnearPair.functions.token0().call()
+    reserves = usdcWnearPair.functions.getReserves().call()
+
+    if t0 == WNEAR_ADDRESS:
+        wnearUsdcRatio = reserves[0]/reserves[1]
+    else:
+        wnearUsdcRatio = reserves[1]/reserves[0]
+    
+    return mechaWnearRatio * wnearUsdcRatio
 
 
 def getCoingeckoPriceRatio(asset):
