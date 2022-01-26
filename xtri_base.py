@@ -17,7 +17,7 @@ from utils import (
     USDT_ADDRESS,
     WBTC_ADDRESS
 )
-from time import time, sleep
+from time import time
 
 pairs = [
     (ATLUNA_ADDRESS, WNEAR_ADDRESS),
@@ -38,6 +38,8 @@ pairs = [
     (USDC_ADDRESS, USDT_ADDRESS),
     ]
 
+TAG = "[GCC_XTRI_BASE] "
+
 def xtri_base(timestamp):
     Account.enable_unaudited_hdwallet_features()
 
@@ -56,14 +58,10 @@ def xtri_base(timestamp):
     xtri_data = {}
 
     for pair in pairs:
-        sleep(10)
-        receipt = convertFeesForPair(tri_maker, pair, w3, acct)
-        for l in receipt['logs']:
-            if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000802119e4e253d5c19aa06a5d567c5a41596d6803"):
-                tri_amount += int(l['data'], 16)
-        print(tri_amount)
+        tri_amount += convertFeesForPair(tri_maker, pair, w3, acct)
+        print(TAG, 'tri_amount: ',  tri_amount)
         
-    print(current_time, initial_triBar_balance, tri_amount)
+    print(TAG, current_time, initial_triBar_balance, tri_amount)
 
 
     if timestamp != 0 and timestamp != None:
