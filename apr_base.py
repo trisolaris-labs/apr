@@ -92,6 +92,7 @@ def apr_base():
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
     print(f"FLX USDC Ratio: {flxUsdcRatio}")
+    print(f"MECHA USDC Ratio: {mechaUsdcRatio/10**12}")
 
 
     for id, address in v1_pools.items():
