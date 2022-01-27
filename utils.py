@@ -171,9 +171,9 @@ def getMechaUsdcRatio(w3):
     reserves = mechaWnearPair.functions.getReserves().call()
 
     if t0 == MECHA_ADDRESS:
-        mechaWnearRatio = reserves[1]/reserves[0]
-    else:
         mechaWnearRatio = reserves[0]/reserves[1]
+    else:
+        mechaWnearRatio = reserves[1]/reserves[0]
     
     usdcWnearPair = init_tlp(w3, WNEAR_USDC)
     t1 = usdcWnearPair.functions.token1().call()
