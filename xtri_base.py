@@ -17,7 +17,7 @@ from utils import (
     USDT_ADDRESS,
     WBTC_ADDRESS
 )
-from time import time
+from time import time, sleep
 
 pairs = [
     (ATLUNA_ADDRESS, WNEAR_ADDRESS),
@@ -58,6 +58,7 @@ def xtri_base(timestamp):
     xtri_data = {}
 
     for pair in pairs:
+        sleep(5)
         tri_amount += convertFeesForPair(tri_maker, pair, w3, acct)
         print(TAG, 'tri_amount: ',  tri_amount)
         
