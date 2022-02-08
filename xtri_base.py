@@ -1,11 +1,12 @@
 import os
-from eth_account import Account
 from web3 import Web3
 from utils import (
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
     ASHIBAM_ADDRESS,
     convertFeesForPair,
+    getAccount,
+    getFundedAccount,
     init_tri_maker,
     init_erc20,
     TRIBAR_ADDRESS,
@@ -41,12 +42,16 @@ pairs = [
 TAG = "[GCC_XTRI_BASE] "
 
 def xtri_base(timestamp):
-    Account.enable_unaudited_hdwallet_features()
-
     web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
     w3 = Web3(Web3.HTTPProvider(web3_url))
-    temp_mnemonic = "test test test test test test test test test test test junk"
-    acct = Account.from_mnemonic(mnemonic=temp_mnemonic)
+    try:
+        # 2/8/22 - Total cost of a complete run is 0.00016Ξ
+        acct = getFundedAccount()
+    except:
+        temp_mnemonic = "test test test test test test test test test test test junk"
+        acct = getAccount(temp_mnemonic)
+    
+    print('xtri acct balance: ' + w3.eth.get_balance(acct.address)/1e18 + 'Ξ')
 
     tri_maker = init_tri_maker(w3)
     tri = init_erc20(w3, TRI_ADDRESS)
