@@ -1,4 +1,6 @@
 import json
+import os
+from eth_account import Account
 from retry import retry
 import requests
 
@@ -227,3 +229,20 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
         if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
             raise e
     return tri_amount
+
+def getAccount(mnemonic):
+    # Needed to use `from_mnemonic`
+    Account.enable_unaudited_hdwallet_features()
+    
+    return Account.from_mnemonic(mnemonic=mnemonic)
+
+def getFundedAccount():
+    mnemonic = os.getenv("AURORA_FUNDED_MNEMONIC")
+    if (mnemonic is None):
+        raise ValueError('[utils::getFundedAccount] env var AURORA_FUNDED_MNEMONIC is None')
+
+    acct = getAccount(mnemonic)
+
+    print('[utils::getFundedAccount] Using funded account: ' + acct.address)
+
+    return acct
