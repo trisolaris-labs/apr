@@ -1,5 +1,4 @@
 import json
-import os
 from eth_account import Account
 from web3 import Web3
 from utils import (
@@ -12,6 +11,7 @@ from utils import (
     FLX_ADDRESS,
     MATIC_ADDRESS,
     convertFeesForPair,
+    getWeb3URL,
     init_tri_maker,
     init_erc20,
     TRIBAR_ADDRESS,
@@ -26,7 +26,7 @@ from utils import (
 from time import time, sleep
 Account.enable_unaudited_hdwallet_features()
 
-web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
+web3_url = getWeb3URL()
 w3 = Web3(Web3.HTTPProvider(web3_url))
 temp_mnemonic = "test test test test test test test test test test test junk"
 acct = Account.from_mnemonic(mnemonic=temp_mnemonic)

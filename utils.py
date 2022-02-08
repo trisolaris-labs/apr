@@ -1,4 +1,5 @@
 import json
+import os
 from retry import retry
 import requests
 
@@ -197,8 +198,16 @@ def getCoingeckoPriceRatio(asset):
         print(f"Coingecko API Call Error: {e}")
         return 0
 
-    
-
+def getWeb3URL():
+    url = os.getenv("AURORA_W3_URL")
+    if (url is None):
+        print("[utils::getWeb3URL] AURORA_W3_URL is None, using fallback")
+        
+        return "https://mainnet.aurora.dev/"
+    else:
+        print("[utils::getWeb3URL] Using AURORA_W3_URL environment variable")
+        
+        return url
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
     if totalStakedInUSDC == 0:

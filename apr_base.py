@@ -4,6 +4,7 @@ from web3 import Web3
 from utils import (
     CHEFV2_ADDRESS,
     ZERO_ADDRESS,
+    getWeb3URL,
     init_chef,
     init_chefv2,
     init_rewarder,
@@ -71,7 +72,7 @@ v2_pools = {
             }
     }
 
-web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
+web3_url = getWeb3URL()
 w3 = Web3(Web3.HTTPProvider(web3_url))
 
 def apr_base():

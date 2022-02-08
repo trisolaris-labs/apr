@@ -2,11 +2,8 @@
 This file is used for Google Cloud functions to serve circulating supply calculations
 """
 
-import os
-import json
-
 from web3 import Web3
-from utils import (init_erc20, TRI_ADDRESS)
+from utils import (getWeb3URL, init_erc20, TRI_ADDRESS)
 from gcc_utils import (get_event_id, get_google_cloud_storage_blob)
 
 # Output file name
@@ -21,7 +18,7 @@ LOCKED_TRI_TRANSACTION_HASH = '0x93026b0e7150837de8180890d4f1790bf14f3bc36f77143
 
 TAG = "[GCC TOTAL CIRC]"
 
-web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
+web3_url = getWeb3URL()
 w3 = Web3(Web3.HTTPProvider(web3_url))
 tri = init_erc20(w3, TRI_ADDRESS)
 
