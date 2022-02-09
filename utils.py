@@ -116,7 +116,7 @@ def getReserveInUsdc(w3, tlp, triUsdcRatio):
             wethReserveInWethUsdcPair = reservesWethUsdc[1]
             usdcReserveInWethUsdcPair = reservesWethUsdc[0]
         return reserveInWeth*usdcReserveInWethUsdcPair/wethReserveInWethUsdcPair
-    elif (t0 == TRI_ADDRESS or t1 == TRI_ADDRESS):
+    elif (t0 == TRI_ADDRESS or t1 == TRI_ADDRESS ):
         print("reached here")
         if t0 == TRI_ADDRESS:
             reserveInTri = reserves[0]*2
@@ -124,6 +124,16 @@ def getReserveInUsdc(w3, tlp, triUsdcRatio):
             reserveInTri = reserves[1]*2
         print(reserveInTri, triUsdcRatio)
         return reserveInTri/triUsdcRatio
+    # HACK TO UNBLOCK
+    elif (t0 == TRIBAR_ADDRESS or t1 == TRIBAR_ADDRESS ):
+        print("reached here")
+        if t0 == TRIBAR_ADDRESS:
+            reserveInTri = reserves[0]*2
+        else:
+            reserveInTri = reserves[1]*2
+        print(reserveInTri, triUsdcRatio)
+        return reserveInTri/triUsdcRatio
+
 
 
 def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
