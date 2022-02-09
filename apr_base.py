@@ -185,7 +185,6 @@ def apr_base():
         reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
         totalSupply = tlp.functions.totalSupply().call()
         totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
-        print("pool",tlp,totalStaked,totalSupply, reserveInUSDC)
         totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
         totalSecondRewardRate = (
             dummyLpTotalSecondRewardRate * allocPoint / (totalAllocPointV2)
