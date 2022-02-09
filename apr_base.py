@@ -180,7 +180,7 @@ def apr_base():
                 doubleRewardUsdcRatio = flxUsdcRatio
             elif id == 9:
                 doubleRewardUsdcRatio = mechaUsdcRatio/10**12
-            elif id == 11:
+            elif id == 10:
                 doubleRewardUsdcRatio = solaceUsdcRatio
 
 
