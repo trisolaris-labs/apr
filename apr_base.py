@@ -30,35 +30,35 @@ v1_pools = {
 
 v2_pools = {
         0: {
-            "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e", 
+            "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
             "Aurora Rewarder": "0x94669d7a170bfe62FAc297061663e0B48C63B9B5"
             },
         1: {
-            "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194", 
+            "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
             "Aurora Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1"
             },
         2: {
-            "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914", 
+            "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914",
             "Aurora Rewarder": "0x89F6628927fdFA2592E016Ba5B14389a4b08D681"
             },
         3: {
-            "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90", 
+            "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90",
             "Aurora Rewarder": "0x17d1597ec86fD6aecbfE0F32Ab2F2aD9c37E6750"
             },
         4: {
-            "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c", 
+            "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c",
             "Aurora Rewarder": ZERO_ADDRESS
             },
         5: {
-            "LP": "0x6443532841a5279cb04420E61Cf855cBEb70dc8C", 
+            "LP": "0x6443532841a5279cb04420E61Cf855cBEb70dc8C",
             "Aurora Rewarder": ZERO_ADDRESS
             },
         6: {
-            "LP": "0x7be4a49AA41B34db70e539d4Ae43c7fBDf839DfA", 
+            "LP": "0x7be4a49AA41B34db70e539d4Ae43c7fBDf839DfA",
             "Aurora Rewarder": ZERO_ADDRESS
             },
         7: {
-            "LP": "0x3dC236Ea01459F57EFc737A12BA3Bb5F3BFfD071", 
+            "LP": "0x3dC236Ea01459F57EFc737A12BA3Bb5F3BFfD071",
             "Aurora Rewarder": ZERO_ADDRESS
             },
         8: {
@@ -70,7 +70,15 @@ v2_pools = {
             "Aurora Rewarder": "0x9847F7e33CCbC0542b05d15c5cf3aE2Ae092C057"
             },
         10: {
-            "LP": "0xdDAdf88b007B95fEb42DDbd110034C9a8e9746F2", 
+            "LP": "0xdDAdf88b007B95fEb42DDbd110034C9a8e9746F2",
+            "Aurora Rewarder": ZERO_ADDRESS
+            },
+        11: {
+            "LP": "0x5913f644A10d98c79F2e0b609988640187256373",
+            "Aurora Rewarder": ZERO_ADDRESS
+            },
+        12: {
+            "LP": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
             "Aurora Rewarder": ZERO_ADDRESS
             }
     }
@@ -177,6 +185,7 @@ def apr_base():
         reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
         totalSupply = tlp.functions.totalSupply().call()
         totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
+        print("pool",tlp,totalStaked,totalSupply, reserveInUSDC)
         totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
         totalSecondRewardRate = (
             dummyLpTotalSecondRewardRate * allocPoint / (totalAllocPointV2)
