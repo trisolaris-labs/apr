@@ -122,17 +122,14 @@ def getReserveInUsdc(w3, tlp, triUsdcRatio):
             reserveInTri = reserves[0]*2
         else:
             reserveInTri = reserves[1]*2
-        print(reserveInTri, triUsdcRatio)
         return reserveInTri/triUsdcRatio
-    # HACK TO UNBLOCK
     elif (t0 == TRIBAR_ADDRESS or t1 == TRIBAR_ADDRESS ):
         print("reached here")
         if t0 == TRIBAR_ADDRESS:
-            reserveInTri = reserves[0]*2
+            reserveInXTri = reserves[0]*2
         else:
-            reserveInTri = reserves[1]*2
-        print(reserveInTri, triUsdcRatio)
-        return reserveInTri/triUsdcRatio
+            reserveInXTri = reserves[1]*2
+        return reserveInXTri*getTriXTriRatio(w3)/triUsdcRatio
 
 
 
@@ -198,6 +195,13 @@ def getMechaUsdcRatio(w3):
         wnearUsdcRatio = reserves[1]/reserves[0]
     
     return mechaWnearRatio * wnearUsdcRatio
+
+def getTriXTriRatio(w3):
+    xtri = init_erc20(w3, TRIBAR_ADDRESS)
+    tri = init_erc20(w3, TRI_ADDRESS)
+    xtri_supply = xtri.functions.totalSupply().call()
+    tri_locked = tri.functions.balanceOf(TRIBAR_ADDRESS).call()
+    return tri_locked/xtri_supply
 
 
 def getCoingeckoPriceRatio(asset):
