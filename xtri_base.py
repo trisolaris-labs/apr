@@ -51,7 +51,7 @@ def xtri_base(timestamp):
         temp_mnemonic = "test test test test test test test test test test test junk"
         acct = getAccount(temp_mnemonic)
     
-    print('xtri acct balance: ' + w3.eth.get_balance(acct.address)/1e18 + 'Ξ')
+    print('xtri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
     tri_maker = init_tri_maker(w3)
     tri = init_erc20(w3, TRI_ADDRESS)
