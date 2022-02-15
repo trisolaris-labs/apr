@@ -218,6 +218,7 @@ def getCoingeckoPriceRatio(asset):
 
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
+    print(f"[UTILS]::getAPR triUsdRatio: {triUsdRatio}, totalRewardRate: {totalRewardRate}, totalStakedInUSDC: {totalStakedInUSDC}")
     if totalStakedInUSDC == 0:
         return 0
     else:
