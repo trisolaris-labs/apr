@@ -4,6 +4,8 @@ from web3 import Web3
 from utils import (
     CHEFV2_ADDRESS,
     ZERO_ADDRESS,
+    getMetaUsdcRatio,
+    getWnearUsdcRatio,
     init_chef,
     init_chefv2,
     init_rewarder,
@@ -75,11 +77,11 @@ v2_pools = {
             },
         11: {
             "LP": "0x5913f644A10d98c79F2e0b609988640187256373",
-            "Aurora Rewarder": ZERO_ADDRESS
+            "Aurora Rewarder": "0x7B9e31BbEdbfdc99e3CC8b879b9a3B1e379Ce530"
             },
         12: {
             "LP": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
-            "Aurora Rewarder": ZERO_ADDRESS
+            "Aurora Rewarder": "0xf267212F1D8888e0eD20BbB0c7C87A089cDe6E88"
             }
     }
 
@@ -95,9 +97,11 @@ def apr_base():
     totalAllocPoint = chef.functions.totalAllocPoint().call()
 
     triPerBlock = chef.functions.triPerBlock().call()
-    triUsdcRatio = getTriUsdcRatio(w3)
-    auroraUsdcRatio = getAuroraUsdcRatio(w3)
-    mechaUsdcRatio = getMechaUsdcRatio(w3)
+    wnearUsdcRatio = getWnearUsdcRatio(w3)
+    triUsdcRatio = getTriUsdcRatio(w3, wnearUsdcRatio)
+    auroraUsdcRatio = getAuroraUsdcRatio(w3, triUsdcRatio)
+    mechaUsdcRatio = getMechaUsdcRatio(w3, wnearUsdcRatio)
+    metaUsdcRatio = getMetaUsdcRatio(w3, wnearUsdcRatio)
     lunaUsdcRatio = getCoingeckoPriceRatio("terra-luna")
     flxUsdcRatio = getCoingeckoPriceRatio("flux-token")
     solaceUsdcRatio = getCoingeckoPriceRatio("solace")
@@ -107,6 +111,7 @@ def apr_base():
     print(f"FLX USDC Ratio: {flxUsdcRatio}")
     print(f"MECHA USDC Ratio: {mechaUsdcRatio/10**12}")
     print(f"Solace USDC Ratio: {solaceUsdcRatio}")
+    print(f"Meta USDC Ratio: {metaUsdcRatio/10**18}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
@@ -161,7 +166,7 @@ def apr_base():
     
 
     for id, addresses in v2_pools.items():
-        print("V2 Reached here", addresses["LP"])
+        print(f"V2 Reached here {id}: {addresses['LP']}")
         tlp = init_tlp(w3, addresses["LP"])
         poolInfo = chefv2.functions.poolInfo(id).call()
         allocPoint = poolInfo[2]
@@ -171,6 +176,7 @@ def apr_base():
         if addresses["Aurora Rewarder"] != ZERO_ADDRESS:
             rewarder = init_rewarder(w3, addresses["Aurora Rewarder"])
             rewardsPerBlock = rewarder.functions.tokenPerBlock().call()
+            rewardDecimals = 18
             print(f"Double rewards per block: {rewardsPerBlock}")
             if id == 0 or id == 1:
                 doubleRewardUsdcRatio = auroraUsdcRatio/10**12
@@ -182,6 +188,9 @@ def apr_base():
                 doubleRewardUsdcRatio = mechaUsdcRatio/10**12
             elif id == 10:
                 doubleRewardUsdcRatio = solaceUsdcRatio
+            elif id == 11 or id == 12:
+                rewardDecimals = 24
+                doubleRewardUsdcRatio = metaUsdcRatio/10**18
 
 
         #LP staked amts logic
@@ -206,7 +215,7 @@ def apr_base():
                     "totalRewardRate": totalWeeklyRewardRate,
                     "allocPoint": allocPoint,
                     "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
-                    "apr2": getAPR(doubleRewardUsdcRatio, rewardsPerBlock/(10**18), totalStakedInUSDC),
+                    "apr2": getAPR(doubleRewardUsdcRatio, rewardsPerBlock/(10**rewardDecimals), totalStakedInUSDC),
                     "chefVersion": "v2",
                 }
         )

@@ -34,6 +34,7 @@ WETH_USDC = "0x2F41AF687164062f118297cA10751F4b55478ae1"
 WNEAR_TRI = "0x84b123875F0F36B966d0B6Ca14b31121bd9676AD"
 TRI_AURORA = "0xd1654a7713617d41A8C9530Fb9B948d00e162194"
 MECHA_WNEAR = "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f"
+META_WNEAR = "0xa8CAaf35c0136033294dD286A14051fBf37aed07"
 
 def init_chef(w3):
     with open('abi/chef.json') as json_file:
@@ -118,14 +119,12 @@ def getReserveInUsdc(w3, tlp, triUsdcRatio):
             usdcReserveInWethUsdcPair = reservesWethUsdc[0]
         return reserveInWeth*usdcReserveInWethUsdcPair/wethReserveInWethUsdcPair
     elif (t0 == TRI_ADDRESS or t1 == TRI_ADDRESS ):
-        print("reached here")
         if t0 == TRI_ADDRESS:
             reserveInTri = reserves[0]*2
         else:
             reserveInTri = reserves[1]*2
         return reserveInTri/triUsdcRatio
     elif (t0 == TRIBAR_ADDRESS or t1 == TRIBAR_ADDRESS ):
-        print("reached here")
         if t0 == TRIBAR_ADDRESS:
             reserveInXTri = reserves[0]*2
         else:
@@ -140,16 +139,8 @@ def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     else:
         return totalStaked*reserveInUSDC/totalAvailable
 
-def getTriUsdcRatio(w3):
-    triWnearPair = init_tlp(w3, WNEAR_TRI)
-    t1 = triWnearPair.functions.token1().call()
-    t0 = triWnearPair.functions.token0().call()
-    reserves = triWnearPair.functions.getReserves().call()
-    if t0 == WNEAR_ADDRESS:
-        triWnearRatio = reserves[1]/reserves[0]
-    else:
-        triWnearRatio = reserves[0]/reserves[1]
-    
+
+def getWnearUsdcRatio(w3):
     usdcWnearPair = init_tlp(w3, WNEAR_USDC)
     t1 = usdcWnearPair.functions.token1().call()
     t0 = usdcWnearPair.functions.token0().call()
@@ -159,9 +150,20 @@ def getTriUsdcRatio(w3):
         wnearUsdcRatio = reserves[0]/reserves[1]
     else:
         wnearUsdcRatio = reserves[1]/reserves[0]
+    return wnearUsdcRatio
+
+def getTriUsdcRatio(w3, wnearUsdcRatio):
+    triWnearPair = init_tlp(w3, WNEAR_TRI)
+    t1 = triWnearPair.functions.token1().call()
+    t0 = triWnearPair.functions.token0().call()
+    reserves = triWnearPair.functions.getReserves().call()
+    if t0 == WNEAR_ADDRESS:
+        triWnearRatio = reserves[1]/reserves[0]
+    else:
+        triWnearRatio = reserves[0]/reserves[1]
     return triWnearRatio * wnearUsdcRatio
 
-def getAuroraUsdcRatio(w3):
+def getAuroraUsdcRatio(w3, triUsdcRatio):
     triAuroraPair = init_tlp(w3, TRI_AURORA)
     t1 = triAuroraPair.functions.token1().call()
     t0 = triAuroraPair.functions.token0().call()
@@ -170,11 +172,9 @@ def getAuroraUsdcRatio(w3):
         triAuroraRatio = reserves[1]/reserves[0]
     else:
         triAuroraRatio = reserves[0]/reserves[1]
-    
-    triUsdcRatio = getTriUsdcRatio(w3)
     return triAuroraRatio * triUsdcRatio
 
-def getMechaUsdcRatio(w3):
+def getMechaUsdcRatio(w3, wnearUsdcRatio):
     mechaWnearPair = init_tlp(w3, MECHA_WNEAR)
     t1 = mechaWnearPair.functions.token1().call()
     t0 = mechaWnearPair.functions.token0().call()
@@ -185,17 +185,20 @@ def getMechaUsdcRatio(w3):
     else:
         mechaWnearRatio = reserves[1]/reserves[0]
     
-    usdcWnearPair = init_tlp(w3, WNEAR_USDC)
-    t1 = usdcWnearPair.functions.token1().call()
-    t0 = usdcWnearPair.functions.token0().call()
-    reserves = usdcWnearPair.functions.getReserves().call()
-
-    if t0 == WNEAR_ADDRESS:
-        wnearUsdcRatio = reserves[0]/reserves[1]
-    else:
-        wnearUsdcRatio = reserves[1]/reserves[0]
-    
     return mechaWnearRatio * wnearUsdcRatio
+
+def getMetaUsdcRatio(w3, wnearUsdcRatio):
+    metaWnearPair = init_tlp(w3, META_WNEAR)
+    t1 = metaWnearPair.functions.token1().call()
+    t0 = metaWnearPair.functions.token0().call()
+    reserves = metaWnearPair.functions.getReserves().call()
+
+    if t0 == META_ADDRESS:
+        metaWnearPair = reserves[0]/reserves[1]
+    else:
+        metaWnearPair = reserves[1]/reserves[0]
+    
+    return metaWnearPair * wnearUsdcRatio
 
 def getTriXTriRatio(w3):
     xtri = init_erc20(w3, TRIBAR_ADDRESS)
