@@ -3,6 +3,7 @@ import os
 from eth_account import Account
 from retry import retry
 import requests
+from urllib import parse
 
 FACTORY_ADDRESS = "0xc66F594268041dB60507F00703b152492fb176E7"
 TRIMAKER_ADDRESS = "0xe793455c9728fc91A3E5a33FAfF9eB2F228aE151"
@@ -222,7 +223,19 @@ def getTriXTriRatio(w3):
 
 def getCoingeckoPriceRatio(asset):
     try:
-        response = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={asset}&vs_currencies=usd")
+        coingecko_api_key = os.getenv("COINGECKO_API_KEY")
+        coingecko_query_params = {"ids": asset, "vs_currencies": "usd"}
+
+        if coingecko_api_key:
+            coingecko_query_params["x_cg_pro_api_key"] = coingecko_api_key
+            coingecko_api_endpoint_root = "https://pro-api.coingecko.com/api/v3/simple/price"
+        else:
+            coingecko_api_endpoint_root = "https://api.coingecko.com/api/v3/simple/price"
+        
+        coingecko_encoded_query_params = parse.urlencode(coingecko_query_params, doseq=False)
+        coingecko_api_endpoint = f"{coingecko_api_endpoint_root}?{coingecko_encoded_query_params}"
+        
+        response = requests.get(coingecko_api_endpoint)
         usd_price = (response.json()[asset]['usd'])
         return 1/usd_price
     except requests.exceptions.RequestException as e:
