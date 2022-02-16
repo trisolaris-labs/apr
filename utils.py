@@ -138,9 +138,12 @@ def getReserveInUsdc(w3, tlp, triUsdcRatio):
         else:
             reserveInTri = reserves[1]*2
         return reserveInTri/triUsdcRatio
-
-
-
+    elif (t0 == USDT_ADDRESS or t1 == USDT_ADDRESS):
+        if t0 == USDT_ADDRESS:
+            return reserves[0]*2
+        else:
+            return reserves[1]*2
+    
 
 def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     if totalAvailable == 0:
