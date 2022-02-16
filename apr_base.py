@@ -82,6 +82,18 @@ v2_pools = {
         12: {
             "LP": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
             "Aurora Rewarder": "0xf267212F1D8888e0eD20BbB0c7C87A089cDe6E88"
+            },
+        13: {
+            "LP": "0xb419ff9221039Bdca7bb92A131DD9CF7DEb9b8e5",
+            "Aurora Rewarder": "0xb84293D04137c9061afe34118Dac9931df153826"
+            },
+        14: {
+            "LP": "0xFBc4C42159A5575a772BebA7E3BF91DB508E127a",
+            "Aurora Rewarder": "0x028Fbc4BB5787e340524EF41d95875Ac2C382101"
+            },
+        15: {
+            "LP": "0x7B273238C6DD0453C160f305df35c350a123E505",
+            "Aurora Rewarder": ZERO_ADDRESS
             }
     }
 
@@ -105,6 +117,7 @@ def apr_base():
     lunaUsdcRatio = getCoingeckoPriceRatio("terra-luna")
     flxUsdcRatio = getCoingeckoPriceRatio("flux-token")
     solaceUsdcRatio = getCoingeckoPriceRatio("solace")
+    chronicleUsdcRatio = getCoingeckoPriceRatio("chronicle")
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
@@ -112,6 +125,7 @@ def apr_base():
     print(f"MECHA USDC Ratio: {mechaUsdcRatio/10**12}")
     print(f"Solace USDC Ratio: {solaceUsdcRatio}")
     print(f"Meta USDC Ratio: {metaUsdcRatio/10**18}")
+    print(f"Chronicle USDC Ratio: {chronicleUsdcRatio}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
