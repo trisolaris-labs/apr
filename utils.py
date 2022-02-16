@@ -27,6 +27,7 @@ MATIC_ADDRESS = "0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8"
 ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 MECHA_ADDRESS = "0xa33C3B53694419824722C10D99ad7cB16Ea62754"
 META_ADDRESS = "0xc21Ff01229e982d7c8b8691163B0A3Cb8F357453"
+XNL_ADDRESS = "0x7cA1C28663b76CFDe424A9494555B94846205585"
 
 ### TLP addresses
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
@@ -130,8 +131,19 @@ def getReserveInUsdc(w3, tlp, triUsdcRatio):
         else:
             reserveInXTri = reserves[1]*2
         return reserveInXTri*getTriXTriRatio(w3)/triUsdcRatio
-
-
+    # TODO FIX ME -- TEMPORARY COPY CODE TO UNBLOCK
+    elif (t0 == XNL_ADDRESS or t1 == XNL_ADDRESS ):
+        if t0 == XNL_ADDRESS:
+            reserveInTri = reserves[0]*2
+        else:
+            reserveInTri = reserves[1]*2
+        return reserveInTri/triUsdcRatio
+    elif (t0 == USDT_ADDRESS or t1 == USDT_ADDRESS):
+        if t0 == USDT_ADDRESS:
+            return reserves[0]*2
+        else:
+            return reserves[1]*2
+    
 
 def getTotalStakedInUSDC(totalStaked, totalAvailable, reserveInUSDC):
     if totalAvailable == 0:
@@ -221,7 +233,6 @@ def getCoingeckoPriceRatio(asset):
 
 
 def getAPR(triUsdRatio, totalRewardRate, totalStakedInUSDC):
-    print(f"[UTILS]::getAPR triUsdRatio: {triUsdRatio}, totalRewardRate: {totalRewardRate}, totalStakedInUSDC: {totalStakedInUSDC}")
     if totalStakedInUSDC == 0:
         return 0
     else:
