@@ -16,7 +16,8 @@ from utils import (
     getTriUsdcRatio,
     getAuroraUsdcRatio,
     getCoingeckoPriceRatio,
-    getMechaUsdcRatio
+    getMechaUsdcRatio,
+    getGbaUsdcRatio
 )
 
 
@@ -93,7 +94,7 @@ v2_pools = {
             },
         15: {
             "LP": "0x7B273238C6DD0453C160f305df35c350a123E505",
-            "Aurora Rewarder": ZERO_ADDRESS
+            "Aurora Rewarder": "0xDAc58A615E2A1a94D7fb726a96C273c057997D50"
             }
     }
 
@@ -118,6 +119,7 @@ def apr_base():
     flxUsdcRatio = getCoingeckoPriceRatio("flux-token")
     solaceUsdcRatio = getCoingeckoPriceRatio("solace")
     chronicleUsdcRatio = getCoingeckoPriceRatio("chronicle")
+    gbaUsdcRatio = getGbaUsdcRatio(w3)
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
@@ -126,6 +128,7 @@ def apr_base():
     print(f"Solace USDC Ratio: {solaceUsdcRatio}")
     print(f"Meta USDC Ratio: {metaUsdcRatio/10**18}")
     print(f"Chronicle USDC Ratio: {chronicleUsdcRatio}")
+    print(f"GBA USDC Ratio: {gbaUsdcRatio/10**12}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
@@ -205,6 +208,12 @@ def apr_base():
             elif id == 11 or id == 12:
                 rewardDecimals = 24
                 doubleRewardUsdcRatio = metaUsdcRatio/10**18
+            elif id == 13 or id == 14:
+                doubleRewardUsdcRatio = chronicleUsdcRatio
+            elif id == 15:
+                doubleRewardUsdcRatio = gbaUsdcRatio/10**12
+                
+            
 
 
         #LP staked amts logic
