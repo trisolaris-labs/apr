@@ -95,7 +95,11 @@ v2_pools = {
         15: {
             "LP": "0x7B273238C6DD0453C160f305df35c350a123E505",
             "Aurora Rewarder": "0xDAc58A615E2A1a94D7fb726a96C273c057997D50"
-            }
+            },
+        16: {
+            "LP": "0x6277f94a69Df5df0Bc58b25917B9ECEFBf1b846A",
+            "Aurora Rewarder": "0x170431D69544a1BC97855C6564E8460d39508844"
+            },
     }
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
@@ -212,6 +216,9 @@ def apr_base():
                 doubleRewardUsdcRatio = chronicleUsdcRatio
             elif id == 15:
                 doubleRewardUsdcRatio = gbaUsdcRatio/10**12
+            elif id == 16:
+                rewardDecimals = 24
+                doubleRewardUsdcRatio = wnearUsdcRatio/10**18
                 
             
 
