@@ -17,7 +17,8 @@ from utils import (
     getAuroraUsdcRatio,
     getCoingeckoPriceRatio,
     getMechaUsdcRatio,
-    getGbaUsdcRatio
+    getGbaUsdcRatio,
+    getBbtUsdcRatio
 )
 
 
@@ -100,6 +101,10 @@ v2_pools = {
             "LP": "0x6277f94a69Df5df0Bc58b25917B9ECEFBf1b846A",
             "Aurora Rewarder": "0x170431D69544a1BC97855C6564E8460d39508844"
             },
+        17: {
+            "LP": "0xadAbA7E2bf88Bd10ACb782302A568294566236dC",
+            "Aurora Rewarder": "0xABE01A6b6922130C982E221681EB4C4aD07A21dA"
+            },
     }
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
@@ -124,6 +129,7 @@ def apr_base():
     solaceUsdcRatio = getCoingeckoPriceRatio("solace")
     chronicleUsdcRatio = getCoingeckoPriceRatio("chronicle")
     gbaUsdcRatio = getGbaUsdcRatio(w3)
+    bbtUsdcRatio = getBbtUsdcRatio(w3)
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
@@ -133,6 +139,7 @@ def apr_base():
     print(f"Meta USDC Ratio: {metaUsdcRatio/10**18}")
     print(f"Chronicle USDC Ratio: {chronicleUsdcRatio}")
     print(f"GBA USDC Ratio: {gbaUsdcRatio/10**12}")
+    print(f"GBA BBT Ratio: {bbtUsdcRatio/10**12}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
@@ -219,6 +226,8 @@ def apr_base():
             elif id == 16:
                 rewardDecimals = 24
                 doubleRewardUsdcRatio = wnearUsdcRatio/10**18
+            elif id == 17:
+                doubleRewardUsdcRatio = bbtUsdcRatio/10**18
                 
             
 
