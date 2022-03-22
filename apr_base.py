@@ -139,7 +139,7 @@ def apr_base():
     print(f"Meta USDC Ratio: {metaUsdcRatio/10**18}")
     print(f"Chronicle USDC Ratio: {chronicleUsdcRatio}")
     print(f"GBA USDC Ratio: {gbaUsdcRatio/10**12}")
-    print(f"GBA BBT Ratio: {bbtUsdcRatio/10**12}")
+    print(f"BBT USDC Ratio: {bbtUsdcRatio/10**12}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
