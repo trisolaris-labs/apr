@@ -30,6 +30,7 @@ MECHA_ADDRESS = "0xa33C3B53694419824722C10D99ad7cB16Ea62754"
 META_ADDRESS = "0xc21Ff01229e982d7c8b8691163B0A3Cb8F357453"
 XNL_ADDRESS = "0x7cA1C28663b76CFDe424A9494555B94846205585"
 GBA_ADDRESS = "0xc2ac78FFdDf39e5cD6D83bbD70c1D67517C467eF"
+BBT_ADDRESS = "0x4148d2Ce7816F0AE378d98b40eB3A7211E1fcF0D"
 
 ### TLP addresses
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
@@ -39,6 +40,7 @@ TRI_AURORA = "0xd1654a7713617d41A8C9530Fb9B948d00e162194"
 MECHA_WNEAR = "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f"
 META_WNEAR = "0xa8CAaf35c0136033294dD286A14051fBf37aed07"
 GBA_USDT = "0x7B273238C6DD0453C160f305df35c350a123E505"
+BBT_WNEAR = "0xadAbA7E2bf88Bd10ACb782302A568294566236dC"
 
 def init_chef(w3):
     with open('abi/chef.json') as json_file:
@@ -213,6 +215,19 @@ def getMechaUsdcRatio(w3, wnearUsdcRatio):
         mechaWnearRatio = reserves[1]/reserves[0]
     
     return mechaWnearRatio * wnearUsdcRatio
+
+def getBbtUsdcRatio(w3, wnearUsdcRatio):
+    bbtWnearPair = init_tlp(w3, BBT_WNEAR)
+    t1 = bbtWnearPair.functions.token1().call()
+    t0 = bbtWnearPair.functions.token0().call()
+    reserves = bbtWnearPair.functions.getReserves().call()
+
+    if t0 == BBT_ADDRESS:
+        bbtWnearRatio = reserves[0]/reserves[1]
+    else:
+        bbtWnearRatio = reserves[1]/reserves[0]
+    
+    return bbtWnearRatio * wnearUsdcRatio
 
 def getMetaUsdcRatio(w3, wnearUsdcRatio):
     metaWnearPair = init_tlp(w3, META_WNEAR)
