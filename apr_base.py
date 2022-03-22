@@ -129,7 +129,7 @@ def apr_base():
     solaceUsdcRatio = getCoingeckoPriceRatio("solace")
     chronicleUsdcRatio = getCoingeckoPriceRatio("chronicle")
     gbaUsdcRatio = getGbaUsdcRatio(w3)
-    bbtUsdcRatio = getBbtUsdcRatio(w3)
+    bbtUsdcRatio = getBbtUsdcRatio(w3, wnearUsdcRatio)
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
