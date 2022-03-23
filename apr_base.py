@@ -227,7 +227,7 @@ def apr_base():
                 rewardDecimals = 24
                 doubleRewardUsdcRatio = wnearUsdcRatio/10**18
             elif id == 17:
-                doubleRewardUsdcRatio = bbtUsdcRatio/10**18
+                doubleRewardUsdcRatio = bbtUsdcRatio/10**12
                 
             
 
