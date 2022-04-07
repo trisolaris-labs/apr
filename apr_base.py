@@ -105,6 +105,10 @@ v2_pools = {
             "LP": "0xadAbA7E2bf88Bd10ACb782302A568294566236dC",
             "Aurora Rewarder": "0xABE01A6b6922130C982E221681EB4C4aD07A21dA"
             },
+        18: {
+            "LP": "0x5EB99863f7eFE88c447Bc9D52AA800421b1de6c9",
+            "Aurora Rewarder": ZERO_ADDRESS
+            }
     }
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
