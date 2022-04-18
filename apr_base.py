@@ -10,7 +10,9 @@ from utils import (
     init_chefv2,
     init_rewarder,
     init_tlp,
+    init_stable_tlp,
     getReserveInUsdc,
+    getReserveStables,
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
@@ -232,9 +234,13 @@ def apr_base():
                 doubleRewardUsdcRatio = wnearUsdcRatio/10**18
             elif id == 17:
                 doubleRewardUsdcRatio = bbtUsdcRatio/10**12
-                
-            
-
+        elif id == 18:
+            print("in here")
+            tlp = init_stable_tlp(w3, addresses["LP"])
+            print(tlp)
+            reserveInUSDC = getReserveStables(w3, tlp)
+            print(reserveInUSDC)
+            exit()
 
         #LP staked amts logic
         reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
