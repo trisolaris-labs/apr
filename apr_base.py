@@ -115,8 +115,7 @@ v2_pools = {
 
 v2_stable_factory_pool = {
         18: {
-            "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59",
-            "tokenCount": 2
+            "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"
         }
     }
 
