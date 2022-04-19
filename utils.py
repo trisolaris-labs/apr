@@ -70,6 +70,21 @@ def init_tlp(w3, lpAddress):
             abi=json.load(json_file)
         )
 
+def init_stable_tlp(w3, lpAddress):
+    with open('abi/lpTokenUnguarded.json') as json_file:
+        return w3.eth.contract(
+            address=lpAddress,
+            abi=json.load(json_file)
+        )
+
+def init_stable_pool(w3, address):
+    with open('abi/swapFlashLoan.json') as json_file:
+        return w3.eth.contract(
+            address=address,
+            abi=json.load(json_file)
+        )
+
+
 def init_tri_maker(w3):
     with open('abi/triMaker.json') as json_file:
         return w3.eth.contract(
@@ -84,6 +99,15 @@ def init_erc20(w3, erc20_address):
             abi=json.load(json_file)
         )
 
+# have function that gets balance of underlying tokens, and then multiply 1
+# add value and then get reserve
+# LP token address does not hold tokens, other address does so need both
+def getReserveStables(w3, total_supply, address):
+    stable_pool_contract = init_stable_pool(w3, address)
+    virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
+    reserve = (virtual_price * total_supply)/(10**36)
+
+    return reserve
 
 def getReserveInUsdc(w3, tlp, triUsdcRatio):
     t0 = tlp.functions.token0().call()

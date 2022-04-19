@@ -10,7 +10,9 @@ from utils import (
     init_chefv2,
     init_rewarder,
     init_tlp,
+    init_stable_tlp,
     getReserveInUsdc,
+    getReserveStables,
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
@@ -105,6 +107,16 @@ v2_pools = {
             "LP": "0xadAbA7E2bf88Bd10ACb782302A568294566236dC",
             "Aurora Rewarder": "0xABE01A6b6922130C982E221681EB4C4aD07A21dA"
             },
+        18: {
+            "LP": "0x5EB99863f7eFE88c447Bc9D52AA800421b1de6c9",
+            "Aurora Rewarder": ZERO_ADDRESS
+            }
+    }
+
+v2_stable_factory_pool = {
+        18: {
+            "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"
+        }
     }
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
@@ -228,15 +240,21 @@ def apr_base():
                 doubleRewardUsdcRatio = wnearUsdcRatio/10**18
             elif id == 17:
                 doubleRewardUsdcRatio = bbtUsdcRatio/10**12
-                
+        elif id == 18:
+            tlp = init_stable_tlp(w3, addresses["LP"])
             
-
-
-        #LP staked amts logic
-        reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
         totalSupply = tlp.functions.totalSupply().call()
         totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
-        totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+        
+        if id == 18:
+            stable_pool_address = v2_stable_factory_pool[id]["poolContract"]
+            reserveInUSDC = getReserveStables(w3, totalSupply, stable_pool_address)
+            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+        else:
+            #LP staked amts logic
+            reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
+            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+        
         totalSecondRewardRate = (
             dummyLpTotalSecondRewardRate * allocPoint / (totalAllocPointV2)
         )  # Taking TRI allocation to dummy LP in chef v1 as tri per block for chef V2
