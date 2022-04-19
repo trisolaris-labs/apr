@@ -9,10 +9,10 @@ from utils import (
     init_chef,
     init_chefv2,
     init_rewarder,
+    init_stable_pool,
     init_tlp,
     init_stable_tlp,
     getReserveInUsdc,
-    getReserveStables,
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
@@ -245,37 +245,53 @@ def apr_base():
             
         totalSupply = tlp.functions.totalSupply().call()
         totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
-        
-        if id == 18:
-            stable_pool_address = v2_stable_factory_pool[id]["poolContract"]
-            reserveInUSDC = getReserveStables(w3, totalSupply, stable_pool_address)
-            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
-        else:
-            #LP staked amts logic
-            reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
-            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
-        
         totalSecondRewardRate = (
             dummyLpTotalSecondRewardRate * allocPoint / (totalAllocPointV2)
         )  # Taking TRI allocation to dummy LP in chef v1 as tri per block for chef V2
         totalWeeklyRewardRate = (
             3600 * 24 * 7 * totalSecondRewardRate
         )  # TODO: update to return base 10 values
-        data.append(
-                {
-                    "id": len(v1_pools) + id,
-                    "poolId": id,
-                    "lpAddress": addresses["LP"],
-                    "totalSupply": totalSupply,
-                    "totalStaked": totalStaked,
-                    "totalStakedInUSD": totalStakedInUSDC / 10 ** 6,
-                    "totalRewardRate": totalWeeklyRewardRate,
-                    "allocPoint": allocPoint,
-                    "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
-                    "apr2": getAPR(doubleRewardUsdcRatio, rewardsPerBlock/(10**rewardDecimals), totalStakedInUSDC),
-                    "chefVersion": "v2",
-                }
-        )
+        
+        # Stable AMM LP staked amts logic
+        if id == 18:
+            stable_pool_contract = init_stable_pool(w3, v2_stable_factory_pool[id]["poolContract"])
+            virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
+            totalStakedInUSDC = (virtual_price/1e18) * (totalStaked/1e18)
+            data.append(
+                    {
+                        "id": len(v1_pools) + id,
+                        "poolId": id,
+                        "lpAddress": addresses["LP"],
+                        "totalSupply": totalSupply,
+                        "totalStaked": totalStaked,
+                        "totalStakedInUSD": totalStakedInUSDC,
+                        "totalRewardRate": totalWeeklyRewardRate,
+                        "allocPoint": allocPoint,
+                        "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
+                        "apr2": getAPR(doubleRewardUsdcRatio, rewardsPerBlock/(10**rewardDecimals), totalStakedInUSDC),
+                        "chefVersion": "v2",
+                    }
+            )
+            
+        else:
+            # Normal AMM LP staked amts logic
+            reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
+            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+            data.append(
+                    {
+                        "id": len(v1_pools) + id,
+                        "poolId": id,
+                        "lpAddress": addresses["LP"],
+                        "totalSupply": totalSupply,
+                        "totalStaked": totalStaked,
+                        "totalStakedInUSD": totalStakedInUSDC / 10 ** 6,
+                        "totalRewardRate": totalWeeklyRewardRate,
+                        "allocPoint": allocPoint,
+                        "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
+                        "apr2": getAPR(doubleRewardUsdcRatio, rewardsPerBlock/(10**rewardDecimals), totalStakedInUSDC),
+                        "chefVersion": "v2",
+                    }
+            )
 
     return data
 
