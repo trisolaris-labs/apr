@@ -9,10 +9,10 @@ from utils import (
     init_chef,
     init_chefv2,
     init_rewarder,
+    init_stable_pool,
     init_tlp,
     init_stable_tlp,
     getReserveInUsdc,
-    getReserveStables,
     getTotalStakedInUSDC,
     getAPR,
     getTriUsdcRatio,
@@ -247,13 +247,13 @@ def apr_base():
         totalStaked = tlp.functions.balanceOf(CHEFV2_ADDRESS).call()
         
         if id == 18:
-            stable_pool_address = v2_stable_factory_pool[id]["poolContract"]
-            reserveInUSDC = getReserveStables(w3, totalSupply, stable_pool_address)
-            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+            stable_pool_contract = init_stable_pool(w3, v2_stable_factory_pool[id]["poolContract"])
+            virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
+            totalStakedInUSDC = (virtual_price/1e18) * (totalStaked/1e18)
         else:
             #LP staked amts logic
             reserveInUSDC = getReserveInUsdc(w3, tlp, triUsdcRatio)
-            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC)
+            totalStakedInUSDC = getTotalStakedInUSDC(totalStaked, totalSupply, reserveInUSDC) / 10 ** 6
         
         totalSecondRewardRate = (
             dummyLpTotalSecondRewardRate * allocPoint / (totalAllocPointV2)
@@ -268,7 +268,7 @@ def apr_base():
                     "lpAddress": addresses["LP"],
                     "totalSupply": totalSupply,
                     "totalStaked": totalStaked,
-                    "totalStakedInUSD": totalStakedInUSDC / 10 ** 6,
+                    "totalStakedInUSD": totalStakedInUSDC,
                     "totalRewardRate": totalWeeklyRewardRate,
                     "allocPoint": allocPoint,
                     "apr": getAPR(triUsdcRatio/10**12, totalSecondRewardRate, totalStakedInUSDC),
