@@ -177,6 +177,8 @@ def apr_base():
     print(f"Chronicle USDC Ratio: {chronicleUsdcRatio}")
     print(f"GBA USDC Ratio: {gbaUsdcRatio/10**12}")
     print(f"BBT USDC Ratio: {bbtUsdcRatio/10**12}")
+    print(f"LINEAR USDC Ratio: {linearUsdcRatio/10**18}")
+    print(f"BSTN USDC Ratio: {bstnUsdcRatio/10**12}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
@@ -269,10 +271,10 @@ def apr_base():
                 doubleRewardUsdcRatio = roseUsdcRatio
             elif id == 21:
                 doubleRewardUsdcRatio = roseUsdcRatio
-            elif id = 22:
+            elif id == 22:
                 rewardDecimals = 24
                 doubleRewardUsdcRatio = linearUsdcRatio/10**18
-            elif id = 23:
+            elif id == 23:
                 doubleRewardUsdcRatio = bstnUsdcRatio/10**18
         elif id == 18:
             tlp = init_stable_tlp(w3, addresses["LP"])

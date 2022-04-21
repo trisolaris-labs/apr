@@ -264,10 +264,15 @@ def getBstnUsdcRatio(w3, wnearUsdcRatio):
     reserves = bstnWnearPair.functions.getReserves().call()
 
     if t0 == BSTN_ADDRESS:
-        bstnWnearRatio = reserves[0]/reserves[1]
+        try:
+            bstnWnearRatio = reserves[0]/reserves[1]
+        except ZeroDivisionError:
+            bstnWnearRatio = 0
     else:
-        bstnWnearRatio = reserves[1]/reserves[0]
-    
+        try:
+            bstnWnearRatio = reserves[1]/reserves[0]
+        except ZeroDivisionError:
+            bstnWnearRatio = 0
     return bstnWnearRatio * wnearUsdcRatio
 
 
