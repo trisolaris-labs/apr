@@ -20,7 +20,9 @@ from utils import (
     getCoingeckoPriceRatio,
     getMechaUsdcRatio,
     getGbaUsdcRatio,
-    getBbtUsdcRatio
+    getBbtUsdcRatio,
+    getBstnUsdcRatio,
+    getLinearUsdcRatio
 )
 
 
@@ -110,6 +112,26 @@ v2_pools = {
         18: {
             "LP": "0x5EB99863f7eFE88c447Bc9D52AA800421b1de6c9",
             "Aurora Rewarder": ZERO_ADDRESS
+            },
+        19: {
+            "LP": "0x5E74D85311fe2409c341Ce49Ce432BB950D221DE",
+            "Aurora Rewarder": ZERO_ADDRESS
+            },
+        20: {
+            "LP": "0xbe753E99D0dBd12FB39edF9b884eBF3B1B09f26C",
+            "Aurora Rewarder": "0xfe9B7A3bf38cE0CA3D5fA25d371Ff5C6598663d4"
+            },
+        21: {
+            "LP": "0xbC0e71aE3Ef51ae62103E003A9Be2ffDe8421700",
+            "Aurora Rewarder": "0x87a03aFA70302a5a0F6156eBEd27f230ABF0e69C"
+            },
+        22: {
+            "LP": "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1",
+            "Aurora Rewarder": "0x1616B20534d1d1d731C31Ca325F4e909b8f3E0f0"
+            },
+        23: {
+            "LP": "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9",
+            "Aurora Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741"
             }
     }
 
@@ -142,6 +164,9 @@ def apr_base():
     chronicleUsdcRatio = getCoingeckoPriceRatio("chronicle")
     gbaUsdcRatio = getGbaUsdcRatio(w3)
     bbtUsdcRatio = getBbtUsdcRatio(w3, wnearUsdcRatio)
+    roseUsdcRatio = getCoingeckoPriceRatio("rose")
+    linearUsdcRatio = getLinearUsdcRatio(w3, wnearUsdcRatio)
+    bstnUsdcRatio = getBstnUsdcRatio(w3, wnearUsdcRatio)
     print(f"TRI USDC Ratio: {triUsdcRatio/10**12}")
     print(f"Aurora USDC Ratio: {auroraUsdcRatio/10**12}")
     print(f"LUNA USDC Ratio: {lunaUsdcRatio}")
@@ -152,6 +177,8 @@ def apr_base():
     print(f"Chronicle USDC Ratio: {chronicleUsdcRatio}")
     print(f"GBA USDC Ratio: {gbaUsdcRatio/10**12}")
     print(f"BBT USDC Ratio: {bbtUsdcRatio/10**12}")
+    print(f"LINEAR USDC Ratio: {linearUsdcRatio/10**18}")
+    print(f"BSTN USDC Ratio: {bstnUsdcRatio/10**12}")
 
     for id, address in v1_pools.items():
         print("V1 Reached here", address)
@@ -240,6 +267,15 @@ def apr_base():
                 doubleRewardUsdcRatio = wnearUsdcRatio/10**18
             elif id == 17:
                 doubleRewardUsdcRatio = bbtUsdcRatio/10**12
+            elif id == 20:
+                doubleRewardUsdcRatio = roseUsdcRatio
+            elif id == 21:
+                doubleRewardUsdcRatio = roseUsdcRatio
+            elif id == 22:
+                rewardDecimals = 24
+                doubleRewardUsdcRatio = linearUsdcRatio/10**18
+            elif id == 23:
+                doubleRewardUsdcRatio = bstnUsdcRatio/10**18
         elif id == 18:
             tlp = init_stable_tlp(w3, addresses["LP"])
             
