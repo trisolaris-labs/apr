@@ -31,6 +31,8 @@ META_ADDRESS = "0xc21Ff01229e982d7c8b8691163B0A3Cb8F357453"
 XNL_ADDRESS = "0x7cA1C28663b76CFDe424A9494555B94846205585"
 GBA_ADDRESS = "0xc2ac78FFdDf39e5cD6D83bbD70c1D67517C467eF"
 BBT_ADDRESS = "0x4148d2Ce7816F0AE378d98b40eB3A7211E1fcF0D"
+BSTN_ADDRESS = "0x9f1F933C660a1DC856F0E0Fe058435879c5CCEf0"
+LINEAR_ADDRESS = "0x918dBe087040A41b786f0Da83190c293DAe24749"
 
 ### TLP addresses
 WNEAR_USDC = "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0"
@@ -41,6 +43,8 @@ MECHA_WNEAR = "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f"
 META_WNEAR = "0xa8CAaf35c0136033294dD286A14051fBf37aed07"
 GBA_USDT = "0x7B273238C6DD0453C160f305df35c350a123E505"
 BBT_WNEAR = "0xadAbA7E2bf88Bd10ACb782302A568294566236dC"
+BSTN_WNEAR = "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9"
+LINEAR_WNEAR = "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1"
 
 def init_chef(w3):
     with open('abi/chef.json') as json_file:
@@ -252,6 +256,33 @@ def getBbtUsdcRatio(w3, wnearUsdcRatio):
         bbtWnearRatio = reserves[1]/reserves[0]
     
     return bbtWnearRatio * wnearUsdcRatio
+
+def getBstnUsdcRatio(w3, wnearUsdcRatio):
+    bstnWnearPair = init_tlp(w3, BSTN_WNEAR)
+    t1 = bstnWnearPair.functions.token1().call()
+    t0 = bstnWnearPair.functions.token0().call()
+    reserves = bstnWnearPair.functions.getReserves().call()
+
+    if t0 == BSTN_ADDRESS:
+        bstnWnearRatio = reserves[0]/reserves[1]
+    else:
+        bstnWnearRatio = reserves[1]/reserves[0]
+    
+    return bstnWnearRatio * wnearUsdcRatio
+
+
+def getLinearUsdcRatio(w3, wnearUsdcRatio):
+    linearWnearPair = init_tlp(w3, LINEAR_WNEAR)
+    t1 = linearWnearPair.functions.token1().call()
+    t0 = linearWnearPair.functions.token0().call()
+    reserves = linearWnearPair.functions.getReserves().call()
+
+    if t0 == LINEAR_ADDRESS:
+        linearWnearRatio = reserves[0]/reserves[1]
+    else:
+        linearWnearRatio = reserves[1]/reserves[0]
+    
+    return linearWnearRatio * wnearUsdcRatio
 
 def getMetaUsdcRatio(w3, wnearUsdcRatio):
     metaWnearPair = init_tlp(w3, META_WNEAR)
