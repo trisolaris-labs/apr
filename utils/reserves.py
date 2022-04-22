@@ -25,7 +25,7 @@ from .prices import (
 # add value and then get reserve
 # LP token address does not hold tokens, other address does so need both
 def getReserveStables(w3, total_supply, address):
-    stable_pool_contract = init_stable_pool(w3, address)
+    stable_pool_contract = init_stable_pool(address)
     virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
     reserve = (virtual_price * total_supply)/(10**36)
     return reserve
@@ -35,48 +35,48 @@ def getReserveInUsd(w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio):
     t1 = tlp.functions.token1().call()
     reserves = tlp.functions.getReserves().call()
     if (t0 == USDC_ADDRESS or t1 == USDC_ADDRESS):
-        decimals = init_erc20(w3, USDC_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(USDC_ADDRESS).functions.decimals().call()
         if t0 == USDC_ADDRESS:
             return reserves[0]*2/10**decimals
         else:
             return reserves[1]*2/10**decimals
     elif (t0 == WNEAR_ADDRESS or t1 == WNEAR_ADDRESS):
-        decimals = init_erc20(w3, WNEAR_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(WNEAR_ADDRESS).functions.decimals().call()
         if t0 == WNEAR_ADDRESS:
             reserveInWnear = reserves[0]*2/10**decimals
         else:
             reserveInWnear = reserves[1]*2/10**decimals
         return reserveInWnear/wnearUsdRatio
     elif (t0 == WETH_ADDRESS or t1 == WETH_ADDRESS):
-        decimals = init_erc20(w3, WETH_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(WETH_ADDRESS).functions.decimals().call()
         if t0 == WETH_ADDRESS:
             reserveInWeth = reserves[0]*2/10**decimals
         else:
             reserveInWeth = reserves[1]*2/10**decimals
         return reserveInWeth/wethUsdRatio
     elif (t0 == TRI_ADDRESS or t1 == TRI_ADDRESS ):
-        decimals = init_erc20(w3, TRI_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(TRI_ADDRESS).functions.decimals().call()
         if t0 == TRI_ADDRESS:
             reserveInTri = reserves[0]*2/10**decimals
         else:
             reserveInTri = reserves[1]*2/10**decimals
         return reserveInTri/triUsdRatio
     elif (t0 == TRIBAR_ADDRESS or t1 == TRIBAR_ADDRESS ):
-        decimals = init_erc20(w3, TRIBAR_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(TRIBAR_ADDRESS).functions.decimals().call()
         if t0 == TRIBAR_ADDRESS:
             reserveInXTri = reserves[0]*2/10**decimals
         else:
             reserveInXTri = reserves[1]*2/10**decimals
         return reserveInXTri*getTriXTriRatio(w3)/triUsdRatio
     elif (t0 == XNL_ADDRESS or t1 == XNL_ADDRESS ):
-        decimals = init_erc20(w3, XNL_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(XNL_ADDRESS).functions.decimals().call()
         if t0 == XNL_ADDRESS:
             reserveInTri = reserves[0]*2/10**decimals
         else:
             reserveInTri = reserves[1]*2/10**decimals
         return reserveInTri/triUsdRatio
     elif (t0 == USDT_ADDRESS or t1 == USDT_ADDRESS):
-        decimals = init_erc20(w3, USDT_ADDRESS).functions.decimals().call()
+        decimals = init_erc20(USDT_ADDRESS).functions.decimals().call()
         if t0 == USDT_ADDRESS:
             return reserves[0]*2/10**decimals
         else:
@@ -99,7 +99,7 @@ def getAPR(tokenUsdRatio, totalRewardRate, totalStakedInUSD):
 
 
 def getDataV1Pools(w3, id, address, chef, triPerBlock, totalAllocPoint, tri_decimals, triUsdRatio, wnearUsdRatio, wethUsdRatio):
-    tlp = init_tlp(w3, address)
+    tlp = init_tlp(address)
     poolInfo = chef.functions.poolInfo(id).call()
     assert poolInfo[0].lower() == address.lower()
     allocPoint = poolInfo[1]
@@ -129,7 +129,7 @@ def getDataV1Pools(w3, id, address, chef, triPerBlock, totalAllocPoint, tri_deci
             }
 
 def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllocPointV2, triUsdRatio, wnearUsdRatio, wethUsdRatio):
-    tlp = init_tlp(w3, pool["LP"])
+    tlp = init_tlp(pool["LP"])
     poolInfo = chefv2.functions.poolInfo(id).call()
     allocPoint = poolInfo[2]
     totalSupply = tlp.functions.totalSupply().call()
@@ -145,7 +145,7 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
     rewardsPerBlock = 0
     doubleRewardUsdRatio = 0
     if pool["Rewarder"] != ZERO_ADDRESS:
-        rewarder = init_rewarder(w3, pool["Rewarder"])
+        rewarder = init_rewarder(pool["Rewarder"])
         rewardDecimals = pool["RewarderTokenDecimals"]
         rewardsPerBlock = rewarder.functions.tokenPerBlock().call()/(10**rewardDecimals)
         rewarder_address = rewarder.functions.rewardToken().call()
@@ -154,7 +154,7 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
         
     # Stable AMM LP staked amts logic
     if id == 18:
-        stable_pool_contract = init_stable_pool(w3, V2_STABLEPOOL_FACTORY[id]["poolContract"])
+        stable_pool_contract = init_stable_pool(V2_STABLEPOOL_FACTORY[id]["poolContract"])
         virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
         totalStakedInUSDC = (virtual_price/1e18) * (totalStaked/1e18)
     else:

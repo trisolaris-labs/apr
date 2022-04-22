@@ -56,8 +56,8 @@ def xtri_base(timestamp):
     
     print('xtri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
-    tri_maker = init_tri_maker(w3)
-    tri = init_erc20(w3, TRI_ADDRESS)
+    tri_maker = init_tri_maker()
+    tri = init_erc20(TRI_ADDRESS)
     
     tri_amount = 0
     initial_triBar_balance = tri.functions.balanceOf(TRIBAR_ADDRESS).call()

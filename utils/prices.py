@@ -29,11 +29,11 @@ def getTokenUSDRatio(w3, pool, rewarder_address, wnearUsdRatio, triUsdRatio):
 # NOTE: the prices are returned in USD and NOT USDC
 def getDexTokenUSDRatio(w3, tlp_address, token_address, wnearUsdRatio=0, triUsdRatio=0):
     ## getting token reserve ratio
-    pair = init_tlp(w3, tlp_address)
+    pair = init_tlp(tlp_address)
     t1 = pair.functions.token1().call()
-    t1_decimals = init_erc20(w3, t1).functions.decimals().call()
+    t1_decimals = init_erc20(t1).functions.decimals().call()
     t0 = pair.functions.token0().call()
-    t0_decimals = init_erc20(w3, t0).functions.decimals().call()
+    t0_decimals = init_erc20(t0).functions.decimals().call()
     reserves = pair.functions.getReserves().call()
     if t0 == token_address:
         tokenReserveRatio = reserves[0]*(10**(t1_decimals-t0_decimals))/reserves[1]
@@ -73,8 +73,8 @@ def getCoingeckoUSDPriceRatio(asset):
         return 0
 
 def getTriXTriRatio(w3):
-    xtri = init_erc20(w3, TRIBAR_ADDRESS)
-    tri = init_erc20(w3, TRI_ADDRESS)
+    xtri = init_erc20(TRIBAR_ADDRESS)
+    tri = init_erc20(TRI_ADDRESS)
     xtri_supply = xtri.functions.totalSupply().call()
     tri_locked = tri.functions.balanceOf(TRIBAR_ADDRESS).call()
     return tri_locked/xtri_supply

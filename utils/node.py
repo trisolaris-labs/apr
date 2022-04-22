@@ -17,59 +17,26 @@ def init_contract(contract_address, json_filename):
             abi=json.load(json_file)
         )
 
-def init_chef(w3):
-    with open('abi/chef.json') as json_file:
-        return w3.eth.contract(
-            address=CHEF_ADDRESS,
-            abi=json.load(json_file)
-        )
+def init_chef():
+    return init_contract(CHEF_ADDRESS, 'abi/chef.json')
 
-def init_chefv2(w3):
-    with open('abi/chefv2.json') as json_file:
-        return w3.eth.contract(
-            address=CHEFV2_ADDRESS,
-            abi=json.load(json_file)
-        )
+def init_chefv2():
+    return init_contract(CHEFV2_ADDRESS, 'abi/chefv2.json')
 
-def init_rewarder(w3, rewarderAddress):
-    with open('abi/complexrewarder.json') as json_file:
-        return w3.eth.contract(
-            address=rewarderAddress,
-            abi=json.load(json_file)
-        )
+def init_rewarder(rewarderAddress):
+    return init_contract(rewarderAddress, 'abi/complexrewarder.json')
 
-def init_tlp(w3, lpAddress):
-    with open('abi/tlp.json') as json_file:
-        return w3.eth.contract(
-            address=lpAddress,
-            abi=json.load(json_file)
-        )
+def init_tlp(lpAddress):
+    return init_contract(lpAddress, 'abi/tlp.json')
 
-def init_stable_tlp(w3, lpAddress):
-    with open('abi/lpTokenUnguarded.json') as json_file:
-        return w3.eth.contract(
-            address=lpAddress,
-            abi=json.load(json_file)
-        )
+def init_stable_tlp(lpAddress):
+    return init_contract(lpAddress, 'abi/lpTokenUnguarded.json')
 
-def init_stable_pool(w3, address):
-    with open('abi/swapFlashLoan.json') as json_file:
-        return w3.eth.contract(
-            address=address,
-            abi=json.load(json_file)
-        )
+def init_stable_pool(address):
+    return init_contract(address, 'abi/swapFlashLoan.json')
 
+def init_tri_maker():
+    return init_contract(TRIMAKER_ADDRESS, 'abi/triMaker.json')
 
-def init_tri_maker(w3):
-    with open('abi/triMaker.json') as json_file:
-        return w3.eth.contract(
-            address=TRIMAKER_ADDRESS,
-            abi=json.load(json_file)
-        )
-
-def init_erc20(w3, erc20_address):
-    with open('abi/erc20.json') as json_file:
-        return w3.eth.contract(
-            address=erc20_address,
-            abi=json.load(json_file)
-        )
+def init_erc20(erc20_address):
+    return init_contract(erc20_address, 'abi/erc20.json')

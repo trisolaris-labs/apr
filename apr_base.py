@@ -28,7 +28,7 @@ def apr_base():
     
     ## chef data
     tri_decimals = 18
-    chef = init_chef(w3)
+    chef = init_chef()
     totalAllocPoint = chef.functions.totalAllocPoint().call()
     triPerBlock = chef.functions.triPerBlock().call()
 
@@ -41,7 +41,7 @@ def apr_base():
     dummyLpTotalSecondRewardRate = (triPerBlock * dummyLpAllocPoint / (totalAllocPoint * 10 ** tri_decimals))
 
     #Chef V2 calls
-    chefv2 = init_chefv2(w3)
+    chefv2 = init_chefv2()
     totalAllocPointV2 = chefv2.functions.totalAllocPoint().call()
 
     ### Getting initial prices
