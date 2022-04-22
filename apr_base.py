@@ -275,7 +275,7 @@ def apr_base():
                 rewardDecimals = 24
                 doubleRewardUsdcRatio = linearUsdcRatio/10**18
             elif id == 23:
-                doubleRewardUsdcRatio = bstnUsdcRatio/10**18
+                doubleRewardUsdcRatio = bstnUsdcRatio/10**12
         elif id == 18:
             tlp = init_stable_tlp(w3, addresses["LP"])
             
