@@ -1,14 +1,9 @@
 import os
 from web3 import Web3
-from utils import (
+from utils.constants import (
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
     ASHIBAM_ADDRESS,
-    convertFeesForPair,
-    getAccount,
-    getFundedAccount,
-    init_tri_maker,
-    init_erc20,
     TRIBAR_ADDRESS,
     TRI_ADDRESS,
     WNEAR_ADDRESS,
@@ -17,6 +12,16 @@ from utils import (
     USDC_ADDRESS,
     USDT_ADDRESS,
     WBTC_ADDRESS
+)
+from utils.fees import (
+    convertFeesForPair,
+    getAccount,
+    getFundedAccount,
+)
+from utils.node import (
+    w3,
+    init_tri_maker,
+    init_erc20,
 )
 from time import time, sleep
 
@@ -42,8 +47,6 @@ pairs = [
 TAG = "[GCC_XTRI_BASE] "
 
 def xtri_base(timestamp):
-    web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
-    w3 = Web3(Web3.HTTPProvider(web3_url))
     try:
         # 2/8/22 - Total cost of a complete run is 0.00016Ξ
         acct = getFundedAccount()
@@ -53,8 +56,8 @@ def xtri_base(timestamp):
     
     print('xtri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
-    tri_maker = init_tri_maker(w3)
-    tri = init_erc20(w3, TRI_ADDRESS)
+    tri_maker = init_tri_maker()
+    tri = init_erc20(TRI_ADDRESS)
     
     tri_amount = 0
     initial_triBar_balance = tri.functions.balanceOf(TRIBAR_ADDRESS).call()

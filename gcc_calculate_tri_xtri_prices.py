@@ -8,7 +8,10 @@ import os
 from web3 import Web3
 
 from gcc_utils import (get_event_id, get_google_cloud_storage_blob)
-from utils import TRI_ADDRESS, WNEAR_ADDRESS, getTriXTriRatio, init_tlp
+from utils.node import w3, init_tlp
+from utils.constants import WNEAR_ADDRESS, TRI_ADDRESS
+from utils.prices import getTriXTriRatio
+
 
 # Output file name
 FILE_NAME = "tri_xtri_price.json"
@@ -26,8 +29,6 @@ TLP_NEAR_USDT = "0x03B666f3488a7992b2385B12dF7f35156d7b29cD"
 TRI_TOKEN_DECIMALS = 18
 NEAR_TOKEN_DECIMALS = 24
 
-web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
-w3 = Web3(Web3.HTTPProvider(web3_url))
 
 # Calculates weighted average price of TRI token
 # Uploads result to gcc file storage
@@ -68,7 +69,7 @@ def gcc_calculate_tri_xtri_prices(data, context):
 # Returns reserves of a pair as a tuple
 # targetTokenAddress will always be index 0 of tuple
 def getTargetTokenPairReserves(w3, tlpAddress, targetTokenAddress):
-    pair = init_tlp(w3, tlpAddress)
+    pair = init_tlp(tlpAddress)
     t1 = pair.functions.token1().call()
     t0 = pair.functions.token0().call()
     reserves = pair.functions.getReserves().call()

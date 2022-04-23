@@ -11,7 +11,9 @@ from statistics import geometric_mean
 from web3 import Web3
 
 from gcc_utils import (get_event_id, get_google_cloud_storage_blob)
-from utils import TRI_ADDRESS, WNEAR_ADDRESS, getTriXTriRatio, init_tlp
+from utils.node import w3, init_tlp
+from utils.constants import WNEAR_ADDRESS, TRI_ADDRESS
+from utils.prices import getTriXTriRatio
 
 # Output file name
 FILE_NAME = "tri_xtri_twap.json"
@@ -95,7 +97,7 @@ def get_prices():
 # Returns reserves of a pair as a tuple
 # targetTokenAddress will always be index 0 of tuple
 def get_target_token_pair_reserves(w3, tlpAddress, targetTokenAddress):
-    pair = init_tlp(w3, tlpAddress)
+    pair = init_tlp(tlpAddress)
     t1 = pair.functions.token1().call()
     t0 = pair.functions.token0().call()
     reserves = pair.functions.getReserves().call()
