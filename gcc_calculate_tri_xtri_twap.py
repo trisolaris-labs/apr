@@ -34,6 +34,7 @@ NEAR_TOKEN_DECIMALS = 24
 
 # Number of items to keep in the price history
 MAX_WINDOW_SIZE = 20
+MAX_HISTORICAL_WINDOW_SIZE = 100
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
 w3 = Web3(Web3.HTTPProvider(web3_url))
@@ -64,19 +65,22 @@ def gcc_calculate_tri_xtri_twap(data, context):
         "xtri_price": xtri_price_usd
     })
 
-    # Remove outdated items from the beginning of the list
-    historical_price_data = historical_price_data[-MAX_WINDOW_SIZE:]
+    # Remove items from beginning of the list that are beyond the window limit
+    window_sized_historical_price_data = historical_price_data[-MAX_WINDOW_SIZE:]
 
     # Calculate geometric mean for all periods within the window
-    tri_twap = geometric_mean(map(lambda x: x['tri_price'], historical_price_data))
-    xtri_twap = geometric_mean(map(lambda x: x['xtri_price'], historical_price_data))
+    tri_twap = geometric_mean(map(lambda x: x['tri_price'], window_sized_historical_price_data))
+    xtri_twap = geometric_mean(map(lambda x: x['xtri_price'], window_sized_historical_price_data))
 
     # Upload calculated TWAPs to GCC
     twap_payload = {"TRI": tri_twap, "xTRI": xtri_twap}
     upload_to_gcc(twap_payload, TRISOLARIS_PRICES_BUCKET_FILE_PATH)
     
+    # Trim list to maintain the max historical storage size
+    max_sized_historical_price_data = historical_price_data[-MAX_HISTORICAL_WINDOW_SIZE:]
+    
     # Upload calculated historical prices to GCC (this file is not public)
-    price_history_payload = {"result": historical_price_data, "size": len(historical_price_data)}
+    price_history_payload = {"result": max_sized_historical_price_data, "size": len(max_sized_historical_price_data)}
     upload_to_gcc(price_history_payload, TRISOLARIS_TRI_XTRI_TWAP_DATA_FILE_PATH)
 
 def get_historical_price_data():
