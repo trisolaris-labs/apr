@@ -3,6 +3,7 @@ import os
 from eth_account import Account
 from web3 import Web3
 from utils.constants import (
+    BSTN_ADDRESS,
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
     ASHIBAM_ADDRESS,
@@ -11,6 +12,10 @@ from utils.constants import (
     EMPYR_ADDRESS,
     FLX_ADDRESS,
     MATIC_ADDRESS,
+    POLAR_ADDRESS,
+    SHITZU_ADDRESS,
+    SPOLAR_ADDRESS,
+    STNEAR_ADDRESS,
     TRIBAR_ADDRESS,
     TRI_ADDRESS,
     WNEAR_ADDRESS,
@@ -38,7 +43,12 @@ tri_maker = init_tri_maker()
 tri = init_erc20(TRI_ADDRESS)
 
 pairs = [
-    (ATLUNA_ADDRESS, WNEAR_ADDRESS),
+    (SHITZU_ADDRESS, USDC_ADDRESS),
+    (POLAR_ADDRESS, WNEAR_ADDRESS),
+    (SPOLAR_ADDRESS, WNEAR_ADDRESS),
+    (STNEAR_ADDRESS, WNEAR_ADDRESS),
+    (BSTN_ADDRESS, WNEAR_ADDRESS),
+    (ATLUNA_ADDRESS, WNEAR_ADDRESS), 
     (ATUST_ADDRESS, WNEAR_ADDRESS),
     (USDC_ADDRESS, WNEAR_ADDRESS),
     (USDT_ADDRESS, WNEAR_ADDRESS),
