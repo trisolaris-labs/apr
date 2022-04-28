@@ -257,6 +257,30 @@ V2_POOLS = {
             "CoingeckoRewarderTokenName": "",
             "RewarderPriceLP": AURORA_WNEAR,
             "RewarderTokenDecimals": 18,
+            },
+        25: {
+            "LP": "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0",
+            "LPType": "",
+            "Rewarder": "0x84C8B673ddBF0F647c350dEd488787d3102ebfa3",
+            "CoingeckoRewarderTokenName": "",
+            "RewarderPriceLP": AURORA_WNEAR,
+            "RewarderTokenDecimals": 18,
+            },
+        26: {
+            "LP": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
+            "LPType": "",
+            "Rewarder": "0x4e0152b260319e5131f853AeCB92c8f992AA0c97",
+            "CoingeckoRewarderTokenName": "",
+            "RewarderPriceLP": AURORA_WNEAR,
+            "RewarderTokenDecimals": 18,
+            },
+        27: {
+            "LP": "0x29C160d2EF4790F9A23B813e7544D99E539c28Ba",
+            "LPType": "",
+            "Rewarder": "0x0Cc7e9D333bDAb07b2C8d41363C72c472B7E9594",
+            "CoingeckoRewarderTokenName": "killswitch",
+            "RewarderPriceLP": "",
+            "RewarderTokenDecimals": 18,
             }
     }
 
