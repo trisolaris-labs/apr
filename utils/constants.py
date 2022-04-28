@@ -44,6 +44,7 @@ GBA_USDT = "0x7B273238C6DD0453C160f305df35c350a123E505"
 BBT_WNEAR = "0xadAbA7E2bf88Bd10ACb782302A568294566236dC"
 BSTN_WNEAR = "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9"
 LINEAR_WNEAR = "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1"
+AURORA_WNEAR = "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008"
 
 ## Pool information
 V1_POOLS = {
@@ -247,6 +248,14 @@ V2_POOLS = {
             "Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741",
             "CoingeckoRewarderTokenName": "",
             "RewarderPriceLP": BSTN_WNEAR,
+            "RewarderTokenDecimals": 18,
+            },
+        24: {
+            "LP": "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008",
+            "LPType": "",
+            "Rewarder": "0x34c58E960b80217fA3e0323d37563c762a131AD9",
+            "CoingeckoRewarderTokenName": "",
+            "RewarderPriceLP": AURORA_WNEAR,
             "RewarderTokenDecimals": 18,
             }
     }
