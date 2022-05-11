@@ -125,6 +125,7 @@ def getDataV1Pools(w3, id, address, chef, triPerBlock, totalAllocPoint, tri_deci
                 "allocPoint": allocPoint,
                 "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSD),
                 "apr2": 0,
+                "nonTriAPRs": [],
                 "chefVersion": "v1",
             }
 
@@ -162,6 +163,29 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
         reserveInUSDC = getReserveInUsd(w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio)
         totalStakedInUSDC = getTotalStakedInUSD(totalStaked, totalSupply, reserveInUSDC)
 
+    nonTriAPRs = []
+
+    # Rewarder logic
+    for _, rewarder_item in pool["Rewarders"].items():
+        if rewarder_item["Rewarder"] == ZERO_ADDRESS:
+            continue
+        
+        rewardsPerBlockForItem = 0
+        doubleRewardUsdRatioForItem = 0
+        rewarderContractForItem = init_rewarder(rewarder_item["Rewarder"])
+        rewardDecimalsForItem = rewarder_item["RewarderTokenDecimals"]
+        rewardsPerBlockForItem = rewarderContractForItem.functions.tokenPerBlock().call()/(10**rewardDecimalsForItem)
+        rewarderAddressForItem = rewarderContractForItem.functions.rewardToken().call()
+        print(f"Double rewards per block: {rewardsPerBlockForItem}")
+        doubleRewardUsdRatioForItem = getTokenUSDRatio(w3, rewarder_item, rewarderAddressForItem, wnearUsdRatio, triUsdRatio)
+
+        nonTriAPRs.append(
+            {
+                "address": rewarderAddressForItem,
+                "apr": getAPR(doubleRewardUsdRatioForItem, rewardsPerBlockForItem, totalStakedInUSDC),
+            }
+        )
+
     return {
                 "id": len(V1_POOLS) + id,
                 "poolId": id,
@@ -173,5 +197,6 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
                 "allocPoint": allocPoint,
                 "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSDC),
                 "apr2": getAPR(doubleRewardUsdRatio, rewardsPerBlock, totalStakedInUSDC),
+                "nonTriAPRs": nonTriAPRs,
                 "chefVersion": "v2",
             }
