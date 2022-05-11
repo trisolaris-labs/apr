@@ -11,10 +11,14 @@ Sample
         23: {
             "LP": "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9",
             "LPType": "",
-            "Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741",
-            "CoingeckoRewarderTokenName": "",
-            "RewarderPriceLP": BSTN_WNEAR,
-            "RewarderTokenDecimals": 18,
+            "Rewarders": {
+                    0: {
+                        "Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741",
+                        "CoingeckoRewarderTokenName": "",
+                        "RewarderPriceLP": BSTN_WNEAR,
+                        "RewarderTokenDecimals": 18,
+                    }
+                }
             }
 ```
 
