@@ -563,5 +563,18 @@
             }
         ],
         "chefVersion": "v2"
+    },
+    {
+        "id": 35,
+        "poolId": 28,
+        "lpAddress": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
+        "totalSupply": 35698159129083851304641,
+        "totalStaked": 0,
+        "totalStakedInUSD": 0.0,
+        "totalRewardRate": 0.0,
+        "allocPoint": 0,
+        "apr": 0,
+        "nonTriAPRs": [],
+        "chefVersion": "v2"
     }
 ]
