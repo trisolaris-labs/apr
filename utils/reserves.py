@@ -124,7 +124,6 @@ def getDataV1Pools(w3, id, address, chef, triPerBlock, totalAllocPoint, tri_deci
                 # "totalWeeklyRewardRate": totalWeeklyRewardRate,
                 "allocPoint": allocPoint,
                 "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSD),
-                "apr2": 0,
                 "nonTriAPRs": [],
                 "chefVersion": "v1",
             }
@@ -142,17 +141,6 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
         3600 * 24 * 7 * totalSecondRewardRate
     )
 
-    # Rewarder logic
-    rewardsPerBlock = 0
-    doubleRewardUsdRatio = 0
-    if pool["Rewarder"] != ZERO_ADDRESS:
-        rewarder = init_rewarder(pool["Rewarder"])
-        rewardDecimals = pool["RewarderTokenDecimals"]
-        rewardsPerBlock = rewarder.functions.tokenPerBlock().call()/(10**rewardDecimals)
-        rewarder_address = rewarder.functions.rewardToken().call()
-        print(f"Double rewards per block: {rewardsPerBlock}")
-        doubleRewardUsdRatio = getTokenUSDRatio(w3, pool, rewarder_address, wnearUsdRatio, triUsdRatio)    
-        
     # Stable AMM LP staked amts logic
     if pool["LPType"] == "StableAMM":
         stable_pool_contract = init_stable_pool(V2_STABLEPOOL_FACTORY[id]["poolContract"])
@@ -196,7 +184,6 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
                 "totalRewardRate": totalWeeklyRewardRate,
                 "allocPoint": allocPoint,
                 "apr": getAPR(triUsdRatio, totalSecondRewardRate, totalStakedInUSDC),
-                "apr2": getAPR(doubleRewardUsdRatio, rewardsPerBlock, totalStakedInUSDC),
                 "nonTriAPRs": nonTriAPRs,
                 "chefVersion": "v2",
             }
