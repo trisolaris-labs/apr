@@ -401,16 +401,12 @@ V2_POOLS = {
         28: {
             "LP": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
             "LPType": "StableAMM",
-            "Rewarder": ZERO_ADDRESS,
-            "CoingeckoRewarderTokenName": "",
-            "RewarderPriceLP": "",
-            "RewarderTokenDecimals": "",
             "Rewarders": {
                     0: {
-                        "Rewarder": ZERO_ADDRESS,
+                        "Rewarder": "0x78391f26397A099Ec9cC346A23f856d1284cBd06",
                         "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
+                        "RewarderPriceLP": AURORA_WNEAR,
+                        "RewarderTokenDecimals": 18,
                     }
                 }
             },
