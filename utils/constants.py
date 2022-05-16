@@ -397,11 +397,26 @@ V2_POOLS = {
                         "RewarderTokenDecimals": 18,
                     }
                 }
-            }
+            },
+        28: {
+            "LP": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
+            "LPType": "StableAMM",
+            "Rewarders": {
+                    0: {
+                        "Rewarder": "0x78391f26397A099Ec9cC346A23f856d1284cBd06",
+                        "CoingeckoRewarderTokenName": "",
+                        "RewarderPriceLP": AURORA_WNEAR,
+                        "RewarderTokenDecimals": 18,
+                    }
+                }
+            },
     }
 
 V2_STABLEPOOL_FACTORY = {
         18: {
             "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"
+        },
+        28: {
+            "poolContract": "0x458459E48dbAC0C8Ca83F8D0b7b29FEfE60c3970"
         }
     }
