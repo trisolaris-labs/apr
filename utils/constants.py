@@ -46,6 +46,10 @@ BSTN_WNEAR = "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9"
 LINEAR_WNEAR = "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1"
 AURORA_WNEAR = "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008"
 
+SIMPLE = "simple"
+COMPLEX = "complex"
+
+
 ## Pool information
 V1_POOLS = {
     0: "0x63da4DB6Ef4e7C62168aB03982399F9588fCd198",
@@ -61,6 +65,7 @@ V2_POOLS = {
         0: {
             "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x94669d7a170bfe62FAc297061663e0B48C63B9B5",
@@ -73,6 +78,7 @@ V2_POOLS = {
         1: {
             "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1",
@@ -85,6 +91,7 @@ V2_POOLS = {
         2: {
             "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x89F6628927fdFA2592E016Ba5B14389a4b08D681",
@@ -97,6 +104,7 @@ V2_POOLS = {
         3: {
             "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x17d1597ec86fD6aecbfE0F32Ab2F2aD9c37E6750",
@@ -109,6 +117,7 @@ V2_POOLS = {
         4: {
             "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": ZERO_ADDRESS,
@@ -121,6 +130,7 @@ V2_POOLS = {
         5: {
             "LP": "0x6443532841a5279cb04420E61Cf855cBEb70dc8C",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": ZERO_ADDRESS,
@@ -133,6 +143,7 @@ V2_POOLS = {
         6: {
             "LP": "0x7be4a49AA41B34db70e539d4Ae43c7fBDf839DfA",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": ZERO_ADDRESS,
@@ -145,6 +156,7 @@ V2_POOLS = {
         7: {
             "LP": "0x3dC236Ea01459F57EFc737A12BA3Bb5F3BFfD071",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": ZERO_ADDRESS,
@@ -157,6 +169,7 @@ V2_POOLS = {
         8: {
             "LP": "0x48887cEEA1b8AD328d5254BeF774Be91B90FaA09", 
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x42b950FB4dd822ef04C4388450726EFbF1C3CF63",
@@ -169,6 +182,7 @@ V2_POOLS = {
         9: {
             "LP": "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f", 
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x9847F7e33CCbC0542b05d15c5cf3aE2Ae092C057",
@@ -181,6 +195,7 @@ V2_POOLS = {
         10: {
             "LP": "0xdDAdf88b007B95fEb42DDbd110034C9a8e9746F2",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0xbbE41F699B0fB747cd4bA21067F6b27e0698Bc30",
@@ -193,6 +208,7 @@ V2_POOLS = {
         11: {
             "LP": "0x5913f644A10d98c79F2e0b609988640187256373",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x7B9e31BbEdbfdc99e3CC8b879b9a3B1e379Ce530",
@@ -205,6 +221,7 @@ V2_POOLS = {
         12: {
             "LP": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0xf267212F1D8888e0eD20BbB0c7C87A089cDe6E88",
@@ -217,6 +234,7 @@ V2_POOLS = {
         13: {
             "LP": "0xb419ff9221039Bdca7bb92A131DD9CF7DEb9b8e5",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0xb84293D04137c9061afe34118Dac9931df153826",
@@ -229,6 +247,7 @@ V2_POOLS = {
         14: {
             "LP": "0xFBc4C42159A5575a772BebA7E3BF91DB508E127a",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x028Fbc4BB5787e340524EF41d95875Ac2C382101",
@@ -241,6 +260,7 @@ V2_POOLS = {
         15: {
             "LP": "0x7B273238C6DD0453C160f305df35c350a123E505",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0xDAc58A615E2A1a94D7fb726a96C273c057997D50",
@@ -253,6 +273,7 @@ V2_POOLS = {
         16: {
             "LP": "0x6277f94a69Df5df0Bc58b25917B9ECEFBf1b846A",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x170431D69544a1BC97855C6564E8460d39508844",
@@ -265,18 +286,26 @@ V2_POOLS = {
         17: {
             "LP": "0xadAbA7E2bf88Bd10ACb782302A568294566236dC",
             "LPType": "",
+            "RewarderType":COMPLEX,
             "Rewarders": {
                     0: {
-                        "Rewarder": "0xABE01A6b6922130C982E221681EB4C4aD07A21dA",
+                        "Rewarder": "0x6820E1EB7412cADB107B415DC9f8e05210e847AE",
                         "CoingeckoRewarderTokenName": "",
                         "RewarderPriceLP": BBT_WNEAR,
                         "RewarderTokenDecimals": 18,
-                    }
+                    },
+                    1: {
+                        "Rewarder": "0x6820E1EB7412cADB107B415DC9f8e05210e847AE",
+                        "CoingeckoRewarderTokenName": "",
+                        "RewarderPriceLP": WNEAR_USDC,
+                        "RewarderTokenDecimals": 24,
+                    },
                 }
             },
         18: {
             "LP": "0x5EB99863f7eFE88c447Bc9D52AA800421b1de6c9",
             "LPType": "StableAMM",
+            "RewarderType":SIMPLE,
             "Rewarder": ZERO_ADDRESS,
             "CoingeckoRewarderTokenName": "",
             "RewarderPriceLP": "",
@@ -287,12 +316,13 @@ V2_POOLS = {
                         "CoingeckoRewarderTokenName": "",
                         "RewarderPriceLP": "",
                         "RewarderTokenDecimals": "",
-                    }
+                    },
                 }
             },
         19: {
             "LP": "0x5E74D85311fe2409c341Ce49Ce432BB950D221DE",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": ZERO_ADDRESS,
@@ -305,6 +335,7 @@ V2_POOLS = {
         20: {
             "LP": "0xbe753E99D0dBd12FB39edF9b884eBF3B1B09f26C",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0xfe9B7A3bf38cE0CA3D5fA25d371Ff5C6598663d4",
@@ -317,6 +348,7 @@ V2_POOLS = {
         21: {
             "LP": "0xbC0e71aE3Ef51ae62103E003A9Be2ffDe8421700",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x87a03aFA70302a5a0F6156eBEd27f230ABF0e69C",
@@ -329,6 +361,7 @@ V2_POOLS = {
         22: {
             "LP": "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x1616B20534d1d1d731C31Ca325F4e909b8f3E0f0",
@@ -341,6 +374,7 @@ V2_POOLS = {
         23: {
             "LP": "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741",
@@ -353,6 +387,7 @@ V2_POOLS = {
         24: {
             "LP": "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x34c58E960b80217fA3e0323d37563c762a131AD9",
@@ -365,6 +400,7 @@ V2_POOLS = {
         25: {
             "LP": "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x84C8B673ddBF0F647c350dEd488787d3102ebfa3",
@@ -377,6 +413,7 @@ V2_POOLS = {
         26: {
             "LP": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x4e0152b260319e5131f853AeCB92c8f992AA0c97",
@@ -389,6 +426,7 @@ V2_POOLS = {
         27: {
             "LP": "0x29C160d2EF4790F9A23B813e7544D99E539c28Ba",
             "LPType": "",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x0Cc7e9D333bDAb07b2C8d41363C72c472B7E9594",
@@ -401,6 +439,7 @@ V2_POOLS = {
         28: {
             "LP": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
             "LPType": "StableAMM",
+            "RewarderType":SIMPLE,
             "Rewarders": {
                     0: {
                         "Rewarder": "0x78391f26397A099Ec9cC346A23f856d1284cBd06",
