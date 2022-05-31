@@ -4,10 +4,13 @@ from web3 import Web3
 from .constants import (
     CHEF_ADDRESS,
     CHEFV2_ADDRESS,
+    PTRI_ADDRESS,
     TRIMAKER_ADDRESS,
+    STABLELPMAKER_ADDRESS,
+    USDCMAKER_ADDRESS
 )
 
-web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
+web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/6hnvSmry5GBrjanXK4WTHbqjFKTqBwcodwY8QnQU3ojt")
 w3 = Web3(Web3.HTTPProvider(web3_url))
 
 def init_contract(contract_address, json_filename):
@@ -37,6 +40,15 @@ def init_stable_pool(address):
 
 def init_tri_maker():
     return init_contract(TRIMAKER_ADDRESS, 'abi/triMaker.json')
+
+def init_usdc_maker():
+    return init_contract(USDCMAKER_ADDRESS, 'abi/usdcMaker.json')
+
+def init_stablelp_maker():
+    return init_contract(STABLELPMAKER_ADDRESS, 'abi/stableLpMaker.json')
+
+def init_ptri():
+    return init_contract(PTRI_ADDRESS, 'abi/pTri.json')
 
 def init_erc20(erc20_address):
     return init_contract(erc20_address, 'abi/erc20.json')
