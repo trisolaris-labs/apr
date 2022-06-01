@@ -97,10 +97,6 @@ def ptri_base(timestamp):
    
     #Stable LP Maker Operations
     convertStablestoLP(stable_lp_maker, w3, acct)
-
-
-    #pTRI Vesting Period Update
-    # updateVestingSchedule(ptri, vesting_period_increment, w3, acct)
    
 
 
