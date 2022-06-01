@@ -267,7 +267,7 @@ V2_POOLS = {
             "LPType": "",
             "Rewarders": {
                     0: {
-                        "Rewarder": "0xABE01A6b6922130C982E221681EB4C4aD07A21dA",
+                        "Rewarder": "0x41A7e26a2cC7DaDc5A31fE9DD77c30Aeb029184d",
                         "CoingeckoRewarderTokenName": "",
                         "RewarderPriceLP": BBT_WNEAR,
                         "RewarderTokenDecimals": 18,
