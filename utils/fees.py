@@ -16,12 +16,46 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
         txn_hash = signed_txn.hex()
         receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
         for l in receipt['logs']:
-            if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000802119e4e253d5c19aa06a5d567c5a41596d6803"):
+            if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000035b1c3d2b6d89906697f67bf6d56f6eedb3120c"):
                 tri_amount += int(l['data'], 16)
     except ValueError as e:
         if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
             raise e
-    return tri_amount
+    return 1
+
+@retry((ValueError), delay=10, tries=5)
+def convertStablestoLP(stable_lp_maker, w3, acct):
+    try:
+        transaction = {
+        'gasPrice': w3.eth.gas_price,
+        'nonce': w3.eth.getTransactionCount(acct.address),
+        }
+        convert_tranasction = stable_lp_maker.functions.convertStables().buildTransaction(transaction)
+        signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
+        signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
+        txn_hash = signed_txn.hex()
+        receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+    except ValueError as e:
+        if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
+            raise e
+    return 1
+
+@retry((ValueError), delay=10, tries=5)
+def updateVestingSchedule(ptri, vesting_period, w3, acct):
+    try:
+        transaction = {
+        'gasPrice': w3.eth.gas_price,
+        'nonce': w3.eth.getTransactionCount(acct.address),
+        }
+        convert_tranasction = ptri.functions.updateVestingSchedule(vesting_period).buildTransaction(transaction)
+        signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
+        signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
+        txn_hash = signed_txn.hex()
+        receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+    except ValueError as e:
+        if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
+            raise e
+    return 1
 
 
 def getAccount(mnemonic):
