@@ -24,15 +24,13 @@ from utils.fees import (
     convertFeesForPair,
     getAccount,
     getFundedAccount,
-    convertStablestoLP,
-    updateVestingSchedule
+    convertStablestoLP
 )
 from utils.node import (
     w3,
     init_usdc_maker,
     init_erc20,
-    init_stablelp_maker,
-    init_ptri
+    init_stablelp_maker
 )
 from time import time, sleep
 
@@ -112,6 +110,3 @@ def ptri_base(timestamp):
     xtri_data["timestamp"] = current_time
 
     return xtri_data
-
-
-ptri_base(1652995245)
