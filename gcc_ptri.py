@@ -13,7 +13,7 @@ def gcc_ptri(data, context):
 
     print(TAG + "Beginning Google Cloud Fn processing of pTRI reward distribution for event_id: {0}".format(event_id))
     
-    ptri_base()
+    ptri_base(None)
 
     print(TAG + "Reward distribution completed")
 
