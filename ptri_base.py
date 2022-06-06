@@ -64,7 +64,6 @@ TAG = "[GCC_PTRI_BASE] "
 
 def ptri_base(timestamp):
     try:
-        # 2/8/22 - Total cost of a complete run is 0.00016Ξ
         acct = getFundedAccount()
     except:
         temp_mnemonic = "test test test test test test test test test test test junk"
@@ -108,3 +107,6 @@ def ptri_base(timestamp):
     ptri_data["timestamp"] = current_time
 
     return ptri_data
+
+if __name__ == "__main__":
+    ptri_base(None)
