@@ -4,7 +4,7 @@ from retry import retry
 
 @retry((ValueError), delay=10, tries=5)
 def convertFeesForPair(tri_maker, pair, w3, acct):
-    tri_amount = 0
+    usdc_amount = 0
     try:
         transaction = {
         'gasPrice': w3.eth.gas_price,
@@ -15,10 +15,13 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
         signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
         txn_hash = signed_txn.hex()
         receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+        for l in receipt['logs']:
+            if (l['topics'][0].hex() == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef' and l['topics'][2].hex() == "0x000000000000000000000000802119e4e253d5c19aa06a5d567c5a41596d6803"):
+                usdc_amount += int(l['data'], 16)
     except ValueError as e:
         if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
             raise e
-    return
+    return usdc_amount
 
 @retry((ValueError), delay=10, tries=5)
 def convertStablestoLP(stable_lp_maker, w3, acct):
