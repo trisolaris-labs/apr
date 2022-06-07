@@ -21,7 +21,7 @@ from utils.constants import (
     PTRI_ADDRESS,
 )
 from utils.fees import (
-    convertFeesForPair,
+    convertFeesForPairs,
     getAccount,
     getFundedAccount,
     convertStablestoLP
@@ -86,9 +86,11 @@ def ptri_base(timestamp):
     ptri_data = {}
 
     #USDC Maker Operations
-    for pair in pairs:
+    chunks = [pairs[x:x+2] for x in range(0, len(pairs), 2)]
+    for chunk in chunks:
+        print(chunk)
         sleep(5)
-        convertFeesForPair(usdc_maker, pair, w3, acct)
+        convertFeesForPairs(usdc_maker, chunk, w3, acct)
         
 
     #Stable LP Maker Operations

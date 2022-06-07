@@ -26,12 +26,20 @@ def gcc_ptri(data, context):
     blob = get_google_cloud_storage_blob(TRISOLARIS_XTRI_BUCKET, TRISOLARIS_XTRI_BUCKET_FILE_PATH)
     ptri_data = json.loads(blob.download_as_string(client=None))
 
-    result = ptri_base(ptri_data['timestamp'])
+    result = ptri_base(ptri_data[-1]['timestamp'])
+    ptri_data.append(result)
 
-    blob.upload_from_string(
-        data=json.dumps(result, ensure_ascii=False, indent=4),
-        content_type='application/json',
-    )
+    if len(data) < 7:
+        blob.upload_from_string(
+            data=json.dumps(ptri_data, ensure_ascii=False, indent=4),
+            content_type='application/json',
+        )
+    else:
+        blob.upload_from_string(
+            data=json.dumps(ptri_data[-7:], ensure_ascii=False, indent=4),
+            content_type='application/json',
+        )
+    
 
     # Don't serve stale data
     blob.cache_control = 'no-cache'

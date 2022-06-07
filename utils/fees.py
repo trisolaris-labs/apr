@@ -24,6 +24,27 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
     return usdc_amount
 
 @retry((ValueError), delay=10, tries=5)
+def convertFeesForPairs(tri_maker, pairs, w3, acct):
+    token0 = []
+    token1 = []
+    for pair in pairs:
+        token0.append(pair[0])
+        token1.append(pair[1])
+    try:
+        transaction = {
+        'gasPrice': w3.eth.gas_price,
+        'nonce': w3.eth.getTransactionCount(acct.address),
+        }
+        convert_tranasction = tri_maker.functions.convertMultiple(token0, token1).buildTransaction(transaction)
+        signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
+        signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
+        txn_hash = signed_txn.hex()
+        w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+    except ValueError as e:
+        if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
+            raise e
+
+@retry((ValueError), delay=10, tries=5)
 def convertStablestoLP(stable_lp_maker, w3, acct):
     tlp_amount = 0
     try:
