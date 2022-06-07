@@ -25,6 +25,7 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
 
 @retry((ValueError), delay=10, tries=5)
 def convertStablestoLP(stable_lp_maker, w3, acct):
+    tlp_amount = 0
     try:
         transaction = {
         'gasPrice': w3.eth.gas_price,
@@ -35,10 +36,14 @@ def convertStablestoLP(stable_lp_maker, w3, acct):
         signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
         txn_hash = signed_txn.hex()
         receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
+        for l in receipt['logs']:
+            # checks for LogLpTokensSentTopTRI event
+            if (l['topics'][0].hex() == '0x0449e4bb1174156d2eca3c858613207c8abf4f2ec58f11e5bf7e148331428180'):
+                tlp_amount += int(l['data'], 16)
     except ValueError as e:
         if str(e).find('INSUFFICIENT_LIQUIDITY_BURNED') == -1:
             raise e
-    return
+    return tlp_amount
 
 
 def getAccount(mnemonic):

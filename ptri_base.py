@@ -18,7 +18,7 @@ from utils.constants import (
     BSTN_ADDRESS,
     FLX_ADDRESS,
     EMPYR_ADDRESS,
-    STABLELPMAKER_ADDRESS
+    PTRI_ADDRESS,
 )
 from utils.fees import (
     convertFeesForPair,
@@ -31,6 +31,9 @@ from utils.node import (
     init_usdc_maker,
     init_erc20,
     init_stablelp_maker
+)
+from utils.prices import (
+    getCoingeckoUSDPriceRatio
 )
 from time import time, sleep
 
@@ -73,10 +76,11 @@ def ptri_base(timestamp):
 
     usdc_maker = init_usdc_maker()
     stable_lp_maker = init_stablelp_maker()
-    usdc = init_erc20(USDC_ADDRESS)
+    tri = init_erc20(TRI_ADDRESS)
     
-    usdc_amount = 0
-    initial_stableLPMaker_balance = usdc.functions.balanceOf(STABLELPMAKER_ADDRESS).call()
+    tlp_amount = 0
+    initial_tri_balance_in_ptri = tri.functions.balanceOf(PTRI_ADDRESS).call()
+    tri_price = getCoingeckoUSDPriceRatio("trisolaris")
     current_time = time()
 
     ptri_data = {}
@@ -84,26 +88,26 @@ def ptri_base(timestamp):
     #USDC Maker Operations
     for pair in pairs:
         sleep(5)
-        usdc_amount += convertFeesForPair(usdc_maker, pair, w3, acct)
-        print(TAG, 'usdc_amount: ',  usdc_amount)
+        convertFeesForPair(usdc_maker, pair, w3, acct)
         
-    print(TAG, current_time, initial_stableLPMaker_balance, usdc_amount)
 
     #Stable LP Maker Operations
-    convertStablestoLP(stable_lp_maker, w3, acct)
+    tlp_amount += convertStablestoLP(stable_lp_maker, w3, acct)
+    print(TAG, 'tlp_amount: ',  tlp_amount)
+    print(TAG, current_time, initial_tri_balance_in_ptri, tlp_amount)
 
     if timestamp != 0 and timestamp != None:
         timedelta = current_time - timestamp
-        # TODO: Change to usdc_amount/(TRI_BALANCE_IN_pTRI*PRICE_OF_TRI)
-        if initial_stableLPMaker_balance:
-            pr = usdc_amount/initial_stableLPMaker_balance
+        if initial_tri_balance_in_ptri:
+            pr = (tlp_amount*tri_price)/(initial_tri_balance_in_ptri)
         else:
-            pr = usdc_amount
+            pr = (tlp_amount*tri_price)
         apr = pr*(3600*24*365)*100/timedelta
         ptri_data["apr"] = apr    
 
-    ptri_data["stableLPMakerUsdc"] = initial_stableLPMaker_balance
-    ptri_data["convertedUsdcAmount"] = usdc_amount
+    ptri_data["triBalance"] = initial_tri_balance_in_ptri
+    ptri_data["convertedUsdcAmount"] = tlp_amount
+    ptri_data["tri_price"] = tri_price
     ptri_data["timestamp"] = current_time
 
     return ptri_data
