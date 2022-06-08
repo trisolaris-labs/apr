@@ -435,7 +435,7 @@ V2_POOLS = {
                         "Rewarder": "0xD59c44fb39638209ec4ADD6DcD7A230a286055ee",
                         "CoingeckoRewarderTokenName": "",
                         "RewarderPriceLP": META_WNEAR,
-                        "RewarderTokenDecimals": ,
+                        "RewarderTokenDecimals": 24,
                     }
                 }
             },
@@ -446,8 +446,8 @@ V2_POOLS = {
                     0: {
                         "Rewarder": "0x9a418aB67F94164EB931344A4EBF1F7bDd3E97aE",
                         "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": ,
-                        "RewarderTokenDecimals": ,
+                        "RewarderPriceLP": BRRR_WNEAR,
+                        "RewarderTokenDecimals": 18,
                     }
                 }
             }
