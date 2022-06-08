@@ -20,7 +20,7 @@ def gcc_ptri_fees(event, context):
             frequency = int(base64.b64decode(event['data']).decode('utf-8'))
             print(TAG, "decoded frequency to " + frequency)
         except:
-            print(TAG, "failed to decode frequency ", event['data'])
+            print(TAG, "failed to decode frequency ", event)
             print(TAG, "using fallback frequency of 24")
             frequency = 24
     else:
