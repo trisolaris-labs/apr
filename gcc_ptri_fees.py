@@ -16,7 +16,7 @@ def gcc_ptri_fees(event, context):
     print(TAG + 'Starting at ' + getTime())
 
     frequency = int(event.get('attributes', {}).get('frequency', 24))
-    print(TAG, "using frequency: ", frequency)
+    print(TAG + "Using frequency: ", frequency)
 
     ptri_fees_base(frequency)
 

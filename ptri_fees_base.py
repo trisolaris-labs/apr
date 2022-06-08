@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+from requests import ReadTimeout
 from web3 import Web3
 import math
 from utils.constants import (
@@ -76,9 +77,13 @@ def ptri_fees_base(frequency = 24):
     start_index, limit = getRange(frequency)
     chunks = [pairs[x] for x in range(start_index, limit)]
     for pair in chunks:
-        print(TAG, current_time, pair)
+        print(TAG, current_time, "STARTING", pair)
         sleep(5)
-        convertFeesForPair(usdc_maker, pair, w3, acct)
+        try:
+            tx = convertFeesForPair(usdc_maker, pair, w3, acct)
+            print(TAG, current_time, "SUCCESS", pair, tx)
+        except ReadTimeout as e:
+            print(TAG, current_time, "ERROR", pair, e)
 
 # Based on the frequency this method is called
 # Gives an index range based on 
@@ -90,7 +95,7 @@ def getRange(frequency = 24):
   start_index = (((current_hour / 24) * frequency) / frequency) * pairs_length
   start_index = math.floor(start_index)
   step = pairs_length / frequency
-  limit = math.max(math.ceil(start_index + step), pairs_length)
+  limit = min(math.ceil(start_index + step), pairs_length)
 
   return start_index, limit
     
