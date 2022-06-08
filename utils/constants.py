@@ -48,6 +48,8 @@ BBT_WNEAR = "0xadAbA7E2bf88Bd10ACb782302A568294566236dC"
 BSTN_WNEAR = "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9"
 LINEAR_WNEAR = "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1"
 AURORA_WNEAR = "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008"
+PAD_WNEAR = "0x6a29e635BCaB8aBeE1491059728e3D6D11d6A114"
+BRRR_WNEAR = "0x71dBEB011EAC90C51b42854A77C45C1E53242698"
 
 ## Pool information
 V1_POOLS = {
@@ -413,6 +415,42 @@ V2_POOLS = {
                     }
                 }
             },
+        29: {
+            "LP": "0x6a29e635BCaB8aBeE1491059728e3D6D11d6A114",
+            "LPType": "",
+            "Rewarders": {
+                    0: {
+                        "Rewarder": "0xe4A4e38a30E9100a147e0C146a9AeAC74C28eD4f",
+                        "CoingeckoRewarderTokenName": "",
+                        "RewarderPriceLP": PAD_WNEAR,
+                        "RewarderTokenDecimals":18,
+                    }
+                }
+            },
+        30: {
+            "LP": "0x120e713AD36eCBff171FC8B7cf19FA8B6f6Ba50C",
+            "LPType": "",
+            "Rewarders": {
+                    0: {
+                        "Rewarder": "0xD59c44fb39638209ec4ADD6DcD7A230a286055ee",
+                        "CoingeckoRewarderTokenName": "",
+                        "RewarderPriceLP": META_WNEAR,
+                        "RewarderTokenDecimals": ,
+                    }
+                }
+            },
+        31: {
+            "LP": "0x71dBEB011EAC90C51b42854A77C45C1E53242698",
+            "LPType": "",
+            "Rewarders": {
+                    0: {
+                        "Rewarder": "0x9a418aB67F94164EB931344A4EBF1F7bDd3E97aE",
+                        "CoingeckoRewarderTokenName": "",
+                        "RewarderPriceLP": ,
+                        "RewarderTokenDecimals": ,
+                    }
+                }
+            }
     }
 
 V2_STABLEPOOL_FACTORY = {
