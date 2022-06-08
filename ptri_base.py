@@ -19,7 +19,7 @@ from utils.prices import (
 )
 from time import time
 
-TAG = "[GCC_PTRI_BASE] "
+TAG = "[PTRI_BASE] "
 
 def ptri_base(timestamp):
     try:
