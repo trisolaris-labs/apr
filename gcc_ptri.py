@@ -1,5 +1,5 @@
 """
-This file is used for Google Cloud functions to collect fees and distribute them to pTRI holders
+This file is used for Google Cloud functions to distribute fees to pTRI holders and calculate APR
 """
 
 from gcc_utils import get_event_id

@@ -1,67 +1,23 @@
 import os
 from web3 import Web3
 from utils.constants import (
-    ATLUNA_ADDRESS,
-    ATUST_ADDRESS,
-    ASHIBAM_ADDRESS,
     TRI_ADDRESS,
-    WNEAR_ADDRESS,
-    WETH_ADDRESS,
-    AURORA_ADDRESS,
-    USDC_ADDRESS,
-    USDT_ADDRESS,
-    WBTC_ADDRESS,
-    SHITZU_ADDRESS,
-    POLAR_ADDRESS,
-    SPOLAR_ADDRESS,
-    STNEAR_ADDRESS,
-    BSTN_ADDRESS,
-    FLX_ADDRESS,
-    EMPYR_ADDRESS,
-    PTRI_ADDRESS,
+    PTRI_ADDRESS
 )
 from utils.fees import (
-    convertFeesForPairs,
     getAccount,
     getFundedAccount,
     convertStablestoLP
 )
 from utils.node import (
     w3,
-    init_usdc_maker,
     init_erc20,
     init_stablelp_maker
 )
 from utils.prices import (
     getCoingeckoUSDPriceRatio
 )
-from time import time, sleep
-
-pairs = [
-    (AURORA_ADDRESS, TRI_ADDRESS),
-    (SHITZU_ADDRESS, USDC_ADDRESS),
-    (POLAR_ADDRESS, WNEAR_ADDRESS),
-    (SPOLAR_ADDRESS, WNEAR_ADDRESS),
-    (STNEAR_ADDRESS, WNEAR_ADDRESS),
-    (BSTN_ADDRESS, WNEAR_ADDRESS),
-    (ATLUNA_ADDRESS, WNEAR_ADDRESS), 
-    (ATUST_ADDRESS, WNEAR_ADDRESS),
-    (USDC_ADDRESS, WNEAR_ADDRESS),
-    (USDT_ADDRESS, WNEAR_ADDRESS),
-    (WBTC_ADDRESS, WNEAR_ADDRESS),
-    (TRI_ADDRESS, WNEAR_ADDRESS),
-    (TRI_ADDRESS, USDC_ADDRESS),
-    (TRI_ADDRESS, USDT_ADDRESS),
-    (WETH_ADDRESS, TRI_ADDRESS),
-    (WETH_ADDRESS, WNEAR_ADDRESS),
-    (WETH_ADDRESS, USDC_ADDRESS),
-    (WETH_ADDRESS, USDT_ADDRESS),
-    (AURORA_ADDRESS, WETH_ADDRESS),
-    (ASHIBAM_ADDRESS, WETH_ADDRESS),
-    (USDC_ADDRESS, USDT_ADDRESS),
-    (FLX_ADDRESS, WNEAR_ADDRESS),
-    (EMPYR_ADDRESS, USDC_ADDRESS)
-    ]
+from time import time
 
 TAG = "[GCC_PTRI_BASE] "
 
@@ -74,7 +30,6 @@ def ptri_base(timestamp):
     
     print(TAG + 'ptri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
-    usdc_maker = init_usdc_maker()
     stable_lp_maker = init_stablelp_maker()
     tri = init_erc20(TRI_ADDRESS)
     
@@ -84,14 +39,6 @@ def ptri_base(timestamp):
     current_time = time()
 
     ptri_data = {}
-
-    #USDC Maker Operations
-    chunks = [pairs[x:x+2] for x in range(0, len(pairs), 2)]
-    for chunk in chunks:
-        print(chunk)
-        sleep(5)
-        convertFeesForPairs(usdc_maker, chunk, w3, acct)
-        
 
     #Stable LP Maker Operations
     tlp_amount += convertStablestoLP(stable_lp_maker, w3, acct)
