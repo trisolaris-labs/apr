@@ -2,7 +2,6 @@
 This file is used for Google Cloud functions to collect fees
 """
 
-import base64
 from gcc_utils import get_event_id
 from ptri_fees_base import ptri_fees_base
 import time
@@ -16,18 +15,8 @@ def gcc_ptri_fees(event, context):
     
     print(TAG + 'Starting at ' + getTime())
 
-    if 'data' in event:
-        try:
-            frequency = int(base64.b64decode(event['data']).decode('utf-8'))
-            print(TAG, "decoded frequency to " + frequency)
-        except:
-            print(TAG, "failed to decode frequency ", event['data'])
-            print(TAG, "using fallback frequency of 24")
-            frequency = 24
-    else:
-        print(TAG, "'data' not in event; using fallback frequency of 24")
-        frequency = 24
-
+    frequency = int(event.get('attributes', {}).get('frequency', 24))
+    print(TAG, "using frequency: ", frequency)
 
     ptri_fees_base(frequency)
 
