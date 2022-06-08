@@ -85,12 +85,12 @@ def ptri_fees_base(frequency = 24):
 #   (1) current hour
 #   (2) length of items in `pairs`
 def getRange(frequency = 24):
-  len = len(pairs)
+  pairs_length = len(pairs)
   current_hour = datetime.now().hour
-  start_index = (((current_hour / 24) * frequency) / frequency) * len
+  start_index = (((current_hour / 24) * frequency) / frequency) * pairs_length
   start_index = math.floor(start_index)
-  step = len / frequency
-  limit = math.max(math.ceil(start_index + step), len)
+  step = pairs_length / frequency
+  limit = math.max(math.ceil(start_index + step), pairs_length)
 
   return start_index, limit
     
