@@ -1,6 +1,8 @@
 import os
 import json
 from web3 import Web3
+
+from .memoize import memoize
 from .constants import (
     CHEF_ADDRESS,
     CHEFV2_ADDRESS,
@@ -52,3 +54,8 @@ def init_ptri():
 
 def init_erc20(erc20_address):
     return init_contract(erc20_address, 'abi/erc20.json')
+
+@memoize
+def getTokenSymbol(address):
+    token = init_erc20(address)
+    return token.functions.symbol().call()

@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+import time
 from requests import ReadTimeout
 from web3 import Web3
 import math
@@ -28,10 +29,10 @@ from utils.fees import (
     getFundedAccount
 )
 from utils.node import (
+    getTokenSymbol,
     w3,
     init_usdc_maker
 )
-from time import time, sleep
 
 pairs = [
     (AURORA_ADDRESS, TRI_ADDRESS),
@@ -71,19 +72,19 @@ def ptri_fees_base(frequency = 24):
     print(TAG + 'ptri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
     usdc_maker = init_usdc_maker()
-    current_time = time()
 
     #USDC Maker Operations
     start_index, limit = getRange(frequency)
     chunks = [pairs[x] for x in range(start_index, limit)]
     for pair in chunks:
-        print(TAG, current_time, "STARTING", pair)
-        sleep(5)
+        pairSymbols = ":".join(map(lambda x: getTokenSymbol(x), pair))
         try:
-            tx = convertFeesForPair(usdc_maker, pair, w3, acct)
-            print(TAG, current_time, "SUCCESS", pair, tx)
+            convertFeesForPair(usdc_maker, pair, w3, acct)
+            print(f"{TAG}{pairSymbols} {getTime()} SUCCESS")
         except ReadTimeout as e:
-            print(TAG, current_time, "ERROR", pair, e)
+            print(f"{TAG}{pairSymbols} {getTime()} {e}")
+        finally:
+            time.sleep(5)
 
 # Based on the frequency this method is called
 # Gives an index range based on 
@@ -101,6 +102,11 @@ def getRange(frequency = 24):
     
 def normalize(values, actual_bounds, desired_bounds):
     return [desired_bounds[0] + (x - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]) for x in values]
+
+def getTime():
+    t = time.localtime()
+    current_time = time.strftime("%H:%M:%S", t)
+    return current_time
 
 if __name__ == "__main__":
     ptri_fees_base(None)
