@@ -9,7 +9,8 @@ from .constants import (
     PTRI_ADDRESS,
     TRIMAKER_ADDRESS,
     STABLELPMAKER_ADDRESS,
-    USDCMAKER_ADDRESS
+    USDCMAKER_ADDRESS,
+    STABLELPMAKERV2_ADDRESS
 )
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
@@ -48,6 +49,9 @@ def init_usdc_maker():
 
 def init_stablelp_maker():
     return init_contract(STABLELPMAKER_ADDRESS, 'abi/stableLpMaker.json')
+
+def init_stablelp_maker_v2():
+    return init_contract(STABLELPMAKERV2_ADDRESS, 'abi/stableLpMakerV2.json')
 
 def init_ptri():
     return init_contract(PTRI_ADDRESS, 'abi/pTri.json')
