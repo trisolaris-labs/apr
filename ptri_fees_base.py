@@ -4,6 +4,7 @@ import time
 from requests import ReadTimeout
 from web3 import Web3
 import math
+from gcc_utils import gccPrint
 from utils.constants import (
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
@@ -69,7 +70,7 @@ def ptri_fees_base(frequency = 24):
         temp_mnemonic = "test test test test test test test test test test test junk"
         acct = getAccount(temp_mnemonic)
     
-    print(TAG + 'ptri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
+    gccPrint(TAG + 'ptri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
     usdc_maker = init_usdc_maker()
 
@@ -80,9 +81,9 @@ def ptri_fees_base(frequency = 24):
         pairSymbols = ":".join(map(lambda x: getTokenSymbol(x), pair))
         try:
             convertFeesForPair(usdc_maker, pair, w3, acct)
-            print(f"{TAG}{pairSymbols} {getTime()} SUCCESS")
+            gccPrint(f"{TAG}{pairSymbols} {getTime()} SUCCESS")
         except ReadTimeout as e:
-            print(f"{TAG}{pairSymbols} {getTime()} {e}")
+            gccPrint(f"{TAG}{pairSymbols} {getTime()} {e}", "ERROR")
         finally:
             time.sleep(5)
 

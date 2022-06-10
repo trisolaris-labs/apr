@@ -2,6 +2,8 @@
 General utility methods for interacting with Google Cloud Compute
 """
 
+import json
+import os
 from google.cloud import storage
 from random import randrange
 
@@ -19,3 +21,10 @@ def get_google_cloud_storage_blob(gcc_bucket, gcc_file_path):
     blob = bucket.get_blob(gcc_file_path)
 
     return blob
+
+def gccPrint(message, severity = "DEFAULT"):
+    if os.getenv("GOOGLE_RUNTIME") is None:
+        print(message)
+    else:
+        entry = dict(severity=severity, message=message)
+        print(json.dumps(entry))
