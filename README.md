@@ -15,6 +15,7 @@ cd apr
 python3 -m venv venv
 pip install -e .
 pip install -e '.[dev]'
+pre-commit install
 
 #### Commit messages
 
