@@ -16,13 +16,18 @@ FILE_NAME = "ptri.json"
 # Google Cloud Storage
 TRISOLARIS_BUCKET = "trisolaris_public"
 TRISOLARIS_BUCKET_FILE_PATH = FILE_NAME
+
+
 # Uploads result to gcc file storage
 def gcc_ptri(data, context):
     event_id = get_event_id(context)
 
     print(
         TAG
-        + "Beginning Google Cloud Fn processing of pTRI reward distribution for event_id: {0}".format(
+        + """
+        Beginning Google Cloud Fn processing of
+        pTRI reward distribution for event_id: {0}
+        """.format(
             event_id
         )
     )

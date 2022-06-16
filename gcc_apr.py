@@ -16,18 +16,27 @@ TRISOLARIS_APR_BUCKET_FILE_PATH = FILE_NAME
 
 TAG = "[GCC_APR]"
 
+
 # Gets apr data from `apr_base`
 # Uploads result to gcc file storage
 def gcc_apr(data, context):
+
     event_id = get_event_id(context)
 
-    print(TAG + "Beginning Google Cloud Fn processing of apr for event_id: {0}".format(event_id))
+    print(
+        TAG
+        + "Beginning Google Cloud Fn processing of apr for event_id: {0}".format(
+            event_id
+        )
+    )
 
     result = apr_base()
 
     print(TAG + "APR calculation completed")
 
-    blob = get_google_cloud_storage_blob(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH)
+    blob = get_google_cloud_storage_blob(
+        TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH
+    )
 
     json_data = json.dumps(result, ensure_ascii=False, indent=4)
 

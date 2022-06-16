@@ -3,9 +3,6 @@ This file is used for Google Cloud functions to serve the weighted average price
 """
 
 import json
-import os
-
-from web3 import Web3
 
 from gcc_utils import get_event_id, get_google_cloud_storage_blob
 from utils.constants import TRI_ADDRESS, WNEAR_ADDRESS
@@ -34,7 +31,9 @@ NEAR_TOKEN_DECIMALS = 24
 def gcc_calculate_tri_xtri_prices(data, context):
     event_id = get_event_id(context)
 
-    print(TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id))
+    print(
+        TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id)
+    )
 
     nearPriceUSD = getWeightedAverageNearUSDPrice(w3)
     print(TAG + " weighted average NEAR price: ${0}".format(nearPriceUSD))
@@ -82,7 +81,9 @@ def getTargetTokenPairReserves(w3, tlpAddress, targetTokenAddress):
     reserves = pair.functions.getReserves().call()
 
     if t0 != targetTokenAddress and t1 != targetTokenAddress:
-        raise ValueError(TAG + "[getTargetTokenPairReserves] Pair does not contain target token")
+        raise ValueError(
+            TAG + "[getTargetTokenPairReserves] Pair does not contain target token"
+        )
 
     if t0 == targetTokenAddress:
         target_token_index = 0
@@ -108,14 +109,22 @@ def getWeightedAverageNearUSDPrice(w3):
         "USD": tlpNearUsdtReserves[1] / (10**6),
     }
 
-    totalPooledUSD = normalizedNearUsdcReserves["USD"] + normalizedNearUsdtReserves["USD"]
+    totalPooledUSD = (
+        normalizedNearUsdcReserves["USD"] + normalizedNearUsdtReserves["USD"]
+    )
     tlpNearUsdcWeight = normalizedNearUsdcReserves["USD"] / totalPooledUSD
     tlpNearUsdtWeight = normalizedNearUsdtReserves["USD"] / totalPooledUSD
 
-    tlpNearUsdtRatio = normalizedNearUsdtReserves["USD"] / normalizedNearUsdtReserves["NEAR"]
-    tlpNearUsdcRatio = normalizedNearUsdcReserves["USD"] / normalizedNearUsdcReserves["NEAR"]
+    tlpNearUsdtRatio = (
+        normalizedNearUsdtReserves["USD"] / normalizedNearUsdtReserves["NEAR"]
+    )
+    tlpNearUsdcRatio = (
+        normalizedNearUsdcReserves["USD"] / normalizedNearUsdcReserves["NEAR"]
+    )
 
-    return (tlpNearUsdtRatio * tlpNearUsdcWeight) + (tlpNearUsdcRatio * tlpNearUsdtWeight)
+    return (tlpNearUsdtRatio * tlpNearUsdcWeight) + (
+        tlpNearUsdcRatio * tlpNearUsdtWeight
+    )
 
 
 # Gets weighted average price of TRI token using TRI/wNEAR and TRI/USDT pools
@@ -136,8 +145,12 @@ def getWeightedAverageTriUSDPrice(w3, nearPriceUSD):
     tlpTriUsdtWeight = normalizedTriUsdtReserves["USD"] / totalPooledUSD
     tlpTriNearWeight = normalizedTriNearReserves["USD"] / totalPooledUSD
 
-    tlpTriUsdtRatio = normalizedTriNearReserves["USD"] / normalizedTriNearReserves["TRI"]
-    tlpTriNearRatio = normalizedTriUsdtReserves["USD"] / normalizedTriUsdtReserves["TRI"]
+    tlpTriUsdtRatio = (
+        normalizedTriNearReserves["USD"] / normalizedTriNearReserves["TRI"]
+    )
+    tlpTriNearRatio = (
+        normalizedTriUsdtReserves["USD"] / normalizedTriUsdtReserves["TRI"]
+    )
 
     return (tlpTriUsdtRatio * tlpTriUsdtWeight) + (tlpTriNearRatio * tlpTriNearWeight)
 

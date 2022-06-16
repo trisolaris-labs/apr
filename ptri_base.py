@@ -1,7 +1,5 @@
-import os
 from time import time
 
-from web3 import Web3
 
 from utils.constants import PTRI_ADDRESS, TRI_ADDRESS
 from utils.fees import convertStablestoLP, getAccount, getFundedAccount
@@ -14,11 +12,20 @@ TAG = "[PTRI_BASE] "
 def ptri_base(timestamp):
     try:
         acct = getFundedAccount()
-    except:
+    except Exception as ex:
+        print(
+            TAG
+            + "Error getting funded account: "
+            + str(ex)
+            + "\n"
+            + "Using temp mnemonic"
+        )
         temp_mnemonic = "test test test test test test test test test test test junk"
         acct = getAccount(temp_mnemonic)
 
-    print(TAG + "ptri acct balance: " + str(w3.eth.get_balance(acct.address) / 1e18) + "Ξ")
+    print(
+        TAG + "ptri acct balance: " + str(w3.eth.get_balance(acct.address) / 1e18) + "Ξ"
+    )
 
     stable_lp_maker = init_stablelp_maker()
     tri = init_erc20(TRI_ADDRESS)
@@ -35,7 +42,7 @@ def ptri_base(timestamp):
     print(TAG, "tlp_amount: ", tlp_amount)
     print(TAG, current_time, initial_tri_balance_in_ptri, tlp_amount)
 
-    if timestamp != 0 and timestamp != None:
+    if timestamp != 0 and timestamp is not None:
         timedelta = current_time - timestamp
         if initial_tri_balance_in_ptri:
             pr = (tlp_amount * tri_price) / (initial_tri_balance_in_ptri)

@@ -8,7 +8,6 @@ import json
 import os
 from statistics import geometric_mean
 
-from web3 import Web3
 
 from gcc_utils import get_event_id, get_google_cloud_storage_blob
 from utils.constants import TRI_ADDRESS, WNEAR_ADDRESS
@@ -37,7 +36,7 @@ MAX_WINDOW_SIZE = 20
 MAX_HISTORICAL_WINDOW_SIZE = 100
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
-w3 = Web3(Web3.HTTPProvider(web3_url))
+
 
 # Calculates time weighted average price of TRI token
 # Uploads historical prices to gcc file storage
@@ -45,7 +44,9 @@ w3 = Web3(Web3.HTTPProvider(web3_url))
 def gcc_calculate_tri_xtri_twap(data, context):
     event_id = get_event_id(context)
 
-    print(TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id))
+    print(
+        TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id)
+    )
 
     (near_price_usd, tri_price_usd, xtri_price_usd) = get_prices()
     print(TAG + " weighted average NEAR price: ${0}".format(near_price_usd))
@@ -71,15 +72,21 @@ def gcc_calculate_tri_xtri_twap(data, context):
     window_sized_historical_price_data = historical_price_data[-MAX_WINDOW_SIZE:]
 
     # Calculate geometric mean for all periods within the window
-    tri_twap = geometric_mean(map(lambda x: x["tri_price"], window_sized_historical_price_data))
-    xtri_twap = geometric_mean(map(lambda x: x["xtri_price"], window_sized_historical_price_data))
+    tri_twap = geometric_mean(
+        map(lambda x: x["tri_price"], window_sized_historical_price_data)
+    )
+    xtri_twap = geometric_mean(
+        map(lambda x: x["xtri_price"], window_sized_historical_price_data)
+    )
 
     # Upload calculated TWAPs to GCC
     twap_payload = {"TRI": tri_twap, "xTRI": xtri_twap}
     upload_to_gcc(twap_payload, TRISOLARIS_PRICES_BUCKET_FILE_PATH)
 
     # Trim list to maintain the max historical storage size
-    max_sized_historical_price_data = historical_price_data[-MAX_HISTORICAL_WINDOW_SIZE:]
+    max_sized_historical_price_data = historical_price_data[
+        -MAX_HISTORICAL_WINDOW_SIZE:
+    ]
 
     # Upload calculated historical prices to GCC (this file is not public)
     price_history_payload = {
@@ -133,26 +140,38 @@ def get_target_token_pair_reserves(w3, tlpAddress, targetTokenAddress):
 
 # Gets weighted average price of wNEAR token using wNEAR/USDC and wNEAR/USDT pools
 def get_weighted_average_near_usd_price(w3):
-    tlpNearUsdcReserves = get_target_token_pair_reserves(w3, TLP_NEAR_USDC, WNEAR_ADDRESS)
+    tlpNearUsdcReserves = get_target_token_pair_reserves(
+        w3, TLP_NEAR_USDC, WNEAR_ADDRESS
+    )
     normalizedNearUsdcReserves = {
         "NEAR": tlpNearUsdcReserves[0] / (10**NEAR_TOKEN_DECIMALS),
         "USD": tlpNearUsdcReserves[1] / (10**6),
     }
 
-    tlpNearUsdtReserves = get_target_token_pair_reserves(w3, TLP_NEAR_USDT, WNEAR_ADDRESS)
+    tlpNearUsdtReserves = get_target_token_pair_reserves(
+        w3, TLP_NEAR_USDT, WNEAR_ADDRESS
+    )
     normalizedNearUsdtReserves = {
         "NEAR": tlpNearUsdtReserves[0] / (10**NEAR_TOKEN_DECIMALS),
         "USD": tlpNearUsdtReserves[1] / (10**6),
     }
 
-    totalPooledUSD = normalizedNearUsdcReserves["USD"] + normalizedNearUsdtReserves["USD"]
+    totalPooledUSD = (
+        normalizedNearUsdcReserves["USD"] + normalizedNearUsdtReserves["USD"]
+    )
     tlpNearUsdcWeight = normalizedNearUsdcReserves["USD"] / totalPooledUSD
     tlpNearUsdtWeight = normalizedNearUsdtReserves["USD"] / totalPooledUSD
 
-    tlpNearUsdtRatio = normalizedNearUsdtReserves["USD"] / normalizedNearUsdtReserves["NEAR"]
-    tlpNearUsdcRatio = normalizedNearUsdcReserves["USD"] / normalizedNearUsdcReserves["NEAR"]
+    tlpNearUsdtRatio = (
+        normalizedNearUsdtReserves["USD"] / normalizedNearUsdtReserves["NEAR"]
+    )
+    tlpNearUsdcRatio = (
+        normalizedNearUsdcReserves["USD"] / normalizedNearUsdcReserves["NEAR"]
+    )
 
-    return (tlpNearUsdtRatio * tlpNearUsdcWeight) + (tlpNearUsdcRatio * tlpNearUsdtWeight)
+    return (tlpNearUsdtRatio * tlpNearUsdcWeight) + (
+        tlpNearUsdcRatio * tlpNearUsdtWeight
+    )
 
 
 # Gets weighted average price of TRI token using TRI/wNEAR and TRI/USDT pools
@@ -173,8 +192,12 @@ def get_weighted_average_tri_usd_price(w3, near_price_usd):
     tlpTriUsdtWeight = normalizedTriUsdtReserves["USD"] / totalPooledUSD
     tlpTriNearWeight = normalizedTriNearReserves["USD"] / totalPooledUSD
 
-    tlpTriUsdtRatio = normalizedTriNearReserves["USD"] / normalizedTriNearReserves["TRI"]
-    tlpTriNearRatio = normalizedTriUsdtReserves["USD"] / normalizedTriUsdtReserves["TRI"]
+    tlpTriUsdtRatio = (
+        normalizedTriNearReserves["USD"] / normalizedTriNearReserves["TRI"]
+    )
+    tlpTriNearRatio = (
+        normalizedTriUsdtReserves["USD"] / normalizedTriUsdtReserves["TRI"]
+    )
 
     return (tlpTriUsdtRatio * tlpTriUsdtWeight) + (tlpTriNearRatio * tlpTriNearWeight)
 
@@ -197,7 +220,9 @@ def upload_to_gcc(payload, file_path):
 
     print(
         TAG
-        + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_PRICES_BUCKET, file_path)
+        + "Uploading to gcc location: {0}/{1} complete".format(
+            TRISOLARIS_PRICES_BUCKET, file_path
+        )
     )
 
 

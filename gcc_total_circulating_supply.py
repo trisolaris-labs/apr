@@ -2,7 +2,6 @@
 This file is used for Google Cloud functions to serve circulating supply calculations
 """
 
-import json
 import os
 
 from web3 import Web3
@@ -19,7 +18,9 @@ TRISOLARIS_APR_BUCKET = "trisolaris_public"
 TRISOLARIS_APR_BUCKET_FILE_PATH = FILE_NAME
 
 # This is the tx where 160MM TRI was locked
-LOCKED_TRI_TRANSACTION_HASH = "0x93026b0e7150837de8180890d4f1790bf14f3bc36f771433717830647c1a0516"
+LOCKED_TRI_TRANSACTION_HASH = (
+    "0x93026b0e7150837de8180890d4f1790bf14f3bc36f771433717830647c1a0516"
+)
 
 TAG = "[GCC TOTAL CIRC]"
 
@@ -27,18 +28,23 @@ web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
 w3 = Web3(Web3.HTTPProvider(web3_url))
 tri = init_erc20(TRI_ADDRESS)
 
+
 # Calculated total circulating supply of TRI
 # Uploads result to gcc file storage
 def gcc_total_circulating_supply(data, context):
     event_id = get_event_id(context)
 
-    print(TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id))
+    print(
+        TAG + "Beginning Google Cloud Fn processing for event_id: {0}".format(event_id)
+    )
 
     circulating_supply = str(get_total_circulating_supply())
 
     print(TAG + " TRI: {0}".format(circulating_supply))
 
-    blob = get_google_cloud_storage_blob(TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH)
+    blob = get_google_cloud_storage_blob(
+        TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH
+    )
 
     blob.upload_from_string(circulating_supply, content_type="application/json")
 

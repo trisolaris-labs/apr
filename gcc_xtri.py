@@ -16,7 +16,9 @@ TRISOLARIS_XTRI_BUCKET_FILE_PATH = FILE_NAME
 
 def gcc_xtri(data, context):
     print(TAG + "Starting at " + getTime())
-    blob = get_google_cloud_storage_blob(TRISOLARIS_XTRI_BUCKET, TRISOLARIS_XTRI_BUCKET_FILE_PATH)
+    blob = get_google_cloud_storage_blob(
+        TRISOLARIS_XTRI_BUCKET, TRISOLARIS_XTRI_BUCKET_FILE_PATH
+    )
     xtri_data = json.loads(blob.download_as_string(client=None))
 
     result = xtri_base(xtri_data["timestamp"])

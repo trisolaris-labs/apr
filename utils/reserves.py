@@ -112,7 +112,9 @@ def getDataV1Pools(
     totalSupply = tlp.functions.totalSupply().call()
     totalStaked = tlp.functions.balanceOf(chef.address).call()
     totalStakedInUSD = getTotalStakedInUSD(totalStaked, totalSupply, reserveInUSDC)
-    totalSecondRewardRate = triPerBlock * allocPoint / (totalAllocPoint * 10**tri_decimals)
+    totalSecondRewardRate = (
+        triPerBlock * allocPoint / (totalAllocPoint * 10**tri_decimals)
+    )
     totalWeeklyRewardRate = 3600 * 24 * 7 * totalSecondRewardRate
     return {
         "id": id,
@@ -153,12 +155,16 @@ def getDataV2Pools(
 
     # Stable AMM LP staked amts logic
     if pool["LPType"] == "StableAMM":
-        stable_pool_contract = init_stable_pool(V2_STABLEPOOL_FACTORY[id]["poolContract"])
+        stable_pool_contract = init_stable_pool(
+            V2_STABLEPOOL_FACTORY[id]["poolContract"]
+        )
         virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
         totalStakedInUSDC = (virtual_price / 1e18) * (totalStaked / 1e18)
     else:
         # Normal AMM LP staked amts logic
-        reserveInUSDC = getReserveInUsd(w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio)
+        reserveInUSDC = getReserveInUsd(
+            w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio
+        )
         totalStakedInUSDC = getTotalStakedInUSD(totalStaked, totalSupply, reserveInUSDC)
 
     nonTriAPRs = []
@@ -172,8 +178,9 @@ def getDataV2Pools(
         doubleRewardUsdRatioForItem = 0
         rewarderContractForItem = init_rewarder(rewarder_item["Rewarder"])
         rewardDecimalsForItem = rewarder_item["RewarderTokenDecimals"]
-        rewardsPerBlockForItem = rewarderContractForItem.functions.tokenPerBlock().call() / (
-            10**rewardDecimalsForItem
+        rewardsPerBlockForItem = (
+            rewarderContractForItem.functions.tokenPerBlock().call()
+            / (10**rewardDecimalsForItem)
         )
         rewarderAddressForItem = rewarderContractForItem.functions.rewardToken().call()
         print(f"Double rewards per block: {rewardsPerBlockForItem}")
@@ -185,7 +192,9 @@ def getDataV2Pools(
             {
                 "address": rewarderAddressForItem,
                 "apr": getAPR(
-                    doubleRewardUsdRatioForItem, rewardsPerBlockForItem, totalStakedInUSDC
+                    doubleRewardUsdRatioForItem,
+                    rewardsPerBlockForItem,
+                    totalStakedInUSDC,
                 ),
             }
         )

@@ -1,7 +1,4 @@
-import os
 from time import sleep, time
-
-from web3 import Web3
 
 from utils.constants import (
     ASHIBAM_ADDRESS,
@@ -45,7 +42,14 @@ def xtri_base(timestamp):
     try:
         # 2/8/22 - Total cost of a complete run is 0.00016Ξ
         acct = getFundedAccount()
-    except:
+    except Exception as ex:
+        print(
+            TAG
+            + "Error getting funded account: "
+            + str(ex)
+            + "\n"
+            + "Using temp mnemonic"
+        )
         temp_mnemonic = "test test test test test test test test test test test junk"
         acct = getAccount(temp_mnemonic)
 
@@ -67,7 +71,7 @@ def xtri_base(timestamp):
 
     print(TAG, current_time, initial_triBar_balance, tri_amount)
 
-    if timestamp != 0 and timestamp != None:
+    if timestamp != 0 and timestamp is not None:
         timedelta = current_time - timestamp
         pr = tri_amount / initial_triBar_balance
         apr = pr * (3600 * 24 * 365) * 100 / timedelta

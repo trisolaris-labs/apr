@@ -1,9 +1,7 @@
 import json
-import os
-from time import sleep, time
+from time import time
 
 from eth_account import Account
-from web3 import Web3
 
 from utils.constants import (
     ASHIBAM_ADDRESS,
