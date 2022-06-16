@@ -64,401 +64,409 @@ V1_POOLS = {
 }
 
 V2_POOLS = {
-        0: {
-            "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x94669d7a170bfe62FAc297061663e0B48C63B9B5",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": TRI_AURORA,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        1: {
-            "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": TRI_AURORA,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        2: {
-            "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x89F6628927fdFA2592E016Ba5B14389a4b08D681",
-                        "CoingeckoRewarderTokenName": "terra-luna",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        3: {
-            "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x17d1597ec86fD6aecbfE0F32Ab2F2aD9c37E6750",
-                        "CoingeckoRewarderTokenName": "terra-luna",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        4: {
-            "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": ZERO_ADDRESS,
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
-                    }
-                }
-            },
-        5: {
-            "LP": "0x6443532841a5279cb04420E61Cf855cBEb70dc8C",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": ZERO_ADDRESS,
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
-                    }
-                }
-            },
-        6: {
-            "LP": "0x7be4a49AA41B34db70e539d4Ae43c7fBDf839DfA",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": ZERO_ADDRESS,
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
-                    }
-                }
-            },
-        7: {
-            "LP": "0x3dC236Ea01459F57EFc737A12BA3Bb5F3BFfD071",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": ZERO_ADDRESS,
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
-                    }
-                }
-            },
-        8: {
-            "LP": "0x48887cEEA1b8AD328d5254BeF774Be91B90FaA09", 
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x42b950FB4dd822ef04C4388450726EFbF1C3CF63",
-                        "CoingeckoRewarderTokenName": "flux-token",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        9: {
-            "LP": "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f", 
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x9847F7e33CCbC0542b05d15c5cf3aE2Ae092C057",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": MECHA_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        10: {
-            "LP": "0xdDAdf88b007B95fEb42DDbd110034C9a8e9746F2",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xbbE41F699B0fB747cd4bA21067F6b27e0698Bc30",
-                        "CoingeckoRewarderTokenName": "solace",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        11: {
-            "LP": "0x5913f644A10d98c79F2e0b609988640187256373",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x7B9e31BbEdbfdc99e3CC8b879b9a3B1e379Ce530",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": META_WNEAR,
-                        "RewarderTokenDecimals": 24,
-                    }
-                }
-            },
-        12: {
-            "LP": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xf267212F1D8888e0eD20BbB0c7C87A089cDe6E88",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": META_WNEAR,
-                        "RewarderTokenDecimals": 24,
-                    }
-                }
-            },
-        13: {
-            "LP": "0xb419ff9221039Bdca7bb92A131DD9CF7DEb9b8e5",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xb84293D04137c9061afe34118Dac9931df153826",
-                        "CoingeckoRewarderTokenName": "chronicle",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        14: {
-            "LP": "0xFBc4C42159A5575a772BebA7E3BF91DB508E127a",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x028Fbc4BB5787e340524EF41d95875Ac2C382101",
-                        "CoingeckoRewarderTokenName": "chronicle",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        15: {
-            "LP": "0x7B273238C6DD0453C160f305df35c350a123E505",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xDAc58A615E2A1a94D7fb726a96C273c057997D50",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": GBA_USDT,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        16: {
-            "LP": "0x6277f94a69Df5df0Bc58b25917B9ECEFBf1b846A",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x170431D69544a1BC97855C6564E8460d39508844",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": WNEAR_USDC,
-                        "RewarderTokenDecimals": 24,
-                    }
-                }
-            },
-        17: {
-            "LP": "0xadAbA7E2bf88Bd10ACb782302A568294566236dC",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x41A7e26a2cC7DaDc5A31fE9DD77c30Aeb029184d",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": BBT_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        18: {
-            "LP": "0x5EB99863f7eFE88c447Bc9D52AA800421b1de6c9",
-            "LPType": "StableAMM",
-            "Rewarder": ZERO_ADDRESS,
-            "CoingeckoRewarderTokenName": "",
-            "RewarderPriceLP": "",
-            "RewarderTokenDecimals": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": ZERO_ADDRESS,
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
-                    }
-                }
-            },
-        19: {
-            "LP": "0x5E74D85311fe2409c341Ce49Ce432BB950D221DE",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": ZERO_ADDRESS,
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": "",
-                    }
-                }
-            },
-        20: {
-            "LP": "0xbe753E99D0dBd12FB39edF9b884eBF3B1B09f26C",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xfe9B7A3bf38cE0CA3D5fA25d371Ff5C6598663d4",
-                        "CoingeckoRewarderTokenName": "rose",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        21: {
-            "LP": "0xbC0e71aE3Ef51ae62103E003A9Be2ffDe8421700",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x87a03aFA70302a5a0F6156eBEd27f230ABF0e69C",
-                        "CoingeckoRewarderTokenName": "rose",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        22: {
-            "LP": "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x1616B20534d1d1d731C31Ca325F4e909b8f3E0f0",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": LINEAR_WNEAR,
-                        "RewarderTokenDecimals": 24,
-                    }
-                }
-            },
-        23: {
-            "LP": "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": BSTN_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        24: {
-            "LP": "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x34c58E960b80217fA3e0323d37563c762a131AD9",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": AURORA_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        25: {
-            "LP": "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x84C8B673ddBF0F647c350dEd488787d3102ebfa3",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": AURORA_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        26: {
-            "LP": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x4e0152b260319e5131f853AeCB92c8f992AA0c97",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": AURORA_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        27: {
-            "LP": "0x29C160d2EF4790F9A23B813e7544D99E539c28Ba",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x0Cc7e9D333bDAb07b2C8d41363C72c472B7E9594",
-                        "CoingeckoRewarderTokenName": "killswitch",
-                        "RewarderPriceLP": "",
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        28: {
-            "LP": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
-            "LPType": "StableAMM",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x78391f26397A099Ec9cC346A23f856d1284cBd06",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": AURORA_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
-            },
-        29: {
-            "LP": "0x6a29e635BCaB8aBeE1491059728e3D6D11d6A114",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xe4A4e38a30E9100a147e0C146a9AeAC74C28eD4f",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": PAD_WNEAR,
-                        "RewarderTokenDecimals":18,
-                    }
-                }
-            },
-        30: {
-            "LP": "0x120e713AD36eCBff171FC8B7cf19FA8B6f6Ba50C",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0xD59c44fb39638209ec4ADD6DcD7A230a286055ee",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": META_WNEAR,
-                        "RewarderTokenDecimals": 24,
-                    }
-                }
-            },
-        31: {
-            "LP": "0x71dBEB011EAC90C51b42854A77C45C1E53242698",
-            "LPType": "",
-            "Rewarders": {
-                    0: {
-                        "Rewarder": "0x9a418aB67F94164EB931344A4EBF1F7bDd3E97aE",
-                        "CoingeckoRewarderTokenName": "",
-                        "RewarderPriceLP": BRRR_WNEAR,
-                        "RewarderTokenDecimals": 18,
-                    }
-                }
+    0: {
+        "LP": "0x5eeC60F348cB1D661E4A5122CF4638c7DB7A886e",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x94669d7a170bfe62FAc297061663e0B48C63B9B5",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": TRI_AURORA,
+                "RewarderTokenDecimals": 18,
             }
-    }
+        },
+    },
+    1: {
+        "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": TRI_AURORA,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    2: {
+        "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x89F6628927fdFA2592E016Ba5B14389a4b08D681",
+                "CoingeckoRewarderTokenName": "terra-luna",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    3: {
+        "LP": "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x17d1597ec86fD6aecbfE0F32Ab2F2aD9c37E6750",
+                "CoingeckoRewarderTokenName": "terra-luna",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    4: {
+        "LP": "0x61C9E05d1Cdb1b70856c7a2c53fA9c220830633c",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": ZERO_ADDRESS,
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": "",
+            }
+        },
+    },
+    5: {
+        "LP": "0x6443532841a5279cb04420E61Cf855cBEb70dc8C",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": ZERO_ADDRESS,
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": "",
+            }
+        },
+    },
+    6: {
+        "LP": "0x7be4a49AA41B34db70e539d4Ae43c7fBDf839DfA",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": ZERO_ADDRESS,
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": "",
+            }
+        },
+    },
+    7: {
+        "LP": "0x3dC236Ea01459F57EFc737A12BA3Bb5F3BFfD071",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": ZERO_ADDRESS,
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": "",
+            }
+        },
+    },
+    8: {
+        "LP": "0x48887cEEA1b8AD328d5254BeF774Be91B90FaA09",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x42b950FB4dd822ef04C4388450726EFbF1C3CF63",
+                "CoingeckoRewarderTokenName": "flux-token",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    9: {
+        "LP": "0xd62f9ec4C4d323A0C111d5e78b77eA33A2AA862f",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x9847F7e33CCbC0542b05d15c5cf3aE2Ae092C057",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": MECHA_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    10: {
+        "LP": "0xdDAdf88b007B95fEb42DDbd110034C9a8e9746F2",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xbbE41F699B0fB747cd4bA21067F6b27e0698Bc30",
+                "CoingeckoRewarderTokenName": "solace",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    11: {
+        "LP": "0x5913f644A10d98c79F2e0b609988640187256373",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x7B9e31BbEdbfdc99e3CC8b879b9a3B1e379Ce530",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": META_WNEAR,
+                "RewarderTokenDecimals": 24,
+            }
+        },
+    },
+    12: {
+        "LP": "0x47924Ae4968832984F4091EEC537dfF5c38948a4",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xf267212F1D8888e0eD20BbB0c7C87A089cDe6E88",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": META_WNEAR,
+                "RewarderTokenDecimals": 24,
+            }
+        },
+    },
+    13: {
+        "LP": "0xb419ff9221039Bdca7bb92A131DD9CF7DEb9b8e5",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xb84293D04137c9061afe34118Dac9931df153826",
+                "CoingeckoRewarderTokenName": "chronicle",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    14: {
+        "LP": "0xFBc4C42159A5575a772BebA7E3BF91DB508E127a",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x028Fbc4BB5787e340524EF41d95875Ac2C382101",
+                "CoingeckoRewarderTokenName": "chronicle",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    15: {
+        "LP": "0x7B273238C6DD0453C160f305df35c350a123E505",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xDAc58A615E2A1a94D7fb726a96C273c057997D50",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": GBA_USDT,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    16: {
+        "LP": "0x6277f94a69Df5df0Bc58b25917B9ECEFBf1b846A",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x170431D69544a1BC97855C6564E8460d39508844",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": WNEAR_USDC,
+                "RewarderTokenDecimals": 24,
+            }
+        },
+    },
+    17: {
+        "LP": "0xadAbA7E2bf88Bd10ACb782302A568294566236dC",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x41A7e26a2cC7DaDc5A31fE9DD77c30Aeb029184d",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": BBT_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    18: {
+        "LP": "0x5EB99863f7eFE88c447Bc9D52AA800421b1de6c9",
+        "LPType": "StableAMM",
+        "Rewarder": ZERO_ADDRESS,
+        "CoingeckoRewarderTokenName": "",
+        "RewarderPriceLP": "",
+        "RewarderTokenDecimals": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": ZERO_ADDRESS,
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": "",
+            }
+        },
+    },
+    19: {
+        "LP": "0x5E74D85311fe2409c341Ce49Ce432BB950D221DE",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": ZERO_ADDRESS,
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": "",
+            }
+        },
+    },
+    20: {
+        "LP": "0xbe753E99D0dBd12FB39edF9b884eBF3B1B09f26C",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xfe9B7A3bf38cE0CA3D5fA25d371Ff5C6598663d4",
+                "CoingeckoRewarderTokenName": "rose",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    21: {
+        "LP": "0xbC0e71aE3Ef51ae62103E003A9Be2ffDe8421700",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x87a03aFA70302a5a0F6156eBEd27f230ABF0e69C",
+                "CoingeckoRewarderTokenName": "rose",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    22: {
+        "LP": "0xbceA13f9125b0E3B66e979FedBCbf7A4AfBa6fd1",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x1616B20534d1d1d731C31Ca325F4e909b8f3E0f0",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": LINEAR_WNEAR,
+                "RewarderTokenDecimals": 24,
+            }
+        },
+    },
+    23: {
+        "LP": "0xBBf3D4281F10E537d5b13CA80bE22362310b2bf9",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xDc6d09f5CC085E29972d192cB3AdCDFA6495a741",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": BSTN_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    24: {
+        "LP": "0x1e0e812FBcd3EB75D8562AD6F310Ed94D258D008",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x34c58E960b80217fA3e0323d37563c762a131AD9",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": AURORA_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    25: {
+        "LP": "0x20F8AeFB5697B77E0BB835A8518BE70775cdA1b0",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x84C8B673ddBF0F647c350dEd488787d3102ebfa3",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": AURORA_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    26: {
+        "LP": "0x03B666f3488a7992b2385B12dF7f35156d7b29cD",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x4e0152b260319e5131f853AeCB92c8f992AA0c97",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": AURORA_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    27: {
+        "LP": "0x29C160d2EF4790F9A23B813e7544D99E539c28Ba",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x0Cc7e9D333bDAb07b2C8d41363C72c472B7E9594",
+                "CoingeckoRewarderTokenName": "killswitch",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    28: {
+        "LP": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
+        "LPType": "StableAMM",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x78391f26397A099Ec9cC346A23f856d1284cBd06",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": AURORA_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    29: {
+        "LP": "0x6a29e635BCaB8aBeE1491059728e3D6D11d6A114",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xe4A4e38a30E9100a147e0C146a9AeAC74C28eD4f",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": PAD_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    30: {
+        "LP": "0x120e713AD36eCBff171FC8B7cf19FA8B6f6Ba50C",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xD59c44fb39638209ec4ADD6DcD7A230a286055ee",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": META_WNEAR,
+                "RewarderTokenDecimals": 24,
+            }
+        },
+    },
+    31: {
+        "LP": "0x71dBEB011EAC90C51b42854A77C45C1E53242698",
+        "LPType": "",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0x9a418aB67F94164EB931344A4EBF1F7bDd3E97aE",
+                "CoingeckoRewarderTokenName": "",
+                "RewarderPriceLP": BRRR_WNEAR,
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+    32: {
+        "LP": "0xffb69779f14E851A8c550Bf5bB1933c44BBDE129",
+        "LPType": "StableAMM",
+        "Rewarders": {
+            0: {
+                "Rewarder": "0xf4ac19e819f5940E92543B544126E7F20b5f6978",
+                "CoingeckoRewarderTokenName": "synapse",
+                "RewarderPriceLP": "",
+                "RewarderTokenDecimals": 18,
+            }
+        },
+    },
+}
 
 V2_STABLEPOOL_FACTORY = {
-        18: {
-            "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"
-        },
-        28: {
-            "poolContract": "0x458459E48dbAC0C8Ca83F8D0b7b29FEfE60c3970"
-        }
-    }
+    18: {"poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"},
+    28: {"poolContract": "0x458459E48dbAC0C8Ca83F8D0b7b29FEfE60c3970"},
+}
