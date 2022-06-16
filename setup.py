@@ -3,6 +3,7 @@
 from setuptools import find_packages, setup  # type: ignore
 
 extras_require = {
+    "types": ["types-requests==2.27.30", "types-retry==0.9.7"],
     "test": [  # `test` GitHub Action jobs uses this
         "pytest>=6.0,<7.0",  # Core testing package
         "pytest-xdist",  # multi-process runner
@@ -26,7 +27,12 @@ extras_require = {
 }
 
 # NOTE: `pip install -e .[dev]` to install package
-extras_require["dev"] = extras_require["test"] + extras_require["lint"] + extras_require["dev"]
+extras_require["dev"] = (
+    extras_require["test"]
+    + extras_require["lint"]
+    + extras_require["dev"]
+    + extras_require["types"]
+)
 
 with open("./README.md") as readme:
     long_description = readme.read()
@@ -63,7 +69,7 @@ setup(
     zip_safe=False,
     keywords="ethereum",
     packages=find_packages(exclude=["tests", "tests.*"]),
-    package_data={},
+    package_data={"apr": ["py.typed"]},
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
