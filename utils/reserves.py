@@ -14,7 +14,7 @@ from .constants import (
     XNL_ADDRESS,
     ZERO_ADDRESS,
     V1_POOLS,
-    V2_STABLEPOOL_FACTORY,
+    V2_STABLEPOOL_SWAP_CONTRACT,
 )
 from .prices import (
     getTriXTriRatio,
@@ -143,7 +143,7 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
 
     # Stable AMM LP staked amts logic
     if pool["LPType"] == "StableAMM":
-        stable_pool_contract = init_stable_pool(V2_STABLEPOOL_FACTORY[id]["poolContract"])
+        stable_pool_contract = init_stable_pool(V2_STABLEPOOL_SWAP_CONTRACT[id]["poolContract"])
         virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
         totalStakedInUSDC = (virtual_price/1e18) * (totalStaked/1e18)
     else:
