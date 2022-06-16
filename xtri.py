@@ -23,7 +23,7 @@ from utils.constants import (
     AURORA_ADDRESS,
     USDC_ADDRESS,
     USDT_ADDRESS,
-    WBTC_ADDRESS
+    WBTC_ADDRESS,
 )
 from utils.fees import (
     convertFeesForPair,
@@ -34,6 +34,7 @@ from utils.node import (
     init_erc20,
 )
 from time import time, sleep
+
 Account.enable_unaudited_hdwallet_features()
 
 temp_mnemonic = "test test test test test test test test test test test junk"
@@ -48,7 +49,7 @@ pairs = [
     (SPOLAR_ADDRESS, WNEAR_ADDRESS),
     (STNEAR_ADDRESS, WNEAR_ADDRESS),
     (BSTN_ADDRESS, WNEAR_ADDRESS),
-    (ATLUNA_ADDRESS, WNEAR_ADDRESS), 
+    (ATLUNA_ADDRESS, WNEAR_ADDRESS),
     (ATUST_ADDRESS, WNEAR_ADDRESS),
     (USDC_ADDRESS, WNEAR_ADDRESS),
     (USDT_ADDRESS, WNEAR_ADDRESS),
@@ -69,32 +70,32 @@ pairs = [
     (BNB_ADDRESS, WNEAR_ADDRESS),
     (MATIC_ADDRESS, WNEAR_ADDRESS),
     (EMPYR_ADDRESS, USDC_ADDRESS),
-    ]
+]
 
 
 tri_amount = 0
 initial_triBar_balance = tri.functions.balanceOf(TRIBAR_ADDRESS).call()
 current_time = time()
 
-with open('xtri.json') as json_file:
+with open("xtri.json") as json_file:
     xtri_data = json.load(json_file)
 
 for pair in pairs:
     tri_amount += convertFeesForPair(tri_maker, pair, w3, acct)
     print(tri_amount)
-    
+
 print(current_time, initial_triBar_balance, tri_amount)
 
 
 if xtri_data["timestamp"] != 0:
     timedelta = current_time - xtri_data["timestamp"]
-    pr = tri_amount/initial_triBar_balance
-    apr = pr*(3600*24*365)*100/timedelta
-    xtri_data["apr"] = apr    
+    pr = tri_amount / initial_triBar_balance
+    apr = pr * (3600 * 24 * 365) * 100 / timedelta
+    xtri_data["apr"] = apr
 
 xtri_data["triBarTri"] = initial_triBar_balance
 xtri_data["mintedTri"] = tri_amount
 xtri_data["timestamp"] = current_time
 
-with open('xtri.json', 'w', encoding='utf-8') as f:
+with open("xtri.json", "w", encoding="utf-8") as f:
     json.dump(xtri_data, f, ensure_ascii=False, indent=4)

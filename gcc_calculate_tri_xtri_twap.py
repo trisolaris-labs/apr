@@ -10,7 +10,7 @@ from statistics import geometric_mean
 
 from web3 import Web3
 
-from gcc_utils import (get_event_id, get_google_cloud_storage_blob)
+from gcc_utils import get_event_id, get_google_cloud_storage_blob
 from utils.node import w3, init_tlp
 from utils.constants import WNEAR_ADDRESS, TRI_ADDRESS
 from utils.prices import getTriXTriRatio
@@ -54,40 +54,49 @@ def gcc_calculate_tri_xtri_twap(data, context):
 
     # Calculate TWAP using historical data
     historical_price_data = get_historical_price_data()
-    
-    block = w3.eth.get_block('latest')
-    
+
+    block = w3.eth.get_block("latest")
+
     # Add newest data to end of the lest
-    historical_price_data.append({
-        "block_number": block['number'],
-        "timestamp": block['timestamp'],
-        "tri_price": tri_price_usd,
-        "xtri_price": xtri_price_usd
-    })
+    historical_price_data.append(
+        {
+            "block_number": block["number"],
+            "timestamp": block["timestamp"],
+            "tri_price": tri_price_usd,
+            "xtri_price": xtri_price_usd,
+        }
+    )
 
     # Remove items from beginning of the list that are beyond the window limit
     window_sized_historical_price_data = historical_price_data[-MAX_WINDOW_SIZE:]
 
     # Calculate geometric mean for all periods within the window
-    tri_twap = geometric_mean(map(lambda x: x['tri_price'], window_sized_historical_price_data))
-    xtri_twap = geometric_mean(map(lambda x: x['xtri_price'], window_sized_historical_price_data))
+    tri_twap = geometric_mean(map(lambda x: x["tri_price"], window_sized_historical_price_data))
+    xtri_twap = geometric_mean(map(lambda x: x["xtri_price"], window_sized_historical_price_data))
 
     # Upload calculated TWAPs to GCC
     twap_payload = {"TRI": tri_twap, "xTRI": xtri_twap}
     upload_to_gcc(twap_payload, TRISOLARIS_PRICES_BUCKET_FILE_PATH)
-    
+
     # Trim list to maintain the max historical storage size
     max_sized_historical_price_data = historical_price_data[-MAX_HISTORICAL_WINDOW_SIZE:]
-    
+
     # Upload calculated historical prices to GCC (this file is not public)
-    price_history_payload = {"result": max_sized_historical_price_data, "size": len(max_sized_historical_price_data)}
+    price_history_payload = {
+        "result": max_sized_historical_price_data,
+        "size": len(max_sized_historical_price_data),
+    }
     upload_to_gcc(price_history_payload, TRISOLARIS_TRI_XTRI_TWAP_DATA_FILE_PATH)
 
+
 def get_historical_price_data():
-    blob = get_google_cloud_storage_blob(TRISOLARIS_PRICES_BUCKET, TRISOLARIS_TRI_XTRI_TWAP_DATA_FILE_PATH)
+    blob = get_google_cloud_storage_blob(
+        TRISOLARIS_PRICES_BUCKET, TRISOLARIS_TRI_XTRI_TWAP_DATA_FILE_PATH
+    )
     data = json.loads(blob.download_as_string(client=None))
 
-    return data['result']
+    return data["result"]
+
 
 def get_prices():
     near_price_usd = get_weighted_average_near_usd_price(w3)
@@ -98,6 +107,7 @@ def get_prices():
 
     return (near_price_usd, tri_price_usd, xtri_price_usd)
 
+
 # Returns reserves of a pair as a tuple
 # targetTokenAddress will always be index 0 of tuple
 def get_target_token_pair_reserves(w3, tlpAddress, targetTokenAddress):
@@ -107,7 +117,9 @@ def get_target_token_pair_reserves(w3, tlpAddress, targetTokenAddress):
     reserves = pair.functions.getReserves().call()
 
     if t0 != targetTokenAddress and t1 != targetTokenAddress:
-        raise ValueError(TAG + '[get_target_token_pair_reserves] Pair does not contain target token')
+        raise ValueError(
+            TAG + "[get_target_token_pair_reserves] Pair does not contain target token"
+        )
 
     if t0 == targetTokenAddress:
         target_token_index = 0
@@ -115,54 +127,57 @@ def get_target_token_pair_reserves(w3, tlpAddress, targetTokenAddress):
     else:
         target_token_index = 1
         other_token_index = 0
-    
+
     return (reserves[target_token_index], reserves[other_token_index])
+
 
 # Gets weighted average price of wNEAR token using wNEAR/USDC and wNEAR/USDT pools
 def get_weighted_average_near_usd_price(w3):
     tlpNearUsdcReserves = get_target_token_pair_reserves(w3, TLP_NEAR_USDC, WNEAR_ADDRESS)
     normalizedNearUsdcReserves = {
-        "NEAR": tlpNearUsdcReserves[0]/(10**NEAR_TOKEN_DECIMALS),
-        "USD": tlpNearUsdcReserves[1]/(10**6),
+        "NEAR": tlpNearUsdcReserves[0] / (10**NEAR_TOKEN_DECIMALS),
+        "USD": tlpNearUsdcReserves[1] / (10**6),
     }
 
     tlpNearUsdtReserves = get_target_token_pair_reserves(w3, TLP_NEAR_USDT, WNEAR_ADDRESS)
     normalizedNearUsdtReserves = {
-        "NEAR": tlpNearUsdtReserves[0]/(10**NEAR_TOKEN_DECIMALS),
-        "USD": tlpNearUsdtReserves[1]/(10**6),
+        "NEAR": tlpNearUsdtReserves[0] / (10**NEAR_TOKEN_DECIMALS),
+        "USD": tlpNearUsdtReserves[1] / (10**6),
     }
 
     totalPooledUSD = normalizedNearUsdcReserves["USD"] + normalizedNearUsdtReserves["USD"]
     tlpNearUsdcWeight = normalizedNearUsdcReserves["USD"] / totalPooledUSD
     tlpNearUsdtWeight = normalizedNearUsdtReserves["USD"] / totalPooledUSD
-    
-    tlpNearUsdtRatio = normalizedNearUsdtReserves["USD"]/normalizedNearUsdtReserves["NEAR"]
-    tlpNearUsdcRatio = normalizedNearUsdcReserves["USD"]/normalizedNearUsdcReserves["NEAR"]
+
+    tlpNearUsdtRatio = normalizedNearUsdtReserves["USD"] / normalizedNearUsdtReserves["NEAR"]
+    tlpNearUsdcRatio = normalizedNearUsdcReserves["USD"] / normalizedNearUsdcReserves["NEAR"]
 
     return (tlpNearUsdtRatio * tlpNearUsdcWeight) + (tlpNearUsdcRatio * tlpNearUsdtWeight)
+
 
 # Gets weighted average price of TRI token using TRI/wNEAR and TRI/USDT pools
 def get_weighted_average_tri_usd_price(w3, near_price_usd):
     tlpTriUsdtReserves = get_target_token_pair_reserves(w3, TLP_TRI_USDT, TRI_ADDRESS)
     normalizedTriUsdtReserves = {
-        "TRI": tlpTriUsdtReserves[0]/(10**TRI_TOKEN_DECIMALS),
-        "USD": tlpTriUsdtReserves[1]/10**6
+        "TRI": tlpTriUsdtReserves[0] / (10**TRI_TOKEN_DECIMALS),
+        "USD": tlpTriUsdtReserves[1] / 10**6,
     }
 
     tlpTriNearReserves = get_target_token_pair_reserves(w3, TLP_TRI_NEAR, TRI_ADDRESS)
     normalizedTriNearReserves = {
-        "TRI": tlpTriNearReserves[0]/(10**TRI_TOKEN_DECIMALS),
-        "USD": (tlpTriNearReserves[1]/(10**NEAR_TOKEN_DECIMALS))*near_price_usd
+        "TRI": tlpTriNearReserves[0] / (10**TRI_TOKEN_DECIMALS),
+        "USD": (tlpTriNearReserves[1] / (10**NEAR_TOKEN_DECIMALS)) * near_price_usd,
     }
 
     totalPooledUSD = normalizedTriUsdtReserves["USD"] + normalizedTriNearReserves["USD"]
     tlpTriUsdtWeight = normalizedTriUsdtReserves["USD"] / totalPooledUSD
     tlpTriNearWeight = normalizedTriNearReserves["USD"] / totalPooledUSD
-    
-    tlpTriUsdtRatio = normalizedTriNearReserves["USD"]/normalizedTriNearReserves["TRI"]
-    tlpTriNearRatio = normalizedTriUsdtReserves["USD"]/normalizedTriUsdtReserves["TRI"]
+
+    tlpTriUsdtRatio = normalizedTriNearReserves["USD"] / normalizedTriNearReserves["TRI"]
+    tlpTriNearRatio = normalizedTriUsdtReserves["USD"] / normalizedTriUsdtReserves["TRI"]
 
     return (tlpTriUsdtRatio * tlpTriUsdtWeight) + (tlpTriNearRatio * tlpTriNearWeight)
+
 
 def upload_to_gcc(payload, file_path):
     json_data = json.dumps(payload, ensure_ascii=False, indent=4)
@@ -172,15 +187,19 @@ def upload_to_gcc(payload, file_path):
     blob.upload_from_string(json_data, "application/json")
 
     # Don't serve stale data
-    blob.cache_control = 'no-cache'
-    
+    blob.cache_control = "no-cache"
+
     # Allows file to be publicly accessible
     blob.make_public()
 
     # Save
     blob.patch()
-    
-    print(TAG + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_PRICES_BUCKET, file_path))
+
+    print(
+        TAG
+        + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_PRICES_BUCKET, file_path)
+    )
+
 
 if __name__ == "__main__":
     gcc_calculate_tri_xtri_twap(None, None)
