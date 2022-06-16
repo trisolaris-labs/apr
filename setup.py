@@ -34,6 +34,8 @@ extras_require["dev"] = (
     + extras_require["types"]
 )
 
+extras_require["lint"] = extras_require["lint"] + extras_require["types"]
+
 with open("./README.md") as readme:
     long_description = readme.read()
 
