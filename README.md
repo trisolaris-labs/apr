@@ -14,6 +14,7 @@ git clone https://github.com/trisolaris-labs/apr.git
 cd apr
 python3 -m venv venv
 pip install -e .
+pip install -e '.[dev]'
 
 ### How to add a new APR to cloud function
 
