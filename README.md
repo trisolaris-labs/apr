@@ -15,6 +15,13 @@ cd apr
 python3 -m venv venv
 pip install -e .
 pip install -e '.[dev]'
+pre-commit install --hook-type commit-msg
+
+#### Commit messages
+
+This repository follows commitizen style, you can use the following commands to use it:
+git add .
+cz c
 
 ### How to add a new APR to cloud function
 
