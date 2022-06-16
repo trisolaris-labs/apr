@@ -8,10 +8,9 @@ import os
 from web3 import Web3
 
 from gcc_utils import get_event_id, get_google_cloud_storage_blob
-from utils.node import w3, init_tlp
-from utils.constants import WNEAR_ADDRESS, TRI_ADDRESS
+from utils.constants import TRI_ADDRESS, WNEAR_ADDRESS
+from utils.node import init_tlp, w3
 from utils.prices import getTriXTriRatio
-
 
 # Output file name
 FILE_NAME = "tri_xtri_price.json"

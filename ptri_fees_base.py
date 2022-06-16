@@ -1,31 +1,33 @@
-from datetime import datetime
+import math
 import os
 import time
+from datetime import datetime
+
 from requests import ReadTimeout
 from web3 import Web3
-import math
+
 from gcc_utils import gccPrint
 from utils.constants import (
+    ASHIBAM_ADDRESS,
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
-    ASHIBAM_ADDRESS,
-    TRI_ADDRESS,
-    WNEAR_ADDRESS,
-    WETH_ADDRESS,
     AURORA_ADDRESS,
+    BSTN_ADDRESS,
+    EMPYR_ADDRESS,
+    FLX_ADDRESS,
+    POLAR_ADDRESS,
+    SHITZU_ADDRESS,
+    SPOLAR_ADDRESS,
+    STNEAR_ADDRESS,
+    TRI_ADDRESS,
     USDC_ADDRESS,
     USDT_ADDRESS,
     WBTC_ADDRESS,
-    SHITZU_ADDRESS,
-    POLAR_ADDRESS,
-    SPOLAR_ADDRESS,
-    STNEAR_ADDRESS,
-    BSTN_ADDRESS,
-    FLX_ADDRESS,
-    EMPYR_ADDRESS,
+    WETH_ADDRESS,
+    WNEAR_ADDRESS,
 )
 from utils.fees import convertFeesForPair, getAccount, getFundedAccount
-from utils.node import getTokenSymbol, w3, init_usdc_maker
+from utils.node import getTokenSymbol, init_usdc_maker, w3
 
 pairs = [
     (AURORA_ADDRESS, TRI_ADDRESS),

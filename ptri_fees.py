@@ -1,4 +1,5 @@
 import json
+
 from ptri_fees_base import ptri_fees_base
 
 default_frequency = 24

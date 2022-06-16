@@ -1,12 +1,14 @@
 import os
-import requests
 from urllib import parse
+
+import requests
+
 from .constants import (
     TRI_ADDRESS,
-    USDC_ADDRESS,
-    WNEAR_ADDRESS,
-    USDT_ADDRESS,
     TRIBAR_ADDRESS,
+    USDC_ADDRESS,
+    USDT_ADDRESS,
+    WNEAR_ADDRESS,
     ZERO_ADDRESS,
 )
 from .node import init_erc20, init_tlp

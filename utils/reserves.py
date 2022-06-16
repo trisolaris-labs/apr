@@ -1,20 +1,18 @@
-from .node import init_erc20, init_stable_pool, init_tlp, init_rewarder
 from .constants import (
-    USDC_ADDRESS,
-    USDT_ADDRESS,
-    WNEAR_ADDRESS,
-    WETH_ADDRESS,
     TRI_ADDRESS,
     TRIBAR_ADDRESS,
-    XNL_ADDRESS,
-    ZERO_ADDRESS,
+    USDC_ADDRESS,
+    USDT_ADDRESS,
     V1_POOLS,
     V2_STABLEPOOL_FACTORY,
+    WETH_ADDRESS,
+    WNEAR_ADDRESS,
+    XNL_ADDRESS,
+    ZERO_ADDRESS,
 )
-from .prices import (
-    getTriXTriRatio,
-    getTokenUSDRatio,
-)
+from .node import init_erc20, init_rewarder, init_stable_pool, init_tlp
+from .prices import getTokenUSDRatio, getTriXTriRatio
+
 
 # have function that gets balance of underlying tokens, and then multiply 1
 # add value and then get reserve

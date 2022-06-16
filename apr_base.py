@@ -1,25 +1,16 @@
-from utils.node import (
-    w3,
-    init_chef,
-    init_chefv2,
-)
-from utils.prices import (
-    getDexTokenUSDRatio,
-)
-from utils.reserves import (
-    getDataV1Pools,
-    getDataV2Pools,
-)
 from utils.constants import (
+    TRI_ADDRESS,
     V1_POOLS,
     V2_POOLS,
     WETH_ADDRESS,
-    WNEAR_ADDRESS,
-    WNEAR_USDC,
     WETH_USDC,
-    TRI_ADDRESS,
+    WNEAR_ADDRESS,
     WNEAR_TRI,
+    WNEAR_USDC,
 )
+from utils.node import init_chef, init_chefv2, w3
+from utils.prices import getDexTokenUSDRatio
+from utils.reserves import getDataV1Pools, getDataV2Pools
 
 
 def apr_base():

@@ -1,16 +1,17 @@
-import os
 import json
+import os
+
 from web3 import Web3
 
-from .memoize import memoize
 from .constants import (
     CHEF_ADDRESS,
     CHEFV2_ADDRESS,
     PTRI_ADDRESS,
-    TRIMAKER_ADDRESS,
     STABLELPMAKER_ADDRESS,
+    TRIMAKER_ADDRESS,
     USDCMAKER_ADDRESS,
 )
+from .memoize import memoize
 
 web3_url = os.getenv("AURORA_W3_URL", "https://mainnet.aurora.dev/")
 w3 = Web3(Web3.HTTPProvider(web3_url))

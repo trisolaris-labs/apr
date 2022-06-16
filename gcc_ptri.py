@@ -2,11 +2,11 @@
 This file is used for Google Cloud functions to distribute fees to pTRI holders and calculate APR
 """
 
-from gcc_utils import get_event_id
-from ptri_base import ptri_base
 import json
 import time
-from gcc_utils import get_google_cloud_storage_blob
+
+from gcc_utils import get_event_id, get_google_cloud_storage_blob
+from ptri_base import ptri_base
 
 TAG = "[GCC_PTRI] "
 

@@ -1,14 +1,18 @@
 import json
 import os
+from time import sleep, time
+
 from eth_account import Account
 from web3 import Web3
+
 from utils.constants import (
-    BSTN_ADDRESS,
+    ASHIBAM_ADDRESS,
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
-    ASHIBAM_ADDRESS,
+    AURORA_ADDRESS,
     AVAX_ADDRESS,
     BNB_ADDRESS,
+    BSTN_ADDRESS,
     EMPYR_ADDRESS,
     FLX_ADDRESS,
     MATIC_ADDRESS,
@@ -16,24 +20,16 @@ from utils.constants import (
     SHITZU_ADDRESS,
     SPOLAR_ADDRESS,
     STNEAR_ADDRESS,
-    TRIBAR_ADDRESS,
     TRI_ADDRESS,
-    WNEAR_ADDRESS,
-    WETH_ADDRESS,
-    AURORA_ADDRESS,
+    TRIBAR_ADDRESS,
     USDC_ADDRESS,
     USDT_ADDRESS,
     WBTC_ADDRESS,
+    WETH_ADDRESS,
+    WNEAR_ADDRESS,
 )
-from utils.fees import (
-    convertFeesForPair,
-)
-from utils.node import (
-    w3,
-    init_tri_maker,
-    init_erc20,
-)
-from time import time, sleep
+from utils.fees import convertFeesForPair
+from utils.node import init_erc20, init_tri_maker, w3
 
 Account.enable_unaudited_hdwallet_features()
 

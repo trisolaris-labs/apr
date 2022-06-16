@@ -2,9 +2,10 @@
 This file is used for Google Cloud functions to collect fees
 """
 
+import time
+
 from gcc_utils import get_event_id
 from ptri_fees_base import ptri_fees_base
-import time
 
 TAG = "[GCC_PTRI_FEES] "
 

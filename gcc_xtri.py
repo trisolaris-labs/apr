@@ -1,5 +1,6 @@
 import json
 import time
+
 from gcc_utils import get_google_cloud_storage_blob
 from xtri_base import xtri_base
 

@@ -1,29 +1,23 @@
 import os
+from time import sleep, time
+
 from web3 import Web3
+
 from utils.constants import (
+    ASHIBAM_ADDRESS,
     ATLUNA_ADDRESS,
     ATUST_ADDRESS,
-    ASHIBAM_ADDRESS,
-    TRIBAR_ADDRESS,
-    TRI_ADDRESS,
-    WNEAR_ADDRESS,
-    WETH_ADDRESS,
     AURORA_ADDRESS,
+    TRI_ADDRESS,
+    TRIBAR_ADDRESS,
     USDC_ADDRESS,
     USDT_ADDRESS,
     WBTC_ADDRESS,
+    WETH_ADDRESS,
+    WNEAR_ADDRESS,
 )
-from utils.fees import (
-    convertFeesForPair,
-    getAccount,
-    getFundedAccount,
-)
-from utils.node import (
-    w3,
-    init_tri_maker,
-    init_erc20,
-)
-from time import time, sleep
+from utils.fees import convertFeesForPair, getAccount, getFundedAccount
+from utils.node import init_erc20, init_tri_maker, w3
 
 pairs = [
     (ATLUNA_ADDRESS, WNEAR_ADDRESS),

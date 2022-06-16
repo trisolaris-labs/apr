@@ -4,8 +4,10 @@ General utility methods for interacting with Google Cloud Compute
 
 import json
 import os
-from google.cloud import storage  # type: ignore
 from random import randrange
+
+from google.cloud import storage  # type: ignore
+
 
 # Assigns a random int as event_id if no context is passed
 # eg: running from shell

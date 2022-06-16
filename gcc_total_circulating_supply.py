@@ -2,13 +2,14 @@
 This file is used for Google Cloud functions to serve circulating supply calculations
 """
 
-import os
 import json
+import os
 
 from web3 import Web3
-from utils.node import init_erc20
-from utils.constants import TRI_ADDRESS
+
 from gcc_utils import get_event_id, get_google_cloud_storage_blob
+from utils.constants import TRI_ADDRESS
+from utils.node import init_erc20
 
 # Output file name
 FILE_NAME = "circulating_supply.json"
