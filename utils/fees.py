@@ -2,6 +2,8 @@ import os
 from eth_account import Account
 from retry import retry
 
+from gcc_utils import gccPrint
+
 @retry((ValueError), delay=10, tries=5)
 def convertFeesForPair(tri_maker, pair, w3, acct):
     usdc_amount = 0
@@ -56,6 +58,7 @@ def convertStablestoLP(stable_lp_maker, w3, acct):
         signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
         signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
         txn_hash = signed_txn.hex()
+        gccPrint("[convertStablestoLP] TX Hash: " + txn_hash)
         receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
         for l in receipt['logs']:
             # checks for LogLpTokensSentTopTRI event
