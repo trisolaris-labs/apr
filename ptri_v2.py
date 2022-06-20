@@ -6,13 +6,13 @@ def ptri_v2():
     print("Starting pTRI V2")
 
     timestamp = None
-    with open("ptriV2.json") as json_file:
+    with open("ptri_v2.json") as json_file:
         data = json.load(json_file)
         timestamp = data[-1]["timestamp"]
     result = ptri_base_v2(timestamp)
     data.append(result)
 
-    with open("ptriV2.json", "w", encoding="utf-8") as f:
+    with open("ptri_v2.json", "w", encoding="utf-8") as f:
         if len(data) < 7:
             json.dump(data, f, ensure_ascii=False, indent=4)
         else:
