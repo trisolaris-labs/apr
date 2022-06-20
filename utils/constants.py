@@ -458,7 +458,7 @@ V2_POOLS = {
         "Rewarders": {
             0: {
                 "Rewarder": "0xf4ac19e819f5940E92543B544126E7F20b5f6978",
-                "CoingeckoRewarderTokenName": "synapse",
+                "CoingeckoRewarderTokenName": "synapse-2",
                 "RewarderPriceLP": "",
                 "RewarderTokenDecimals": 18,
             }
@@ -469,5 +469,5 @@ V2_POOLS = {
 V2_STABLEPOOL_SWAP_CONTRACT = {
     18: {"poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"},
     28: {"poolContract": "0x458459E48dbAC0C8Ca83F8D0b7b29FEfE60c3970"},
-    32: {"poolContract": "0x3ce7aad78b9eb47fd2b487c463a17aaed038b7ec"},
+    32: {"poolContract": "0x3CE7AAD78B9eb47Fd2b487c463A17AAeD038B7EC"},
 }
