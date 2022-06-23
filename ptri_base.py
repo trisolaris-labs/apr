@@ -4,6 +4,7 @@ from utils.constants import TRI_ADDRESS, PTRI_ADDRESS
 from utils.fees import getAccount, getFundedAccount, convertStablestoLP
 from utils.node import w3, init_erc20, init_stablelp_maker_v2
 from utils.prices import getCoingeckoUSDPriceRatio
+from gcc_utils import gccPrint
 from time import time
 
 TAG = "[PTRI_BASE] "
@@ -16,7 +17,7 @@ def ptri_base(timestamp):
         temp_mnemonic = "test test test test test test test test test test test junk"
         acct = getAccount(temp_mnemonic)
 
-    print(
+    gccPrint(
         TAG + "ptri acct balance: " + str(w3.eth.get_balance(acct.address) / 1e18) + "Ξ"
     )
 
@@ -32,8 +33,8 @@ def ptri_base(timestamp):
 
     # Stable LP Maker Operations
     tlp_amount += convertStablestoLP(stable_lp_maker_v2, w3, acct)
-    print(TAG, "tlp_amount: ", tlp_amount)
-    print(TAG, current_time, initial_tri_balance_in_ptri, tlp_amount)
+    gccPrint(TAG, "tlp_amount: ", tlp_amount)
+    gccPrint(TAG, current_time, initial_tri_balance_in_ptri, tlp_amount)
 
     if timestamp != 0 and timestamp != None:
         timedelta = current_time - timestamp
