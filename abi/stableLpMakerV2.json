@@ -45,6 +45,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "stableSwapAddress",
+        "type": "address"
+      }
+    ],
+    "name": "LogAddStableSwap",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "usdcAmount",
         "type": "uint256"
@@ -108,6 +121,19 @@
       }
     ],
     "name": "LogProtocolOwnedLiquidity",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "stableSwapAddress",
+        "type": "address"
+      }
+    ],
+    "name": "LogRemoveStableSwap",
     "type": "event"
   },
   {
@@ -221,6 +247,19 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_stableSwap",
+        "type": "address"
+      }
+    ],
+    "name": "addStableSwap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address[]",
         "name": "stableSwaps",
         "type": "address[]"
@@ -322,6 +361,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stableSwap",
+        "type": "address"
+      }
+    ],
+    "name": "removeStableSwap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
@@ -351,12 +403,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_polPercent",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "_pTri",
+        "type": "address"
       }
     ],
-    "name": "setProtocolOwnerLiquidityPercent",
+    "name": "setPTri",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -364,12 +416,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_pTri",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_polPercent",
+        "type": "uint256"
       }
     ],
-    "name": "setpTri",
+    "name": "setProtocolOwnerLiquidityPercent",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -421,6 +473,25 @@
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "whitelistedStableSwapAddresses",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
