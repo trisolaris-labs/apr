@@ -16,3 +16,5 @@ from gcc_calculate_tri_xtri_twap import gcc_calculate_tri_xtri_twap
 from gcc_ptri import gcc_ptri
 
 from gcc_ptri_fees import gcc_ptri_fees
+
+from gcc_top_pools import gcc_top_pools

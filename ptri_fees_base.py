@@ -1,29 +1,9 @@
 from datetime import datetime
-import os
 import time
 from requests import ReadTimeout
-from web3 import Web3
+import requests
 import math
 from gcc_utils import gccPrint
-from utils.constants import (
-    ATLUNA_ADDRESS,
-    ATUST_ADDRESS,
-    ASHIBAM_ADDRESS,
-    TRI_ADDRESS,
-    WNEAR_ADDRESS,
-    WETH_ADDRESS,
-    AURORA_ADDRESS,
-    USDC_ADDRESS,
-    USDT_ADDRESS,
-    WBTC_ADDRESS,
-    SHITZU_ADDRESS,
-    POLAR_ADDRESS,
-    SPOLAR_ADDRESS,
-    STNEAR_ADDRESS,
-    BSTN_ADDRESS,
-    FLX_ADDRESS,
-    EMPYR_ADDRESS
-)
 from utils.fees import (
     convertFeesForPair,
     getAccount,
@@ -35,33 +15,8 @@ from utils.node import (
     init_usdc_maker
 )
 
-pairs = [
-    (AURORA_ADDRESS, TRI_ADDRESS),
-    (SHITZU_ADDRESS, USDC_ADDRESS),
-    (POLAR_ADDRESS, WNEAR_ADDRESS),
-    (SPOLAR_ADDRESS, WNEAR_ADDRESS),
-    (STNEAR_ADDRESS, WNEAR_ADDRESS),
-    (BSTN_ADDRESS, WNEAR_ADDRESS),
-    (ATLUNA_ADDRESS, WNEAR_ADDRESS), 
-    (ATUST_ADDRESS, WNEAR_ADDRESS),
-    (USDC_ADDRESS, WNEAR_ADDRESS),
-    (USDT_ADDRESS, WNEAR_ADDRESS),
-    (WBTC_ADDRESS, WNEAR_ADDRESS),
-    (TRI_ADDRESS, WNEAR_ADDRESS),
-    (TRI_ADDRESS, USDC_ADDRESS),
-    (TRI_ADDRESS, USDT_ADDRESS),
-    (WETH_ADDRESS, TRI_ADDRESS),
-    (WETH_ADDRESS, WNEAR_ADDRESS),
-    (WETH_ADDRESS, USDC_ADDRESS),
-    (WETH_ADDRESS, USDT_ADDRESS),
-    (AURORA_ADDRESS, WETH_ADDRESS),
-    (ASHIBAM_ADDRESS, WETH_ADDRESS),
-    (USDC_ADDRESS, USDT_ADDRESS),
-    (FLX_ADDRESS, WNEAR_ADDRESS),
-    (EMPYR_ADDRESS, USDC_ADDRESS)
-    ]
-
 TAG = "[PTRI_FEES_BASE] "
+TOP_PAIRS_ENDPOINT = "https://cdn.trisolaris.io/pools.json"
 
 def ptri_fees_base(frequency = 24):
     try:
@@ -75,7 +30,8 @@ def ptri_fees_base(frequency = 24):
     usdc_maker = init_usdc_maker()
 
     #USDC Maker Operations
-    start_index, limit = getRange(frequency)
+    pairs = requests.get(TOP_PAIRS_ENDPOINT).json()
+    start_index, limit = getRange(len(pairs), frequency)
     chunks = [pairs[x] for x in range(start_index, limit)]
     for pair in chunks:
         pairSymbols = ":".join(map(lambda x: getTokenSymbol(x), pair))
@@ -91,13 +47,12 @@ def ptri_fees_base(frequency = 24):
 # Gives an index range based on 
 #   (1) current hour
 #   (2) length of items in `pairs`
-def getRange(frequency = 24):
-  pairs_length = len(pairs)
+def getRange(quantity, frequency = 24):
   current_hour = datetime.now().hour
-  start_index = (((current_hour / 24) * frequency) / frequency) * pairs_length
+  start_index = (((current_hour / 24) * frequency) / frequency) * quantity
   start_index = math.floor(start_index)
-  step = pairs_length / frequency
-  limit = min(math.ceil(start_index + step), pairs_length)
+  step = quantity / frequency
+  limit = min(math.ceil(start_index + step), quantity)
 
   return start_index, limit
     
