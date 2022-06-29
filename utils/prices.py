@@ -11,15 +11,15 @@ from .constants import (
 )
 from .node import init_erc20, init_tlp
 
-def getTokenUSDRatio(w3, rewarder_item, rewarder_address, wnearUsdRatio, triUsdRatio):
-    if rewarder_item["Rewarder"] == ZERO_ADDRESS:
+def getTokenUSDRatio(w3, pool, rewarder_address, wnearUsdRatio, triUsdRatio):
+    if pool["Rewarder"] == ZERO_ADDRESS:
         return 0
-    elif rewarder_item['CoingeckoRewarderTokenName'] != "":
-        return getCoingeckoUSDPriceRatio(rewarder_item['CoingeckoRewarderTokenName'])
+    elif pool['CoingeckoRewarderTokenName'] != "":
+        return getCoingeckoUSDPriceRatio(pool['CoingeckoRewarderTokenName'])
     else:
         return getDexTokenUSDRatio(
             w3, 
-            rewarder_item["RewarderPriceLP"], 
+            pool["RewarderPriceLP"], 
             rewarder_address, 
             wnearUsdRatio, 
             triUsdRatio
