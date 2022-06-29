@@ -154,18 +154,15 @@ def getDataV2Pools(w3, id, pool, chefv2, dummyLpTotalSecondRewardRate, totalAllo
     nonTriAPRs = []
 
     # Rewarder logic
-    for _, rewarder_item in pool["Rewarders"].items():
-        if rewarder_item["Rewarder"] == ZERO_ADDRESS:
-            continue
-        
+    if pool["Rewarder"] != ZERO_ADDRESS:
         rewardsPerBlockForItem = 0
         doubleRewardUsdRatioForItem = 0
-        rewarderContractForItem = init_rewarder(rewarder_item["Rewarder"])
-        rewardDecimalsForItem = rewarder_item["RewarderTokenDecimals"]
+        rewarderContractForItem = init_rewarder(pool["Rewarder"])
+        rewardDecimalsForItem = pool["RewarderTokenDecimals"]
         rewardsPerBlockForItem = rewarderContractForItem.functions.tokenPerBlock().call()/(10**rewardDecimalsForItem)
         rewarderAddressForItem = rewarderContractForItem.functions.rewardToken().call()
         print(f"Double rewards per block: {rewardsPerBlockForItem}")
-        doubleRewardUsdRatioForItem = getTokenUSDRatio(w3, rewarder_item, rewarderAddressForItem, wnearUsdRatio, triUsdRatio)
+        doubleRewardUsdRatioForItem = getTokenUSDRatio(w3, pool, rewarderAddressForItem, wnearUsdRatio, triUsdRatio)
 
         nonTriAPRs.append(
             {
