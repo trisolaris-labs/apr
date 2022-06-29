@@ -24,7 +24,7 @@ def get_google_cloud_storage_blob(gcc_bucket, gcc_file_path):
     return blob
 
 
-def gccPrint(*message, severity="DEFAULT"):
+def gccPrint(message, severity="DEFAULT"):
     if os.getenv("GOOGLE_RUNTIME") is None:
         print(message)
     else:
