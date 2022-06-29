@@ -33,8 +33,8 @@ def ptri_base(timestamp):
 
     # Stable LP Maker Operations
     tlp_amount += convertStablestoLP(stable_lp_maker_v2, w3, acct)
-    gccPrint(TAG + "tlp_amount: " + (tlp_amount/1e18))
-    gccPrint(TAG + "tlp received: " + (tlp_amount/1e18) - (initial_tri_balance_in_ptri/1e18))
+    gccPrint(f"{TAG} tlp_amount: {tlp_amount/1e18}")
+    gccPrint(f"{TAG} initial tri balance: {initial_tri_balance_in_ptri/1e18}")
 
     if timestamp != 0 and timestamp != None:
         timedelta = current_time - timestamp
