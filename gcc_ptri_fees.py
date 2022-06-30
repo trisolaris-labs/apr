@@ -23,7 +23,7 @@ def gcc_ptri_fees(event, context):
 
         print(TAG + 'Completed at ' + getTime())
     except Exception as e:
-        gccPrint(TAG + "Caught exception: " + e, "ERROR")
+        gccPrint(e, "ERROR")
 
 
 def getTime():
