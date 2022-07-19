@@ -9,6 +9,7 @@ from .constants import (
     PTRI_ADDRESS,
     TRIMAKER_ADDRESS,
     STABLELPMAKER_ADDRESS,
+    STABLELPMAKERV3_ADDRESS,
     USDCMAKER_ADDRESS,
     STABLELPMAKERV2_ADDRESS,
 )
@@ -56,6 +57,10 @@ def init_usdc_maker():
 
 def init_stablelp_maker_v2():
     return init_contract(STABLELPMAKERV2_ADDRESS, "abi/stableLpMakerV2.json")
+
+
+def init_stablelp_maker_v3():
+    return init_contract(STABLELPMAKERV3_ADDRESS, "abi/stableLpMakerV3.json")
 
 
 def init_ptri():

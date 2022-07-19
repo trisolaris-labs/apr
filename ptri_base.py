@@ -2,7 +2,7 @@ import os
 from web3 import Web3
 from utils.constants import TRI_ADDRESS, PTRI_ADDRESS
 from utils.fees import getAccount, getFundedAccount, convertStablestoLP
-from utils.node import w3, init_erc20, init_stablelp_maker_v2
+from utils.node import init_stablelp_maker_v3, w3, init_erc20
 from utils.prices import getCoingeckoUSDPriceRatio
 from gcc_utils import gccPrint
 from time import time
@@ -21,7 +21,7 @@ def ptri_base(timestamp):
         TAG + "ptri acct balance: " + str(w3.eth.get_balance(acct.address) / 1e18) + "Ξ"
     )
 
-    stable_lp_maker_v2 = init_stablelp_maker_v2()
+    stable_lp_maker_v2 = init_stablelp_maker_v3()
     tri = init_erc20(TRI_ADDRESS)
 
     tlp_amount = 0
