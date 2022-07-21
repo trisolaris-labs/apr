@@ -71,7 +71,7 @@ def convertFeesForPairs(tri_maker, pairs, w3, acct):
 
 
 @retry((ValueError), delay=15, tries=2)
-def convertStablestoLP(stable_lp_maker_v2, w3, acct):
+def convertStablestoLP(stable_lp_maker_v3, w3, acct):
     tlp_amount = 0
     try:
         transaction = {
@@ -83,30 +83,22 @@ def convertStablestoLP(stable_lp_maker_v2, w3, acct):
             USDC_USDT_BASE_POOL,
             NUSD_USDC_USDT_META_POOL,
         ]
-
-        # Convert fees from above to USN
+        removeLiquidity = [
+            USDC_USDT_BASE_POOL,
+        ]
+        # Convert fees from nUSD to USDC
         swaps = [
-            NUSD_USDC_USDT_META_DEPOSIT_POOL,  # NUSD -> USDC,
-            USDC_USDT_USN_BASE_POOL,  # USDC -> USN,
-            USDC_USDT_USN_BASE_POOL,  # USDT -> USN,
+            NUSD_USDC_USDT_META_DEPOSIT_POOL,
         ]
         stableTokensIndexFrom = [
-            # NUSD_USDC_USDT_META_POOL
-            0,  # NUSD -> USDC,
-            # USDC_USDT_USN_BASE_POOL
-            0,  # USDC -> USN,
-            1,  # USDT -> USN,
+            0,
         ]
         stableTokensIndexTo = [
-            # NUSD_USDC_USDT_META_POOL
             1,
-            # USDC_USDT_USN_BASE_POOL
-            2,
-            2,
         ]
 
-        convert_tranasction = stable_lp_maker_v2.functions.convertStables(
-            stableSwaps, swaps, stableTokensIndexFrom, stableTokensIndexTo
+        convert_tranasction = stable_lp_maker_v3.functions.convertStables(
+            stableSwaps, removeLiquidity, swaps, stableTokensIndexFrom, stableTokensIndexTo
         ).buildTransaction(transaction)
         signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
         signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
