@@ -29,11 +29,14 @@ def formatRewarderConfigItem(rewarder_config_item):
         rewarder_config_item, "RewarderPriceLP"
     )
 
+    if rewarder_price_lp != "":
+        rewarder_price_lp = Web3.toChecksumAddress(rewarder_price_lp)
+
     id = rewarder_config_item["PoolId"]
     pool = {
         "LP": Web3.toChecksumAddress(rewarder_config_item["LPToken"]),
         "LPType": "",
-        "Rewarder": rewarder,
+        "Rewarder": Web3.toChecksumAddress(rewarder),
         "CoingeckoRewarderTokenName": coingecko_token_name,
         "RewarderPriceLP": rewarder_price_lp,
         "RewarderTokenDecimals": rewarder_config_item["RewardTokenDecimals"],
