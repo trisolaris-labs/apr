@@ -89,7 +89,7 @@ def apr_base():
     fetched_rewarder_configs = getRewarderConfigs()
     for rewarder_config in fetched_rewarder_configs:
         id, pool = formatRewarderConfigItem(rewarder_config)
-        print(f"V3 Reached here {id}: {pool['LP']}")
+        print(f"Fetched V2 Reached here {id}: {pool['LP']}")
 
         data.append(
             getDataV2Pools(
