@@ -1,4 +1,3 @@
-from web3 import Web3
 from gcc_utils import gccPrint
 from utils import covalent
 from utils.constants import (
@@ -53,13 +52,13 @@ from utils.constants import (
     HAK_ADDRESS,
     MFF_ADDRESS,
 )
-from utils.memoize import memoize
+from utils.top_pools_utils import (
+    create_base_pools_map,
+    get_base_pairs_above_fee_threshold,
+    to_checksum_address,
+    token_pair_exists_in_base_pairs_map,
+)
 
-from utils.node import getTokenSymbol
-
-TAG = "[TOP_POOLS_BASE] "
-
-FEE_THRESHOLD = 1
 BASE_PAIRS = [
     [USDC_ADDRESS, WNEAR_ADDRESS],
     [USDT_ADDRESS, WNEAR_ADDRESS],
@@ -145,129 +144,46 @@ BASE_PAIRS = [
     [MATIC_ADDRESS, WETH_ADDRESS],
     [MFF_ADDRESS, USDC_ADDRESS],
 ]
+TAG = "[TOP_POOLS_BASE]"
 
-# Returns bool indicating if token pair exists in base pairs
-def token_pair_exists_in_base_pairs_map(token0, token1, base_pairs_map):
-    # If both tokens aren't in BASE_POOL_TOKEN_MAP, bail
-    if token0 not in base_pairs_map or token1 not in base_pairs_map:
-        return False
-
-    # If tokens aren't complimentary, bail
-    if token1 not in base_pairs_map[token0]:
-        return False
-
-    return True
-
-
-@memoize
-def to_checksum_address(address):
-    return Web3.toChecksumAddress(address)
-
-
-# Creates a map representing Covalent API pairs response:
-#   {
-#     [token: string]: {
-#         [complimentary_token: string]: [generated fee: int]
-#     }
-#   }
-def create_covalent_pair_fee_map(covalent_pools):
-    result = {}
-    for pool in covalent_pools:
-        fee_quote = pool["fee_24h_quote"]
-        if fee_quote < FEE_THRESHOLD:
-            continue
-
-        token0 = to_checksum_address(pool["token_0"]["contract_address"])
-        token1 = to_checksum_address(pool["token_1"]["contract_address"])
-
-        if token0 not in result:
-            result[token0] = {}
-        if token1 not in result:
-            result[token1] = {}
-
-        result[token0][token1] = fee_quote
-        result[token1][token0] = fee_quote
-
-    return result
-
-
-# Filter out base pools that:
-#   1) Exist in Covalent API response
-#   2) Have generate fees less than FEE_THRESHOLD
-def get_base_pairs_above_fee_threshold(base_pairs, covalent_pools):
-    covalent_pair_fee_map = create_covalent_pair_fee_map(covalent_pools)
-
-    result = []
-    for pair in base_pairs:
-        [token0, token1] = pair
-        fee = covalent_pair_fee_map.get(token0, {}).get(token1)
-
-        # If pair exists and fee is less than threshold, filter it out
-        if fee is not None and fee < FEE_THRESHOLD:
-            gccPrint(
-                f"Skipping {getTokenSymbol(token0)}:{getTokenSymbol(token1)}: Fee is below ${FEE_THRESHOLD} threshold"
-            )
-        else:
-            result.append(pair)
-
-    return result
-
-
-# Map of addres => address[] pairs
-def create_base_pools_map(base_pairs):
-    result = {}
-    for pair in base_pairs:
-        token0, token1 = pair
-
-        # Initialize values to empty list
-        if token0 not in result:
-            result[token0] = []
-        if token1 not in result:
-            result[token1] = []
-
-        # Append complimentary token
-        result[token0].append(token1)
-        result[token1].append(token0)
-
-    return result
+FEE_THRESHOLD = 1
 
 
 def top_pools_base():
-    gccPrint(TAG + "Starting")
+    gccPrint(f"{TAG} Starting")
 
     try:
         # Get pairs from Covalent API
         covalent_pools = covalent.getPools()
         base_pools_above_fee_threshold = get_base_pairs_above_fee_threshold(
-            BASE_PAIRS, covalent_pools
+            BASE_PAIRS, covalent_pools, FEE_THRESHOLD
         )
+        gccPrint(
+            f"{TAG} {len(base_pools_above_fee_threshold)} base pairs above fee threshold"
+        )
+
         base_pairs_map = create_base_pools_map(base_pools_above_fee_threshold)
+
+        covalent_pool_filters = (
+            # Filter out pools below fee threshold
+            lambda pool: pool["fee_24h_quote"] > FEE_THRESHOLD,
+            # Filter out duplicate pools
+            lambda pool: token_pair_exists_in_base_pairs_map(
+                to_checksum_address(pool["token_0"]["contract_address"]),
+                to_checksum_address(pool["token_1"]["contract_address"]),
+                base_pairs_map,
+            )
+            is False,
+        )
+
+        covalent_pools = filter(
+            lambda pool: all(f(pool) for f in covalent_pool_filters), covalent_pools
+        )
 
         # Sort Covalent pools by fees DESC
         covalent_pools = sorted(
             covalent_pools, key=lambda x: x["fee_24h_quote"], reverse=True
         )
-
-        # Filter out pools below fee threshold
-        covalent_pools = list(
-            filter(lambda pool: pool["fee_24h_quote"] > FEE_THRESHOLD, covalent_pools)
-        )
-
-        # Filter out duplicate pools
-        covalent_pools = list(
-            filter(
-                lambda pool: token_pair_exists_in_base_pairs_map(
-                    to_checksum_address(pool["token_0"]["contract_address"]),
-                    to_checksum_address(pool["token_1"]["contract_address"]),
-                    base_pairs_map,
-                )
-                is False,
-                covalent_pools,
-            )
-        )
-
-        # Take top 20 unique fee generating pools
-        covalent_pools = list(covalent_pools)[0:20]
 
         # Get token pairs for valid Covalent pools
         covalent_pools = list(
@@ -280,10 +196,15 @@ def top_pools_base():
             )
         )
 
-        top_pools_tokens = base_pools_above_fee_threshold + covalent_pools
+        gccPrint(f"{TAG} {len(covalent_pools)} Covalent API pairs above fee threshold")
 
+        # Combine valid base pools with top 20 fee-generating covalent pools
+        top_pools_tokens = base_pools_above_fee_threshold + covalent_pools[0:20]
+
+        gccPrint(f"{TAG} Completed with {len(top_pools_tokens)} pools")
         return top_pools_tokens
     except Exception as e:
+        print("wat")
         gccPrint(
             f"{TAG} Error fetching from Covalent API; Returning BASE_PAIRS", "ERROR"
         )
