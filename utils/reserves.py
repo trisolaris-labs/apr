@@ -1,6 +1,8 @@
+from gcc_utils import gccPrint
+from utils.covalent import getPool
 from .node import init_erc20, init_stable_pool, init_tlp, init_rewarder
 from .constants import (
-    STNEAR_ADDRESS,
+    COINGECKO_TOKEN_ID_MAP,
     USDC_ADDRESS,
     USDT_ADDRESS,
     WNEAR_ADDRESS,
@@ -79,15 +81,21 @@ def getReserveInUsd(w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio):
             return reserves[0] * 2 / 10**decimals
         else:
             return reserves[1] * 2 / 10**decimals
-    elif t0 == STNEAR_ADDRESS or t1 == STNEAR_ADDRESS:
-        decimals = init_erc20(STNEAR_ADDRESS).functions.decimals().call()
-        stnear_usd_ratio = getCoingeckoUSDPriceRatio("staked-near")
-
-        if t0 == STNEAR_ADDRESS:
-            reserveInTri = reserves[0] * 2 / 10**decimals
+    elif t0 in COINGECKO_TOKEN_ID_MAP or t1 in COINGECKO_TOKEN_ID_MAP:
+        # Attempt to get reserves using CoinGecko API
+        reference_token_address = t0 if t0 in COINGECKO_TOKEN_ID_MAP else t1
+        reference_token_ID = COINGECKO_TOKEN_ID_MAP[reference_token_address]
+        reference_token_usd_ratio = getCoingeckoUSDPriceRatio(reference_token_ID)
+        reference_token_decimals = (
+            init_erc20(reference_token_address).functions.decimals().call()
+        )
+        if t0 == reference_token_address:
+            reserveInTri = reserves[0] * 2 / 10**reference_token_decimals
         else:
-            reserveInTri = reserves[1] * 2 / 10**decimals
-        return reserveInTri / stnear_usd_ratio
+            reserveInTri = reserves[1] * 2 / 10**reference_token_decimals
+        return reserveInTri / reference_token_usd_ratio
+    else:
+        return 0
 
 
 def getTotalStakedInUSD(totalStaked, totalAvailable, reserveInUSD):
@@ -178,8 +186,13 @@ def getDataV2Pools(
         reserveInUSDC = getReserveInUsd(
             w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio
         )
-        totalStakedInUSDC = getTotalStakedInUSD(totalStaked, totalSupply, reserveInUSDC)
-
+        if reserveInUSDC > 0:
+            totalStakedInUSDC = getTotalStakedInUSD(
+                totalStaked, totalSupply, reserveInUSDC
+            )
+        else:
+            gccPrint(f'Error getting reserveInUSDC for pair {pool["LP"]}', "ERROR")
+            totalStakedInUSDC = 0
     nonTriAPRs = []
 
     # Rewarder logic
