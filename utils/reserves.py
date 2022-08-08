@@ -95,6 +95,12 @@ def getReserveInUsd(w3, tlp, triUsdRatio, wnearUsdRatio, wethUsdRatio):
             reserveInTri = reserves[1] * 2 / 10**reference_token_decimals
         return reserveInTri / reference_token_usd_ratio
     else:
+        # Attempt to get reserves from Covalent API
+        covalent_response = getPool(tlp.address)
+
+        if covalent_response is not None:
+            return covalent_response["total_liquidity_quote"]
+
         return 0
 
 
