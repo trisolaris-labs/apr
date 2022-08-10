@@ -204,9 +204,9 @@ def top_pools_base():
         gccPrint(f"{TAG} Completed with {len(top_pools_tokens)} pools")
         return top_pools_tokens
     except Exception as e:
-        print("wat")
         gccPrint(
-            f"{TAG} Error fetching from Covalent API; Returning BASE_PAIRS", "ERROR"
+            f"{TAG} Error fetching from Covalent API: {e}, Returning BASE_PAIRS",
+            "ERROR",
         )
 
         return BASE_PAIRS
