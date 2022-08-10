@@ -5,7 +5,7 @@ This file is used for Google Cloud functions to update the top pools in the last
 import json
 
 from top_pools_base import top_pools_base
-from gcc_utils import (gccPrint, get_event_id, get_google_cloud_storage_blob)
+from gcc_utils import gccPrint, get_event_id, get_google_cloud_storage_blob
 
 # Output file name
 FILE_NAME = "pools.json"
@@ -21,15 +21,15 @@ TAG = "[GCC_TOP_POOLS]"
 def gcc_top_pools(data, context):
     event_id = get_event_id(context)
 
-    gccPrint(TAG + "Beginning Google Cloud Fn processing of top pools for event_id: {0}".format(event_id))
-    
+    gccPrint(
+        f"{TAG} Beginning Google Cloud Fn processing of top pools for event_id: {event_id}"
+    )
+
     result = top_pools_base()
 
     if len(result) == 0:
-        gccPrint(TAG + f"Received 0 items, not uploading to GCC")
+        gccPrint(f"{TAG} Received 0 items, not uploading to GCC")
         return
-    
-    gccPrint(TAG + f"fetched {len(result)} pools with 24h volume > $100")
 
     blob = get_google_cloud_storage_blob(TRISOLARIS_BUCKET, TRISOLARIS_BUCKET_FILE_PATH)
 
@@ -38,15 +38,18 @@ def gcc_top_pools(data, context):
     blob.upload_from_string(json_data, "application/json")
 
     # Don't serve stale data
-    blob.cache_control = 'no-cache'
-    
+    blob.cache_control = "no-cache"
+
     # Allows file to be publicly accessible
     blob.make_public()
 
     # Save
     blob.patch()
-    
-    gccPrint(TAG + "Uploading to gcc location: {0}/{1} complete".format(TRISOLARIS_BUCKET, TRISOLARIS_BUCKET_FILE_PATH))
+
+    gccPrint(
+        f"{TAG} Uploading to gcc location: {TRISOLARIS_BUCKET}/{TRISOLARIS_BUCKET_FILE_PATH} complete"
+    )
+
 
 if __name__ == "__main__":
     gcc_top_pools(None, None)
