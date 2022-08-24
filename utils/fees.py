@@ -98,7 +98,11 @@ def convertStablestoLP(stable_lp_maker_v3, w3, acct):
         ]
 
         convert_tranasction = stable_lp_maker_v3.functions.convertStables(
-            stableSwaps, removeLiquidity, swaps, stableTokensIndexFrom, stableTokensIndexTo
+            stableSwaps,
+            removeLiquidity,
+            swaps,
+            stableTokensIndexFrom,
+            stableTokensIndexTo,
         ).buildTransaction(transaction)
         signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
         signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
@@ -113,6 +117,7 @@ def convertStablestoLP(stable_lp_maker_v3, w3, acct):
             ):
                 tlp_amount += int(l["data"], 16)
     except ValueError as e:
+        gccPrint(e, "ERROR")
         if str(e).find("INSUFFICIENT_LIQUIDITY_BURNED") == -1:
             raise e
     return tlp_amount
