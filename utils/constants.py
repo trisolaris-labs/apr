@@ -162,10 +162,10 @@ V2_POOLS = {
     1: {
         "LP": "0xd1654a7713617d41A8C9530Fb9B948d00e162194",
         "LPType": "",
-        "Rewarder": "0x78EdEeFdF8c3ad827228d07018578E89Cf159Df1",
+        "Rewarder": ZERO_ADDRESS,
         "CoingeckoRewarderTokenName": "",
-        "RewarderPriceLP": TRI_AURORA,
-        "RewarderTokenDecimals": 18,
+        "RewarderPriceLP": "",
+        "RewarderTokenDecimals": "",
     },
     2: {
         "LP": "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914",
