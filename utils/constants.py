@@ -62,6 +62,7 @@ HAK_ADDRESS = "0x5ac53F985ea80c6Af769b9272F35F122201D0F56"
 MFF_ADDRESS = "0x78B65477bBa78fc11735801D559C386611d07529"
 ETHERNAL_ADDRESS = "0x17cbd9C274e90C537790C51b4015a65cD015497e"
 AURIGAMI_ADDRESS = "0x09C9D464b58d96837f8d8b6f4d9fE4aD408d3A4f"
+AURIGAMI_USDC_ADDRESS = "0x4f0d864b1ABf4B701799a0b30b57A22dFEB5917b"
 POLARIS_ORBITAL_ADDRESS = "0x3AC55eA8D2082fAbda674270cD2367dA96092889"
 USP_ADDRESS = "0xa69d9Ba086D41425f35988613c156Db9a88a1A96"
 VAPORWAVE_ADDRESS = "0x2451dB68DeD81900C4F16ae1af597E9658689734"
@@ -302,10 +303,6 @@ V2_POOLS = {
         "CoingeckoRewarderTokenName": "",
         "RewarderPriceLP": "",
         "RewarderTokenDecimals": "",
-        "Rewarder": ZERO_ADDRESS,
-        "CoingeckoRewarderTokenName": "",
-        "RewarderPriceLP": "",
-        "RewarderTokenDecimals": "",
     },
     19: {
         "LP": "0x5E74D85311fe2409c341Ce49Ce432BB950D221DE",
@@ -421,8 +418,21 @@ V2_POOLS = {
     },
 }
 
-V2_STABLEPOOL_SWAP_CONTRACT = {
-    18: {"poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59"},
-    28: {"poolContract": "0x458459E48dbAC0C8Ca83F8D0b7b29FEfE60c3970"},
-    32: {"poolContract": "0x3CE7AAD78B9eb47Fd2b487c463A17AAeD038B7EC"},
+V2_STABLEPOOL_METADATA = {
+    18: {
+        "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59",
+        "referenceToken": USDC_ADDRESS,
+    },
+    28: {
+        "poolContract": "0x458459E48dbAC0C8Ca83F8D0b7b29FEfE60c3970",
+        "referenceToken": USDC_ADDRESS,
+    },
+    32: {
+        "poolContract": "0x3CE7AAD78B9eb47Fd2b487c463A17AAeD038B7EC",
+        "referenceToken": USDC_ADDRESS,
+    },
+    37: {
+        "poolContract": "0x46F27692de8aA76E86e7E665e573828b9ddcB2b8",
+        "referenceToken": AURIGAMI_USDC_ADDRESS,
+    },
 }
