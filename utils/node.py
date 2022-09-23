@@ -71,6 +71,10 @@ def init_erc20(erc20_address):
     return init_contract(erc20_address, "abi/erc20.json")
 
 
+def init_aurigami_erc20(au_erc20_address):
+    return init_contract(au_erc20_address, "abi/au_erc20.json")
+
+
 @memoize
 def getTokenSymbol(address):
     token = init_erc20(address)

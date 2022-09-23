@@ -1,7 +1,13 @@
 from gcc_utils import gccPrint
 from utils.covalent import getPool
-from .node import init_erc20, init_stable_pool, init_tlp, init_rewarder
+from .node import (
+    init_erc20,
+    init_stable_pool,
+    init_tlp,
+    init_rewarder,
+)
 from .constants import (
+    AURIGAMI_USDC_ADDRESS,
     COINGECKO_TOKEN_ID_MAP,
     USDC_ADDRESS,
     USDT_ADDRESS,
@@ -12,9 +18,10 @@ from .constants import (
     XNL_ADDRESS,
     ZERO_ADDRESS,
     V1_POOLS,
-    V2_STABLEPOOL_SWAP_CONTRACT,
+    V2_STABLEPOOL_METADATA,
 )
 from .prices import (
+    getAurigamiERC20ExchangeRate,
     getCoingeckoUSDPriceRatio,
     getTriXTriRatio,
     getTokenUSDRatio,
@@ -183,10 +190,18 @@ def getDataV2Pools(
     # Stable AMM LP staked amts logic
     if pool["LPType"] == "StableAMM":
         stable_pool_contract = init_stable_pool(
-            V2_STABLEPOOL_SWAP_CONTRACT[id]["poolContract"]
+            V2_STABLEPOOL_METADATA[id]["poolContract"]
         )
+
+        if V2_STABLEPOOL_METADATA[id]["referenceToken"] == USDC_ADDRESS:
+            reference_token_price = getCoingeckoUSDPriceRatio("usd-coin")
+        elif V2_STABLEPOOL_METADATA[id]["referenceToken"] == AURIGAMI_USDC_ADDRESS:
+            reference_token_price = getAurigamiERC20ExchangeRate(AURIGAMI_USDC_ADDRESS)
+
         virtual_price = stable_pool_contract.functions.getVirtualPrice().call()
-        totalStakedInUSDC = (virtual_price / 1e18) * (totalStaked / 1e18)
+        # Multiply virtual price by reference token to get USD value of LP token, relative to underlying assets
+        normalized_virtual_price = virtual_price * reference_token_price
+        totalStakedInUSDC = (normalized_virtual_price / 1e18) * (totalStaked / 1e18)
     else:
         # Normal AMM LP staked amts logic
         reserveInUSDC = getReserveInUsd(
