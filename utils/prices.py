@@ -99,4 +99,4 @@ def getTriXTriRatio(w3):
 def getAurigamiERC20ExchangeRate(au_erc20_address):
     au_token = init_aurigami_erc20(au_erc20_address)
     au_token_exchange_rate = au_token.functions.exchangeRateStored().call()
-    return au_token_exchange_rate
+    return au_token_exchange_rate / 1e18
