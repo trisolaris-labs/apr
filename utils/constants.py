@@ -418,6 +418,8 @@ V2_POOLS = {
     },
 }
 
+# For Stable Pools: Add the `poolContract` and address of a reference token
+# All other data should populate from trisolaris_core automation
 V2_STABLEPOOL_METADATA = {
     18: {
         "poolContract": "0x13e7a001EC72AB30D66E2f386f677e25dCFF5F59",
