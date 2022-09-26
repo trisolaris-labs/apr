@@ -1,3 +1,4 @@
+from gcc_utils import gccPrint
 from utils.node import (
     w3,
     init_chef,
@@ -13,6 +14,7 @@ from utils.reserves import (
 from utils.constants import (
     V1_POOLS,
     V2_POOLS,
+    V2_STABLEPOOL_METADATA,
     WETH_ADDRESS,
     WNEAR_ADDRESS,
     WNEAR_USDC,
@@ -24,7 +26,7 @@ from utils.rewarder_configs import formatRewarderConfigItem, getRewarderConfigs
 
 
 def apr_base():
-    print("Starting APR BASE")
+    gccPrint("Starting APR BASE")
     data = []
 
     ## chef data
@@ -53,7 +55,7 @@ def apr_base():
     triUsdRatio = getDexTokenUSDRatio(w3, WNEAR_TRI, TRI_ADDRESS, wnearUsdRatio)
 
     for id, address in V1_POOLS.items():
-        print("V1 Reached here", address)
+        gccPrint(f"V1 Reached here {address}")
         # Chef V1
         data.append(
             getDataV1Pools(
@@ -71,7 +73,7 @@ def apr_base():
         )
 
     for id, pool in V2_POOLS.items():
-        print(f"V2 Reached here {id}: {pool['LP']}")
+        gccPrint(f"V2 Reached here {id}: {pool['LP']}")
         data.append(
             getDataV2Pools(
                 w3,
@@ -89,7 +91,11 @@ def apr_base():
     fetched_rewarder_configs = getRewarderConfigs()
     for rewarder_config in fetched_rewarder_configs:
         id, pool = formatRewarderConfigItem(rewarder_config)
-        print(f"Fetched V2 Reached here {id}: {pool['LP']}")
+        gccPrint(f"Fetched V2 Reached here {id}: {pool['LP']}")
+
+        if pool["LPType"] == "StableAMM" and (id in V2_STABLEPOOL_METADATA) is False:
+            gccPrint(f"Skipping pool ID {id}: ID Not Found in V2_STABLEPOOL_METADATA")
+            continue
 
         data.append(
             getDataV2Pools(

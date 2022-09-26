@@ -2,7 +2,7 @@ import requests
 from retry import retry
 from web3 import Web3
 
-from utils.constants import V2_STABLEPOOL_METADATA, ZERO_ADDRESS
+from utils.constants import ZERO_ADDRESS
 
 REWARDER_CONFIG_ENDPOINT = "https://raw.githubusercontent.com/trisolaris-labs/trisolaris_core/main/rewarderConfigs.json"
 
@@ -25,6 +25,9 @@ def formatRewarderConfigItem(rewarder_config_item):
     coingecko_token_name = _getOptionalValueFromRewarderConfigItem(
         rewarder_config_item, "CoingeckoRewarderTokenName"
     )
+    is_stable_pool = _getOptionalValueFromRewarderConfigItem(
+        rewarder_config_item, "isStablePool", False
+    )
     rewarder_price_lp = _getOptionalValueFromRewarderConfigItem(
         rewarder_config_item, "RewarderPriceLP"
     )
@@ -35,7 +38,7 @@ def formatRewarderConfigItem(rewarder_config_item):
     id = rewarder_config_item["PoolId"]
     pool = {
         "LP": Web3.toChecksumAddress(rewarder_config_item["LPToken"]),
-        "LPType": "StableAMM" if id in V2_STABLEPOOL_METADATA else "",
+        "LPType": "StableAMM" if is_stable_pool else "",
         "Rewarder": Web3.toChecksumAddress(rewarder),
         "CoingeckoRewarderTokenName": coingecko_token_name,
         "RewarderPriceLP": rewarder_price_lp,
