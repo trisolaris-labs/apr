@@ -69,12 +69,7 @@ def upload_to_gcs(bucket, path, content_type, data):
     # Save
     blob.patch()
 
-    print(
-        TAG
-        + " Uploading to gcc location: {0}/{1} complete".format(
-            TRISOLARIS_APR_BUCKET, TRISOLARIS_APR_BUCKET_FILE_PATH
-        )
-    )
+    print(TAG + " Uploading to gcc location: {0}/{1} complete".format(bucket, path))
 
 
 def get_locked_tri():
