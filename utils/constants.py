@@ -437,4 +437,8 @@ V2_STABLEPOOL_METADATA = {
         "poolContract": "0x46F27692de8aA76E86e7E665e573828b9ddcB2b8",
         "referenceToken": AURIGAMI_USDC_ADDRESS,
     },
+    40: {
+        "poolContract": "0x51d96EF6960cC7b4C884E1215564f926011A4064",
+        "referenceToken": USDC_ADDRESS,
+    },
 }
