@@ -8,7 +8,7 @@ from .constants import (
     CHEFV2_ADDRESS,
     PTRI_ADDRESS,
     TRIMAKER_ADDRESS,
-    STABLELPMAKER_ADDRESS,
+    STABLELPMAKERV4_ADDRESS,
     STABLELPMAKERV3_ADDRESS,
     USDCMAKER_ADDRESS,
     STABLELPMAKERV2_ADDRESS,
@@ -61,6 +61,10 @@ def init_stablelp_maker_v2():
 
 def init_stablelp_maker_v3():
     return init_contract(STABLELPMAKERV3_ADDRESS, "abi/stableLpMakerV3.json")
+
+
+def init_stablelp_maker_v4():
+    return init_contract(STABLELPMAKERV4_ADDRESS, "abi/stableLpMakerV3.json")
 
 
 def init_ptri():

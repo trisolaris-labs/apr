@@ -71,7 +71,7 @@ def convertFeesForPairs(tri_maker, pairs, w3, acct):
 
 
 @retry((ValueError), delay=15, tries=2)
-def convertStablestoLP(stable_lp_maker_v3, w3, acct):
+def convertStablestoLP(stable_lp_maker, w3, acct):
     tlp_amount = 0
     try:
         transaction = {
@@ -86,18 +86,21 @@ def convertStablestoLP(stable_lp_maker_v3, w3, acct):
         removeLiquidity = [
             USDC_USDT_BASE_POOL,
         ]
-        # Convert fees from nUSD to USDC
+        # Convert nUSD, USN to USDC
         swaps = [
             NUSD_USDC_USDT_META_DEPOSIT_POOL,
+            USDC_USDT_USN_BASE_POOL,
         ]
         stableTokensIndexFrom = [
             0,
+            2,
         ]
         stableTokensIndexTo = [
             1,
+            0,
         ]
 
-        convert_tranasction = stable_lp_maker_v3.functions.convertStables(
+        convert_tranasction = stable_lp_maker.functions.convertStables(
             stableSwaps,
             removeLiquidity,
             swaps,
