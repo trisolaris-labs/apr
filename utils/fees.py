@@ -21,6 +21,7 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
     usdc_amount = 0
     try:
         transaction = {
+            "from": acct.address,
             "gasPrice": w3.eth.gas_price,
             "nonce": w3.eth.getTransactionCount(acct.address),
         }
@@ -55,6 +56,7 @@ def convertFeesForPairs(tri_maker, pairs, w3, acct):
         token1.append(pair[1])
     try:
         transaction = {
+            "from": acct.address,
             "gasPrice": w3.eth.gas_price,
             "nonce": w3.eth.getTransactionCount(acct.address),
         }
@@ -75,6 +77,7 @@ def convertStablestoLP(stable_lp_maker, w3, acct):
     tlp_amount = 0
     try:
         transaction = {
+            "from": acct.address,
             "gasPrice": w3.eth.gas_price,
             "nonce": w3.eth.getTransactionCount(acct.address),
         }
