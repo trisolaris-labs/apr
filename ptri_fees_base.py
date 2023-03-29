@@ -31,9 +31,10 @@ def ptri_fees_base(frequency = 24):
 
     #USDC Maker Operations
     pairs = requests.get(TOP_PAIRS_ENDPOINT).json()
-    start_index, limit = getRange(len(pairs), frequency)
-    chunks = [pairs[x] for x in range(start_index, limit)]
-    for pair in chunks:
+    # start_index, limit = getRange(len(pairs), frequency)
+    # chunks = [pairs[x] for x in range(start_index, limit)]
+    # for pair in chunks:
+    for pair in pairs:
         pairSymbols = ":".join(map(lambda x: getTokenSymbol(x), pair))
         try:
             convertFeesForPair(usdc_maker, pair, w3, acct)
@@ -66,3 +67,15 @@ def getTime():
 
 if __name__ == "__main__":
     ptri_fees_base(None)
+
+###################################################################
+### DO THIS BEFORE RUNNING `ptri_base`, SEE `ptri_fees_base.py` ###
+###################################################################
+"""
+Since there's a delay, we need to _fully_ run this before running `ptri_base`:
+1. Comment out lines 34-36 and add line 37
+This will collect the fees for _all_ pairs
+  (We established this limit to stay under the gcc 540s run-time constraint)
+2. Run this script
+
+"""

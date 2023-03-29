@@ -58,4 +58,24 @@ def ptri_base(timestamp):
 
 
 if __name__ == "__main__":
-    ptri_base(None)
+    ptri_base(1678219208)
+
+
+############################################################
+####### BEFORE RUNNING THIS, SEE `ptri_fees_base.py` #######
+############################################################
+"""
+Since there's a delay, we need to update the following on ptri.json:
+0. BEFORE RUNNING THIS, SEE `ptri_fees_base.py`
+
+1. Update line 63 to with the last timestamp from `https://cdn.trisolaris.io/ptri.json`
+2. Run this script and save the terminal output
+3. Create compatible JSON object from lines 53-57
+4. Download JSON object here: https://cdn.trisolaris.io/ptri.json
+5. Save JSON object here AGAIN: https://cdn.trisolaris.io/ptri.json, except as `ptri_backup.json`
+6. Open `ptri.json`, and add object from 1. to the downloaded file.
+7. Upload (drag and drop) your new `ptri.json` (with the additional JSON object) to https://console.cloud.google.com/storage/browser/trisolaris_public;tab=objects?forceOnBucketsSortingFiltering=false&project=trisolaris-ad-hoc&prefix=&forceOnObjectsSortingFiltering=false
+  - When "Resolve object conflict" modal shows, click "Overwrite object"
+8. Load up trisolaris.io/stake and confirm data.  It can take 10-30 seconds to update.z
+  - If it doesn't look right, do 5. but rename `ptri_backup.json` to `ptri.json`, and upload that to undo the changes.
+"""
