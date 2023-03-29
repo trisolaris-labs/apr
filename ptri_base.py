@@ -50,6 +50,10 @@ def ptri_base(timestamp):
     ptri_data["tri_price"] = tri_price
     ptri_data["timestamp"] = current_time
 
+    gccPrint(
+        f"{TAG} apr: {apr}, triBalance: {initial_tri_balance_in_ptri}, convertedUsdcAmount: {tlp_amount}, tri_price: {tri_price}, timestamp: {current_time}"
+    )
+
     return ptri_data
 
 
