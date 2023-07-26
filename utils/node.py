@@ -35,6 +35,10 @@ def init_rewarder(rewarderAddress):
     return init_contract(rewarderAddress, "abi/complexrewarder.json")
 
 
+def init_n_rewarder(rewarderAddress):
+    return init_contract(rewarderAddress, "abi/complex_n_rewarder.json")
+
+
 def init_tlp(lpAddress):
     return init_contract(lpAddress, "abi/tlp.json")
 
