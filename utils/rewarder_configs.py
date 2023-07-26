@@ -28,6 +28,9 @@ def formatRewarderConfigItem(rewarder_config_item):
     is_stable_pool = _getOptionalValueFromRewarderConfigItem(
         rewarder_config_item, "isStablePool", False
     )
+    is_n_rewarder = _getOptionalValueFromRewarderConfigItem(
+        rewarder_config_item, "isComplexNRewarder", False
+    )
     rewarder_price_lp = _getOptionalValueFromRewarderConfigItem(
         rewarder_config_item, "RewarderPriceLP"
     )
@@ -39,6 +42,7 @@ def formatRewarderConfigItem(rewarder_config_item):
     pool = {
         "LP": Web3.toChecksumAddress(rewarder_config_item["LPToken"]),
         "LPType": "StableAMM" if is_stable_pool else "",
+        "RewarderType": "Complex" if is_n_rewarder else "Simple",
         "Rewarder": Web3.toChecksumAddress(rewarder),
         "CoingeckoRewarderTokenName": coingecko_token_name,
         "RewarderPriceLP": rewarder_price_lp,
