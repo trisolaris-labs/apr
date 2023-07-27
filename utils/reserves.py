@@ -221,10 +221,9 @@ def getDataV2Pools(
 
     # Rewarder logic
     if pool["Rewarder"] != ZERO_ADDRESS:
-        rewardsPerBlockForItem = 0
-        tokenUsdRatio = 0
-
         if pool["RewarderType"] == "Complex":
+            rewardsPerBlockForItem = 0
+            tokenUsdRatio = 0
             rewarderContractForItem = init_n_rewarder(pool["Rewarder"])
             numRewardTokens = rewarderContractForItem.functions.numRewardTokens().call()
 
@@ -261,6 +260,8 @@ def getDataV2Pools(
                 )
 
         elif pool["RewarderType"] == "Simple":
+            rewardsPerBlockForItem = 0
+            tokenUsdRatio = 0
             rewarderContractForItem = init_rewarder(pool["Rewarder"])
             rewardDecimalsForItem = pool["RewarderTokenDecimals"]
             rewardsPerBlockForItem = (
