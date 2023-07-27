@@ -242,7 +242,9 @@ def getDataV2Pools(
                     / (10**rewardDecimalsForItem)
                 )
 
-                print(f"N rewards per block at index {i}: {rewardsPerBlockForItem}")
+                print(
+                    f"Complex N rewards per block at index {i}: {rewardsPerBlockForItem}"
+                )
                 tokenUsdRatio = getTokenUSDRatio(
                     w3, pool, rewardTokenAddressForItem, wnearUsdRatio, triUsdRatio
                 )
