@@ -2,9 +2,10 @@ from gcc_utils import gccPrint
 from utils.covalent import getPool
 from .node import (
     init_erc20,
+    init_n_rewarder,
+    init_rewarder,
     init_stable_pool,
     init_tlp,
-    init_rewarder,
 )
 from .constants import (
     AURIGAMI_USDC_ADDRESS,
@@ -26,6 +27,7 @@ from .prices import (
     getTriXTriRatio,
     getTokenUSDRatio,
 )
+
 
 # have function that gets balance of underlying tokens, and then multiply 1
 # add value and then get reserve
@@ -214,34 +216,77 @@ def getDataV2Pools(
         else:
             gccPrint(f'Error getting reserveInUSDC for pair {pool["LP"]}', "ERROR")
             totalStakedInUSDC = 0
+
     nonTriAPRs = []
 
     # Rewarder logic
     if pool["Rewarder"] != ZERO_ADDRESS:
-        rewardsPerBlockForItem = 0
-        doubleRewardUsdRatioForItem = 0
-        rewarderContractForItem = init_rewarder(pool["Rewarder"])
-        rewardDecimalsForItem = pool["RewarderTokenDecimals"]
-        rewardsPerBlockForItem = (
-            rewarderContractForItem.functions.tokenPerBlock().call()
-            / (10**rewardDecimalsForItem)
-        )
-        rewarderAddressForItem = rewarderContractForItem.functions.rewardToken().call()
-        print(f"Double rewards per block: {rewardsPerBlockForItem}")
-        doubleRewardUsdRatioForItem = getTokenUSDRatio(
-            w3, pool, rewarderAddressForItem, wnearUsdRatio, triUsdRatio
-        )
+        if pool["RewarderType"] == "Complex":
+            rewardsPerBlockForItem = 0
+            tokenUsdRatio = 0
+            rewarderContractForItem = init_n_rewarder(pool["Rewarder"])
+            numRewardTokens = rewarderContractForItem.functions.numRewardTokens().call()
 
-        nonTriAPRs.append(
-            {
-                "address": rewarderAddressForItem,
-                "apr": getAPR(
-                    doubleRewardUsdRatioForItem,
-                    rewardsPerBlockForItem,
-                    totalStakedInUSDC,
-                ),
-            }
-        )
+            for i in range(numRewardTokens):
+                rewardTokenAddressForItem = (
+                    rewarderContractForItem.functions.rewardTokens(i).call()
+                )
+                rewardTokenContractForItem = init_erc20(rewardTokenAddressForItem)
+                rewardDecimalsForItem = (
+                    rewardTokenContractForItem.functions.decimals().call()
+                )
+
+                rewardsPerBlockForItem = (
+                    rewarderContractForItem.functions.tokenPerBlock(i).call()
+                    / (10**rewardDecimalsForItem)
+                )
+
+                print(
+                    f"Complex N rewards per block at index {i}: {rewardsPerBlockForItem}"
+                )
+                tokenUsdRatio = getTokenUSDRatio(
+                    w3, pool, rewardTokenAddressForItem, wnearUsdRatio, triUsdRatio
+                )
+
+                nonTriAPRs.append(
+                    {
+                        "address": rewardTokenAddressForItem,
+                        "apr": getAPR(
+                            tokenUsdRatio,
+                            rewardsPerBlockForItem,
+                            totalStakedInUSDC,
+                        ),
+                    }
+                )
+
+        elif pool["RewarderType"] == "Simple":
+            rewardsPerBlockForItem = 0
+            tokenUsdRatio = 0
+            rewarderContractForItem = init_rewarder(pool["Rewarder"])
+            rewardDecimalsForItem = pool["RewarderTokenDecimals"]
+            rewardsPerBlockForItem = (
+                rewarderContractForItem.functions.tokenPerBlock().call()
+                / (10**rewardDecimalsForItem)
+            )
+            rewardTokenAddressForItem = (
+                rewarderContractForItem.functions.rewardToken().call()
+            )
+
+            print(f"Double rewards per block: {rewardsPerBlockForItem}")
+            tokenUsdRatio = getTokenUSDRatio(
+                w3, pool, rewardTokenAddressForItem, wnearUsdRatio, triUsdRatio
+            )
+
+            nonTriAPRs.append(
+                {
+                    "address": rewardTokenAddressForItem,
+                    "apr": getAPR(
+                        tokenUsdRatio,
+                        rewardsPerBlockForItem,
+                        totalStakedInUSDC,
+                    ),
+                }
+            )
 
     return {
         "id": len(V1_POOLS) + id,

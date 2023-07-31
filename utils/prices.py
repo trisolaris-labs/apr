@@ -12,20 +12,26 @@ from .constants import (
 from .node import init_aurigami_erc20, init_erc20, init_tlp
 
 
-def getTokenUSDRatio(w3, pool, rewarder_address, wnearUsdRatio, triUsdRatio):
+def getTokenUSDRatio(w3, pool, reward_token_address, wnearUsdRatio, triUsdRatio):
     if pool["Rewarder"] == ZERO_ADDRESS:
         return 0
     elif pool["CoingeckoRewarderTokenName"] != "":
         return getCoingeckoUSDPriceRatio(pool["CoingeckoRewarderTokenName"])
     else:
         return getDexTokenUSDRatio(
-            w3, pool["RewarderPriceLP"], rewarder_address, wnearUsdRatio, triUsdRatio
+            w3,
+            pool["RewarderPriceLP"],
+            reward_token_address,
+            wnearUsdRatio,
+            triUsdRatio,
         )
 
 
 # Takes a TLP token with either USDC, USDT or WNEAR and returns the token price in USD
 # NOTE: the prices are returned in USD and NOT USDC
-def getDexTokenUSDRatio(w3, tlp_address, token_address, wnearUsdRatio=0, triUsdRatio=0):
+def getDexTokenUSDRatio(
+    w3, tlp_address, reward_token_address, wnearUsdRatio=0, triUsdRatio=0
+):
     ## getting token reserve ratio
     pair = init_tlp(tlp_address)
     t1 = pair.functions.token1().call()
@@ -33,7 +39,7 @@ def getDexTokenUSDRatio(w3, tlp_address, token_address, wnearUsdRatio=0, triUsdR
     t0 = pair.functions.token0().call()
     t0_decimals = init_erc20(t0).functions.decimals().call()
     reserves = pair.functions.getReserves().call()
-    if t0 == token_address:
+    if t0 == reward_token_address:
         tokenReserveRatio = (
             reserves[0] * (10 ** (t1_decimals - t0_decimals)) / reserves[1]
         )
