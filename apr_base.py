@@ -111,6 +111,42 @@ def apr_base():
             )
         )
 
+    # mock_data = [
+    #     {
+    #         "LPToken": "0x22E38A04c14624e6deb66762Dc98E793db2C80Cb",
+    #         "isComplexNRewarder": "true",
+    #         "RewardTokens": [
+    #             "0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79",
+    #             "0xc21Ff01229e982d7c8b8691163B0A3Cb8F357453",
+    #         ],
+    #         "Rewarder": "0xB247fA13a9BE90123C4B94982A2b30c60E6182ab",
+    #         "RewarderPriceLPs": [AURORA_WNEAR, META_WNEAR],
+    #         "PoolId": 43,
+    #     }
+    # ]
+
+    # for rewarder_config in mock_data:
+    #     id, pool = formatRewarderConfigItem(rewarder_config)
+    #     gccPrint(f"Mock V2 Reached here {id}: {pool['LP']}")
+
+    #     data.append(
+    #         getDataV2Pools(
+    #             w3,
+    #             id,
+    #             pool,
+    #             chefv2,
+    #             dummyLpTotalSecondRewardRate,
+    #             totalAllocPointV2,
+    #             triUsdRatio,
+    #             wnearUsdRatio,
+    #             wethUsdRatio,
+    #         )
+    #     )
+
+    # print(data)
+
+    gccPrint("Ending APR BASE")
+
     return data
 
 

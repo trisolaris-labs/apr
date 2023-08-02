@@ -34,6 +34,10 @@ def formatRewarderConfigItem(rewarder_config_item):
     rewarder_price_lp = _getOptionalValueFromRewarderConfigItem(
         rewarder_config_item, "RewarderPriceLP"
     )
+    rewarder_price_lps = _getOptionalValueFromRewarderConfigItem(
+        rewarder_config_item, "RewarderPriceLPs"
+    )
+    rewarder_token_decimals = rewarder_config_item.get("RewardTokenDecimals")
 
     if rewarder_price_lp != "":
         rewarder_price_lp = Web3.toChecksumAddress(rewarder_price_lp)
@@ -46,7 +50,8 @@ def formatRewarderConfigItem(rewarder_config_item):
         "Rewarder": Web3.toChecksumAddress(rewarder),
         "CoingeckoRewarderTokenName": coingecko_token_name,
         "RewarderPriceLP": rewarder_price_lp,
-        "RewarderTokenDecimals": rewarder_config_item["RewardTokenDecimals"],
+        "RewarderPriceLPs": rewarder_price_lps,
+        "RewarderTokenDecimals": rewarder_token_decimals,
     }
 
     return (id, pool)

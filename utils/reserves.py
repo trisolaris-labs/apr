@@ -221,7 +221,8 @@ def getDataV2Pools(
 
     # Rewarder logic
     if pool["Rewarder"] != ZERO_ADDRESS:
-        if pool["RewarderType"] == "Complex":
+        rewarder_type = pool.get("RewarderType", "Simple")
+        if rewarder_type == "Complex":
             rewardsPerBlockForItem = 0
             tokenUsdRatio = 0
             rewarderContractForItem = init_n_rewarder(pool["Rewarder"])
@@ -245,7 +246,7 @@ def getDataV2Pools(
                     f"Complex N rewards per block at index {i}: {rewardsPerBlockForItem}"
                 )
                 tokenUsdRatio = getTokenUSDRatio(
-                    w3, pool, rewardTokenAddressForItem, wnearUsdRatio, triUsdRatio
+                    w3, pool, rewardTokenAddressForItem, wnearUsdRatio, triUsdRatio, i
                 )
 
                 nonTriAPRs.append(
@@ -259,7 +260,7 @@ def getDataV2Pools(
                     }
                 )
 
-        elif pool["RewarderType"] == "Simple":
+        elif rewarder_type == "Simple":
             rewardsPerBlockForItem = 0
             tokenUsdRatio = 0
             rewarderContractForItem = init_rewarder(pool["Rewarder"])
