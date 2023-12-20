@@ -4,6 +4,7 @@ from web3 import Web3
 
 from .memoize import memoize
 from .constants import (
+    FACTORY_ADDRESS,
     CHEF_ADDRESS,
     CHEFV2_ADDRESS,
     PTRI_ADDRESS,
@@ -82,6 +83,8 @@ def init_erc20(erc20_address):
 def init_aurigami_erc20(au_erc20_address):
     return init_contract(au_erc20_address, "abi/au_erc20.json")
 
+def init_uniswap_v2_factory():
+    return init_contract(FACTORY_ADDRESS, "abi/iuniswapV2Factory.json")
 
 @memoize
 def getTokenSymbol(address):
