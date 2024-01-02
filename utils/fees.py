@@ -2,10 +2,6 @@ import os
 from eth_account import Account
 from retry import retry
 from utils.constants import (
-    USDC_ADDRESS,
-    USDT_ADDRESS,
-    USN_ADDRESS,
-    NUSD_ADDRESS,
     USDC_USDT_USN_BASE_POOL,
     USDC_USDT_BASE_POOL,
     NUSD_USDC_USDT_META_POOL,
@@ -15,6 +11,8 @@ from utils.constants import (
 
 from gcc_utils import gccPrint
 
+def getUniswapPairAddress(uniswap_v2_factory, pair):
+    return uniswap_v2_factory.functions.getPair(pair[0], pair[1]).call()
 
 @retry((ValueError), delay=10, tries=5)
 def convertFeesForPair(tri_maker, pair, w3, acct):
@@ -31,7 +29,7 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
         signed = w3.eth.account.sign_transaction(convert_tranasction, acct.key)
         signed_txn = w3.eth.sendRawTransaction(signed.rawTransaction)
         txn_hash = signed_txn.hex()
-        gccPrint(f"[convertFeesForPair] TX Hash: " + txn_hash)
+        gccPrint("[convertFeesForPair] TX Hash: " + txn_hash)
         receipt = w3.eth.waitForTransactionReceipt(txn_hash, timeout=1200)
         for l in receipt["logs"]:
             if (
@@ -44,6 +42,11 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
     except ValueError as e:
         if str(e).find("INSUFFICIENT_LIQUIDITY_BURNED") == -1:
             raise e
+        # NOTE - This is a hack to ignore the error when the pool is empty
+        if str(e).find("INSUFFICIENT_OUTPUT_AMOUNT") == -1:
+            gccPrint(e, "ERROR")
+            gccPrint(f"[convertFeesForPair] {pair} {usdc_amount} fees converted", "WARNING")
+            return usdc_amount
     return usdc_amount
 
 

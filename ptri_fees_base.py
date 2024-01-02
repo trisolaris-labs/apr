@@ -7,16 +7,19 @@ from gcc_utils import gccPrint
 from utils.fees import (
     convertFeesForPair,
     getAccount,
-    getFundedAccount
+    getFundedAccount,
+    getUniswapPairAddress,
 )
 from utils.node import (
     getTokenSymbol,
     w3,
-    init_usdc_maker
+    init_usdc_maker,
+    init_uniswap_v2_factory
 )
 
 TAG = "[PTRI_FEES_BASE] "
 TOP_PAIRS_ENDPOINT = "https://cdn.trisolaris.io/pools.json"
+
 
 def ptri_fees_base(frequency = 24):
     try:
@@ -28,6 +31,7 @@ def ptri_fees_base(frequency = 24):
     gccPrint(TAG + 'ptri acct balance: ' + str(w3.eth.get_balance(acct.address)/1e18) + 'Ξ')
 
     usdc_maker = init_usdc_maker()
+    uniswap_v2_factory = init_uniswap_v2_factory()
 
     #USDC Maker Operations
     pairs = requests.get(TOP_PAIRS_ENDPOINT).json()
@@ -36,8 +40,12 @@ def ptri_fees_base(frequency = 24):
     for pair in chunks:
         pairSymbols = ":".join(map(lambda x: getTokenSymbol(x), pair))
         try:
-            convertFeesForPair(usdc_maker, pair, w3, acct)
-            gccPrint(f"{TAG}{pairSymbols} {getTime()} SUCCESS")
+            uniswap_pair_address = getUniswapPairAddress(uniswap_v2_factory, pair)
+            if uniswap_pair_address != "0x0000000000000000000000000000000000000000":
+                usdc_amount = convertFeesForPair(usdc_maker, pair, w3, acct)
+                gccPrint(f"{TAG}{pairSymbols} {usdc_amount} converted {getTime()} SUCCESS")
+            else:
+                gccPrint(f"{TAG}{pairSymbols} {getTime()} NO PAIR")
         except ReadTimeout as e:
             gccPrint(f"{TAG}{pairSymbols} {getTime()} {e}", "ERROR")
         finally:
