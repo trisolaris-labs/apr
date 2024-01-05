@@ -2,10 +2,7 @@ import os
 from eth_account import Account
 from retry import retry
 from utils.constants import (
-    USDC_USDT_USN_BASE_POOL,
     USDC_USDT_BASE_POOL,
-    NUSD_USDC_USDT_META_POOL,
-    NUSD_USDC_USDT_META_DEPOSIT_POOL,
 )
 
 
@@ -88,26 +85,14 @@ def convertStablestoLP(stable_lp_maker, w3, acct):
             "nonce": w3.eth.getTransactionCount(acct.address),
         }
         stableSwaps = [
-            USDC_USDT_USN_BASE_POOL,
             USDC_USDT_BASE_POOL,
-            NUSD_USDC_USDT_META_POOL,
         ]
         removeLiquidity = [
             USDC_USDT_BASE_POOL,
         ]
-        # Convert nUSD, USN to USDC
-        swaps = [
-            NUSD_USDC_USDT_META_DEPOSIT_POOL,
-            USDC_USDT_USN_BASE_POOL,
-        ]
-        stableTokensIndexFrom = [
-            0,
-            2,
-        ]
-        stableTokensIndexTo = [
-            1,
-            0,
-        ]
+        swaps = [ ]
+        stableTokensIndexFrom = [ ]
+        stableTokensIndexTo = [ ]
 
         convert_tranasction = stable_lp_maker.functions.convertStables(
             stableSwaps,
