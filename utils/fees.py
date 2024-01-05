@@ -40,8 +40,11 @@ def convertFeesForPair(tri_maker, pair, w3, acct):
             ):
                 usdc_amount += int(l["data"], 16)
     except ValueError as e:
+        # NOTE - This is a hack to ignore the error when the pool is empty
         if str(e).find("INSUFFICIENT_LIQUIDITY_BURNED") == -1:
-            raise e
+            gccPrint(e, "ERROR")
+            gccPrint(f"[convertFeesForPair] {pair} {usdc_amount} fees converted", "WARNING")
+            return usdc_amount
         # NOTE - This is a hack to ignore the error when the pool is empty
         if str(e).find("INSUFFICIENT_OUTPUT_AMOUNT") == -1:
             gccPrint(e, "ERROR")
