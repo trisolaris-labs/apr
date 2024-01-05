@@ -84,7 +84,7 @@ def init_aurigami_erc20(au_erc20_address):
     return init_contract(au_erc20_address, "abi/au_erc20.json")
 
 def init_uniswap_v2_factory():
-    return init_contract(FACTORY_ADDRESS, "abi/iuniswapV2Factory.json")
+    return init_contract(FACTORY_ADDRESS, "abi/IuniswapV2Factory.json")
 
 @memoize
 def getTokenSymbol(address):
