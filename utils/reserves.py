@@ -197,6 +197,8 @@ def getDataV2Pools(
 
         if V2_STABLEPOOL_METADATA[id]["referenceToken"] == USDC_ADDRESS:
             reference_token_price = getCoingeckoUSDPriceRatio("usd-coin")
+        elif V2_STABLEPOOL_METADATA[id]["referenceToken"] == USDT_ADDRESS:
+            reference_token_price = getCoingeckoUSDPriceRatio("tether")
         elif V2_STABLEPOOL_METADATA[id]["referenceToken"] == AURIGAMI_USDC_ADDRESS:
             reference_token_price = getAurigamiERC20ExchangeRate(AURIGAMI_USDC_ADDRESS)
 

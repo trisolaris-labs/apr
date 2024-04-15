@@ -442,4 +442,12 @@ V2_STABLEPOOL_METADATA = {
         "poolContract": "0x51d96EF6960cC7b4C884E1215564f926011A4064",
         "referenceToken": USDC_ADDRESS,
     },
+    46: {
+        "poolContract": "0x35529BbDd64a561D8A29004C7eFcb1a5D0F6eA4a",
+        "referenceToken": USDC_ADDRESS,
+    },
+    49: {
+        "poolContract": "0x3e8795F95B6D0B063A054f40e3D50178fc463763",
+        "referenceToken": USDT_ADDRESS,
+    },
 }
