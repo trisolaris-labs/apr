@@ -451,3 +451,6 @@ V2_STABLEPOOL_METADATA = {
         "referenceToken": USDT_ADDRESS,
     },
 }
+
+LP_CUT = 0.0025
+"""0.25% fee is hardcoded into UniswapV2Pair"""
